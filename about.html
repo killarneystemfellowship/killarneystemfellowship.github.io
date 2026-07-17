@@ -199,10 +199,12 @@
         padding: clamp(28px, 3.2vw, 52px);
         overflow: hidden;
         background:
-          radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.86), transparent 34%),
-          linear-gradient(145deg, var(--teal-wash), rgba(255, 255, 255, 0.72));
-        border: 1px solid rgba(9, 81, 105, 0.18);
-        box-shadow: 0 30px 70px rgba(7, 34, 53, 0.08);
+          radial-gradient(circle at 82% 12%, rgba(19, 193, 172, 0.2), transparent 34%),
+          var(--navy);
+        color: var(--white);
+        border: 1px solid rgba(19, 193, 172, 0.34);
+        border-radius: clamp(24px, 2.4vw, 38px);
+        box-shadow: 0 34px 80px rgba(7, 34, 53, 0.2);
       }
 
       .hero-side::before {
@@ -224,7 +226,7 @@
         position: relative;
         z-index: 2;
         margin: 0;
-        color: var(--blue);
+        color: var(--teal);
         font-size: 0.68rem;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -254,21 +256,21 @@
       }
 
       .network-orbit {
-        stroke: rgba(9, 81, 105, 0.28);
+        stroke: rgba(255, 255, 255, 0.25);
         stroke-width: 1;
         stroke-dasharray: 5 11;
         animation: network-flow 12s linear infinite;
       }
 
       .network-link {
-        stroke: rgba(9, 81, 105, 0.36);
+        stroke: rgba(255, 255, 255, 0.38);
         stroke-width: 1.3;
         stroke-dasharray: 7 10;
         animation: network-flow 9s linear infinite reverse;
       }
 
       .network-node {
-        fill: var(--paper);
+        fill: var(--navy);
         stroke: var(--teal);
         stroke-width: 2;
         transform-box: fill-box;
@@ -282,8 +284,8 @@
       }
 
       .network-core {
-        fill: var(--navy);
-        stroke: var(--teal);
+        fill: var(--teal);
+        stroke: var(--white);
         stroke-width: 3;
         transform-box: fill-box;
         transform-origin: center;
@@ -292,9 +294,16 @@
 
       .network-core-mark {
         fill: none;
-        stroke: var(--white);
+        stroke: var(--navy);
         stroke-width: 2;
         stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .network-core-node {
+        fill: var(--orange);
+        stroke: var(--navy);
+        stroke-width: 1.5;
       }
 
       .hero-graphic-label {
@@ -302,7 +311,7 @@
         justify-content: center;
         gap: 12px;
         margin: 10px 0 0;
-        color: rgba(7, 34, 53, 0.58);
+        color: rgba(255, 255, 255, 0.68);
         font-size: 0.62rem;
         font-weight: 700;
         letter-spacing: 0.11em;
@@ -388,7 +397,8 @@
         max-width: none;
         margin: 0;
         padding: clamp(24px, 2.4vw, 36px) 0 0;
-        border-top: 1px solid rgba(9, 81, 105, 0.25);
+        color: var(--white);
+        border-top: 1px solid rgba(255, 255, 255, 0.24);
         font-family: var(--font-serif), Georgia, serif;
         font-size: clamp(1.25rem, 1.7vw, 1.75rem);
         line-height: 1.38;
@@ -675,6 +685,7 @@
         .hero-graphic *,
         .hero-scroll-cue::before { animation: none !important; }
       }
+
     </style>
   </head>
   <body>
@@ -717,7 +728,11 @@
               <circle class="network-node network-node-orange" cx="622" cy="190" r="11" />
               <circle class="network-node" cx="523" cy="294" r="9" />
               <circle class="network-core" cx="360" cy="176" r="42" />
-              <path class="network-core-mark" d="M343 176h34M360 159v34" />
+              <path class="network-core-mark" d="M344 184L360 162L378 184L350 188Z" />
+              <circle class="network-core-node" cx="360" cy="162" r="4" />
+              <circle class="network-core-node" cx="344" cy="184" r="4" />
+              <circle class="network-core-node" cx="378" cy="184" r="4" />
+              <circle class="network-core-node" cx="350" cy="188" r="4" />
             </svg>
             <div class="hero-graphic-label">
               <span>Data</span><span>Research</span><span>Communication</span>
