@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      if (/^https?:$/.test(window.location.protocol) && window.location.pathname.endsWith("/index.html")) {
+        const cleanPath = window.location.pathname.slice(0, -10) || "/";
+        window.history.replaceState(null, "", `${cleanPath}${window.location.search}${window.location.hash}`);
+      }
+    </script>
+    <meta name="description" content="Answers to common questions about free Killarney STEM Fellowship classroom workshops in Vancouver." />
+    <title>Workshop FAQ — Killarney STEM Fellowship</title>
+    <link rel="canonical" href="https://killarneystemfellowship.github.io/faq/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Killarney STEM Fellowship" />
+    <meta property="og:title" content="Workshop FAQ — Killarney STEM Fellowship" />
+    <meta property="og:description" content="Everything teachers usually need to know before bringing Killarney STEM Fellowship into the classroom." />
+    <meta property="og:url" content="https://killarneystemfellowship.github.io/faq/" />
+    <meta property="og:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Killarney STEM Fellowship — Science, made real." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Workshop FAQ — Killarney STEM Fellowship" />
+    <meta name="twitter:description" content="Answers for teachers planning a free classroom workshop." />
+    <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <link rel="icon" type="image/jpeg" href="/STEMbird.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --font-sans: "DM Sans";
+        --font-serif: "Fraunces";
+        --navy: #072235;
+        --blue: #095169;
+        --teal: #13c1ac;
+        --orange: #ee8728;
+        --ink: #071d2a;
+        --paper: #f3f0ea;
+        --white: #ffffff;
+        --teal-wash: #dff6f2;
+        --line: rgba(7, 34, 53, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 76px;
+      }
+
+      html.page-leaving {
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-sans), Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid var(--orange);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 18px;
+        z-index: 200;
+        padding: 10px 14px;
+        background: var(--white);
+        transform: translateY(-150%);
+      }
+
+      .skip-link:focus { transform: translateY(0); }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        min-height: 76px;
+        display: grid;
+        grid-template-columns: minmax(250px, 1fr) auto minmax(250px, 1fr);
+        align-items: center;
+        gap: 28px;
+        padding: 0 4vw;
+        background: rgba(243, 240, 234, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+      }
+
+      .wordmark,
+      .footer-mark {
+        font-family: var(--font-serif), Georgia, serif;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+      }
+
+      .wordmark em,
+      .footer-mark em {
+        color: var(--teal);
+        font-style: normal;
+      }
+
+      .site-header > nav {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .site-header > nav a,
+      .header-cta { transition: color 180ms ease; }
+
+      .site-header > nav a:hover,
+      .header-cta:hover { color: var(--blue); }
+
+      .header-cta {
+        justify-self: end;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .faq-main {
+        padding: clamp(64px, 8vw, 118px) 4vw clamp(100px, 12vw, 180px);
+      }
+
+      .faq-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(160px, 0.3fr) minmax(280px, 0.52fr);
+        gap: clamp(28px, 4.5vw, 76px);
+        align-items: center;
+        margin-bottom: clamp(74px, 9vw, 126px);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      p { margin-top: 0; }
+
+      h1 {
+        max-width: 10ch;
+        margin: 22px 0 0;
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(4.4rem, 8.4vw, 9.5rem);
+        font-weight: 600;
+        line-height: 0.86;
+        letter-spacing: -0.055em;
+      }
+
+      h1 em {
+        color: var(--orange);
+        font-style: normal;
+      }
+
+      .faq-intro {
+        max-width: 42ch;
+        margin: 0;
+        padding-left: 26px;
+        border-left: 3px solid var(--orange);
+        font-size: 1.08rem;
+        line-height: 1.75;
+      }
+
+      .faq-hero-graphic {
+        width: min(240px, 100%);
+        justify-self: center;
+      }
+
+      .faq-hero-graphic svg {
+        display: block;
+        width: 100%;
+        overflow: visible;
+      }
+
+      .faq-orbit {
+        fill: none;
+        stroke: rgba(9, 81, 105, 0.26);
+        stroke-width: 1.5;
+        stroke-dasharray: 7 9;
+        transform-origin: 110px 120px;
+        animation: faq-orbit-turn 18s linear infinite;
+      }
+
+      .faq-orbit-secondary {
+        animation-direction: reverse;
+        animation-duration: 14s;
+      }
+
+      .faq-graphic-link {
+        fill: none;
+        stroke: rgba(9, 81, 105, 0.24);
+        stroke-width: 1.5;
+      }
+
+      .faq-graphic-node {
+        fill: var(--paper);
+        stroke: var(--teal);
+        stroke-width: 2;
+      }
+
+      .faq-graphic-node-orange { stroke: var(--orange); }
+
+      .faq-question-core {
+        fill: var(--navy);
+        stroke: var(--teal);
+        stroke-width: 3;
+      }
+
+      .faq-question-mark {
+        fill: var(--white);
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: 78px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+
+      @keyframes faq-orbit-turn {
+        to { transform: rotate(360deg); }
+      }
+
+      .faq-layout {
+        display: grid;
+        grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+        gap: clamp(46px, 8vw, 130px);
+        align-items: start;
+      }
+
+      .faq-aside {
+        position: sticky;
+        top: 118px;
+        padding: 30px;
+        background: var(--navy);
+        color: var(--white);
+        border-radius: 28px;
+      }
+
+      .faq-aside strong {
+        display: block;
+        margin-top: 18px;
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(2rem, 3vw, 3.5rem);
+        line-height: 0.98;
+      }
+
+      .faq-aside p:last-child {
+        margin: 22px 0 0;
+        color: rgba(255, 255, 255, 0.68);
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--line);
+      }
+
+      .faq-item {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .faq-item.is-animating {
+        overflow: hidden;
+      }
+
+      .faq-item summary {
+        min-height: 116px;
+        display: grid;
+        grid-template-columns: 46px minmax(0, 1fr) 42px;
+        gap: 18px;
+        align-items: center;
+        padding: 20px 0;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .faq-item summary::-webkit-details-marker { display: none; }
+
+      .faq-number {
+        color: var(--orange);
+        font-size: 0.68rem;
+        font-weight: 750;
+        letter-spacing: 0.1em;
+      }
+
+      .faq-item summary strong {
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(1.55rem, 2.35vw, 2.7rem);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+        transition: color 180ms ease;
+      }
+
+      .faq-item summary:hover strong { color: var(--blue); }
+
+      .faq-toggle {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), background 180ms ease;
+      }
+
+      .faq-item[open] .faq-toggle {
+        transform: rotate(90deg);
+        background: var(--teal);
+      }
+
+      .faq-answer {
+        max-width: 64ch;
+        padding: 0 58px 36px 64px;
+        color: rgba(7, 29, 42, 0.72);
+      }
+
+      .faq-answer p { margin: 0; }
+
+      .faq-contact {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        margin-top: clamp(70px, 9vw, 120px);
+        padding: clamp(30px, 5vw, 58px);
+        background: var(--teal-wash);
+        border-radius: 28px;
+      }
+
+      .faq-contact strong {
+        display: block;
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(2rem, 3.4vw, 4rem);
+        line-height: 1;
+      }
+
+      .faq-contact p {
+        margin: 14px 0 0;
+        color: rgba(7, 29, 42, 0.68);
+      }
+
+      .button {
+        min-height: 54px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 34px;
+        padding: 0 22px;
+        background: var(--orange);
+        color: var(--navy);
+        border: 1px solid var(--orange);
+        border-radius: 999px;
+        font-size: 0.83rem;
+        font-weight: 750;
+        white-space: nowrap;
+        transition: transform 180ms ease;
+      }
+
+      .button:hover { transform: translateY(-2px); }
+
+      .site-footer {
+        padding: 70px 4vw 36px;
+        background: var(--navy);
+        color: var(--white);
+      }
+
+      .footer-mark {
+        margin: 0;
+        font-size: clamp(3.5rem, 7.2vw, 8.2rem);
+        line-height: 0.9;
+      }
+
+      .site-footer > p:nth-child(2) {
+        margin: 30px 0 80px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .footer-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 18px 32px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+        color: rgba(255, 255, 255, 0.66);
+        font-size: 0.7rem;
+      }
+
+      .footer-instagram {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .footer-instagram svg { width: 18px; height: 18px; }
+
+      @media (max-width: 1050px) {
+        .faq-hero {
+          grid-template-columns: minmax(0, 1fr) minmax(180px, 0.45fr);
+        }
+        .faq-intro {
+          grid-column: 1 / -1;
+          max-width: 680px;
+        }
+        .faq-hero-graphic {
+          grid-column: 2;
+          grid-row: 1;
+        }
+        .faq-layout { grid-template-columns: 1fr; }
+        .faq-aside { position: static; }
+      }
+
+      @media (max-width: 720px) {
+        .site-header { min-height: 68px; padding: 0 20px; }
+        .faq-main { padding-right: 20px; padding-left: 20px; }
+        h1 { font-size: clamp(3.75rem, 18vw, 6rem); }
+        .faq-hero { grid-template-columns: 1fr; }
+        .faq-hero-graphic {
+          grid-column: auto;
+          grid-row: auto;
+          width: min(210px, 62vw);
+          margin: -18px 0;
+        }
+        .faq-item summary {
+          min-height: 94px;
+          grid-template-columns: 34px minmax(0, 1fr) 38px;
+          gap: 12px;
+        }
+        .faq-answer { padding: 0 46px 28px; }
+        .faq-contact { align-items: stretch; flex-direction: column; }
+        .button { width: 100%; }
+        .footer-meta { flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+        .faq-orbit { animation: none; }
+      }
+    </style>
+    <link rel="stylesheet" href="/mobile-nav.css" />
+    <script src="/mobile-nav.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Killarney STEM Fellowship home">
+        <img class="brand-mark" src="/STEMbird.jpg" width="1181" height="1181" alt="" />
+        <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="/about/">About</a>
+        <a href="/#chapter">Chapter</a>
+        <a href="/#impact">Impact</a>
+        <a href="/#workshops">Workshops</a>
+        <a href="/#opportunities">Opportunities</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <a class="header-cta" href="/">Killarney chapter <span aria-hidden="true">→</span></a>
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
+        <span class="mobile-menu-icon" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+      <nav aria-label="Mobile navigation">
+        <a href="/about/"><span class="mobile-menu-index">01</span><span>About</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#chapter"><span class="mobile-menu-index">02</span><span>Chapter</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#impact"><span class="mobile-menu-index">03</span><span>Impact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#workshops"><span class="mobile-menu-index">04</span><span>Workshops</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#opportunities"><span class="mobile-menu-index">05</span><span>Opportunities</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#support"><span class="mobile-menu-index">06</span><span>Support</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/contact/"><span class="mobile-menu-index">07</span><span>Contact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+      </nav>
+      <div class="mobile-menu-meta">
+        <a href="mailto:killarney@stemfellowship.org">killarney@stemfellowship.org</a>
+        <a href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      </div>
+    </aside>
+
+    <main class="faq-main" id="main">
+      <section class="faq-hero" aria-labelledby="faq-title">
+        <div>
+          <p class="eyebrow">Classroom workshop guide</p>
+          <h1 id="faq-title">Questions, <em>answered.</em></h1>
+        </div>
+        <div class="faq-hero-graphic" aria-hidden="true">
+          <svg viewBox="0 0 220 240" role="presentation">
+            <ellipse class="faq-orbit" cx="110" cy="120" rx="96" ry="58" transform="rotate(-18 110 120)" />
+            <ellipse class="faq-orbit faq-orbit-secondary" cx="110" cy="120" rx="66" ry="98" transform="rotate(28 110 120)" />
+            <path class="faq-graphic-link" d="M28 88 72 46 110 120 178 68 194 156 142 202 110 120 46 178Z" />
+            <circle class="faq-graphic-node faq-graphic-node-orange" cx="28" cy="88" r="7" />
+            <circle class="faq-graphic-node" cx="72" cy="46" r="6" />
+            <circle class="faq-graphic-node" cx="178" cy="68" r="7" />
+            <circle class="faq-graphic-node faq-graphic-node-orange" cx="194" cy="156" r="6" />
+            <circle class="faq-graphic-node" cx="142" cy="202" r="7" />
+            <circle class="faq-graphic-node" cx="46" cy="178" r="6" />
+            <circle class="faq-question-core" cx="110" cy="120" r="45" />
+            <text class="faq-question-mark" x="110" y="147">?</text>
+          </svg>
+        </div>
+        <p class="faq-intro">Everything teachers usually need to know before bringing Killarney STEM Fellowship into the classroom.</p>
+      </section>
+
+      <section class="faq-layout" aria-label="Workshop frequently asked questions">
+        <aside class="faq-aside">
+          <p class="eyebrow">Quick guide</p>
+          <strong>Free, hands-on, and built for one class block.</strong>
+          <p>Choose a question to see the details. Only one answer opens at a time.</p>
+        </aside>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary><span class="faq-number">01</span><strong>Are the workshops really free?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>Yes. Our current classroom workshops are offered at no cost and include the planned activity materials and trained student presenters.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-number">02</span><strong>Which grades are the workshops designed for?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>Engineering bridges is designed for Grades 4–7, while Strawberry DNA extraction is best suited to Grades 5–7. Share your class grade in the request form and we’ll help confirm the fit.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-number">03</span><strong>How long does a visit take?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>Each workshop is designed for one class block. We coordinate the exact timing with the teacher when confirming the visit.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-number">04</span><strong>What does the chapter bring?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>We bring the planned workshop materials and trained presenters. The classroom teacher provides the learning space, normal classroom supervision, and any school-specific guidance we should know.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-number">05</span><strong>Where are visits available?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>Our outreach is intended for Vancouver-area elementary classrooms. Submit your school through the request form and we’ll confirm whether the chapter can coordinate a visit.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span class="faq-number">06</span><strong>What happens after I submit a request?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
+            <div class="faq-answer"><p>Our team reviews your school, grade, class size, workshop preference, and possible dates. We then follow up by email to discuss availability and the next steps.</p></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="faq-contact" aria-label="Workshop request">
+        <div>
+          <strong>Still have a question?</strong>
+          <p>Send the chapter your classroom details and we’ll help determine the right next step.</p>
+        </div>
+        <a class="button" href="/contact/">Request a workshop <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-mark">Killarney <em>STEM</em> Fellowship</p>
+      <p>Expanding minds. Educating leaders. Empowering futures.</p>
+      <div class="footer-meta">
+        <span>© 2026 · Killarney Secondary School · Vancouver, BC</span>
+        <a class="footer-instagram" href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer" aria-label="Killarney STEM Fellowship on Instagram">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
+          Instagram <span aria-hidden="true">↗</span>
+        </a>
+        <a href="/#workshops">Return to workshops <span aria-hidden="true">→</span></a>
+      </div>
+    </footer>
+
+    <script>
+      const faqItems = [...document.querySelectorAll(".faq-item")];
+
+      const setFaqItem = (item, shouldOpen) => {
+        const summary = item.querySelector("summary");
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduceMotion || typeof item.animate !== "function") {
+          item.open = shouldOpen;
+          item._targetOpen = undefined;
+          return;
+        }
+
+        if (item._animation) {
+          item._animation.onfinish = null;
+          item._animation.cancel();
+        }
+
+        const startHeight = item.getBoundingClientRect().height;
+        if (shouldOpen) item.open = true;
+        const endHeight = shouldOpen ? item.scrollHeight : summary.getBoundingClientRect().height;
+
+        item._targetOpen = shouldOpen;
+        item.classList.add("is-animating");
+        item.style.height = `${startHeight}px`;
+
+        item._animation = item.animate(
+          { height: [`${startHeight}px`, `${endHeight}px`] },
+          { duration: 380, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+        );
+
+        item._animation.onfinish = () => {
+          item.open = shouldOpen;
+          item.style.height = "";
+          item.classList.remove("is-animating");
+          item._animation = null;
+          item._targetOpen = undefined;
+        };
+      };
+
+      faqItems.forEach((item) => {
+        item.querySelector("summary").addEventListener("click", (event) => {
+          event.preventDefault();
+          const shouldOpen = !(item._targetOpen ?? item.open);
+
+          if (shouldOpen) {
+            faqItems.forEach((otherItem) => {
+              if (otherItem !== item && (otherItem.open || otherItem._targetOpen)) {
+                setFaqItem(otherItem, false);
+              }
+            });
+          }
+
+          setFaqItem(item, shouldOpen);
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[href]");
+        if (!link || link.target === "_blank" || event.defaultPrevented) return;
+        const href = link.getAttribute("href");
+        if (!href) return;
+
+        const destination = new URL(href, window.location.href);
+        if (destination.origin !== window.location.origin) return;
+        if (destination.href === window.location.href) return;
+        if (
+          destination.pathname === window.location.pathname &&
+          destination.search === window.location.search &&
+          destination.hash
+        ) return;
+        if (!destination.pathname.endsWith("/") && !destination.pathname.endsWith(".html")) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.location.href = link.href;
+          return;
+        }
+        document.documentElement.classList.add("page-leaving");
+        window.setTimeout(() => { window.location.href = link.href; }, 180);
+      });
+    </script>
+  </body>
+</html>

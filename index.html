@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      if (/^https?:$/.test(window.location.protocol) && window.location.pathname.endsWith("/index.html")) {
+        const cleanPath = window.location.pathname.slice(0, -10) || "/";
+        window.history.replaceState(null, "", `${cleanPath}${window.location.search}${window.location.hash}`);
+      }
+    </script>
     <meta
       name="description"
       content="The official STEM Fellowship chapter at Killarney Secondary: student research, data and AI, physics, science communication, and free elementary workshops."
@@ -1649,12 +1655,12 @@ blockquote cite {
         <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="about.html">About</a>
+        <a href="/about/">About</a>
         <a href="#chapter">Chapter</a>
         <a href="#impact">Impact</a>
         <a href="#workshops">Workshops</a>
         <a href="#opportunities">Opportunities</a>
-        <a href="contact.html">Contact</a>
+        <a href="/contact/">Contact</a>
       </nav>
       <a
         class="header-cta"
@@ -1671,13 +1677,13 @@ blockquote cite {
 
     <aside class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
       <nav aria-label="Mobile navigation">
-        <a href="about.html"><span class="mobile-menu-index">01</span><span>About</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/about/"><span class="mobile-menu-index">01</span><span>About</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
         <a href="#chapter"><span class="mobile-menu-index">02</span><span>Chapter</span><span class="mobile-menu-arrow" aria-hidden="true">↓</span></a>
         <a href="#impact"><span class="mobile-menu-index">03</span><span>Impact</span><span class="mobile-menu-arrow" aria-hidden="true">↓</span></a>
         <a href="#workshops"><span class="mobile-menu-index">04</span><span>Workshops</span><span class="mobile-menu-arrow" aria-hidden="true">↓</span></a>
         <a href="#opportunities"><span class="mobile-menu-index">05</span><span>Opportunities</span><span class="mobile-menu-arrow" aria-hidden="true">↓</span></a>
         <a href="#support"><span class="mobile-menu-index">06</span><span>Support</span><span class="mobile-menu-arrow" aria-hidden="true">↓</span></a>
-        <a href="contact.html"><span class="mobile-menu-index">07</span><span>Contact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/contact/"><span class="mobile-menu-index">07</span><span>Contact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
       </nav>
       <div class="mobile-menu-meta">
         <a href="mailto:killarney@stemfellowship.org">killarney@stemfellowship.org</a>
@@ -1706,7 +1712,7 @@ blockquote cite {
             </a>
             <a
               class="button button-secondary"
-              href="contact.html"
+              href="/contact/"
             >
               Book a free workshop <span aria-hidden="true">→</span>
             </a>
@@ -1795,7 +1801,7 @@ blockquote cite {
             <p class="route-number">02 · Elementary teachers</p>
             <h3>Bring a free workshop to your classroom.</h3>
             <p>Share your school, grade, class size, preferred workshop, and a few possible dates. Materials and trained presenters are included.</p>
-            <a href="contact.html">
+            <a href="/contact/">
               Request a workshop <span aria-hidden="true">↗</span>
             </a>
           </article>
@@ -1847,10 +1853,10 @@ blockquote cite {
           </article>
         </div>
         <div class="workshop-actions">
-          <a class="button button-light" href="contact.html">
+          <a class="button button-light" href="/contact/">
             Request a classroom workshop <span aria-hidden="true">→</span>
           </a>
-          <a class="button button-ghost-light" href="faq.html">
+          <a class="button button-ghost-light" href="/faq/">
             Read the workshop FAQ <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -1912,7 +1918,7 @@ blockquote cite {
 
         <div class="support-action" data-reveal>
           <p>Have another way to help? Tell us what you have in mind and our student leadership team will follow up.</p>
-          <a class="button button-orange" href="contact.html#partner-inquiry">
+          <a class="button button-orange" href="/contact/#partner-inquiry">
             Start a conversation <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -1953,7 +1959,7 @@ blockquote cite {
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
           Instagram <span aria-hidden="true">↗</span>
         </a>
-        <a href="faq.html">Workshop FAQ <span aria-hidden="true">→</span></a>
+        <a href="/faq/">Workshop FAQ <span aria-hidden="true">→</span></a>
         <a href="https://www.stemfellowship.org/contacts" target="_blank" rel="noreferrer">
           Official chapter of STEM Fellowship Canada <span aria-hidden="true">↗</span>
         </a>
@@ -2061,7 +2067,17 @@ blockquote cite {
         ) return;
 
         const href = link.getAttribute("href");
-        if (!href || !/^\.?\/?[^#]*\.html(?:#.*)?$/.test(href)) return;
+        if (!href) return;
+
+        const destination = new URL(href, window.location.href);
+        if (destination.origin !== window.location.origin) return;
+        if (destination.href === window.location.href) return;
+        if (
+          destination.pathname === window.location.pathname &&
+          destination.search === window.location.search &&
+          destination.hash
+        ) return;
+        if (!destination.pathname.endsWith("/") && !destination.pathname.endsWith(".html")) return;
 
         event.preventDefault();
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
