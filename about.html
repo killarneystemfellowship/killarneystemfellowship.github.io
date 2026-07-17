@@ -8,10 +8,25 @@
       content="Learn about STEM Fellowship Canada, its mission, national community, and five organizational pillars."
     />
     <title>About STEM Fellowship — Killarney Chapter</title>
+    <link rel="canonical" href="https://killarneystemfellowship.github.io/about.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Killarney STEM Fellowship" />
+    <meta property="og:title" content="About STEM Fellowship — Killarney Chapter" />
+    <meta property="og:description" content="Meet the national organization, its mission, and the five pillars guiding STEM Fellowship." />
+    <meta property="og:url" content="https://killarneystemfellowship.github.io/about.html" />
+    <meta property="og:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Killarney STEM Fellowship — Science, made real." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About STEM Fellowship — Killarney Chapter" />
+    <meta name="twitter:description" content="Meet the national organization, its mission, and five core pillars." />
+    <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <link rel="icon" type="image/jpeg" href="STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap"
       rel="stylesheet"
     />
     <style>
@@ -594,12 +609,25 @@
 
       .footer-meta {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         gap: 32px;
         padding-top: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.22);
         color: rgba(255, 255, 255, 0.66);
         font-size: 0.7rem;
+      }
+
+      .footer-instagram {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .footer-instagram svg {
+        width: 18px;
+        height: 18px;
       }
 
       @media (max-width: 1050px) {
@@ -687,13 +715,16 @@
       }
 
     </style>
+    <link rel="stylesheet" href="mobile-nav.css" />
+    <script src="mobile-nav.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
       <a class="wordmark" href="index.html" aria-label="Killarney STEM Fellowship home">
-        Killarney <em>STEM</em> Fellowship
+        <img class="brand-mark" src="STEMbird.jpg" width="1181" height="1181" alt="" />
+        <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
       </a>
       <nav aria-label="Primary navigation">
         <a href="about.html" aria-current="page">About</a>
@@ -706,7 +737,26 @@
       <a class="header-cta" href="index.html">
         Killarney chapter <span aria-hidden="true">→</span>
       </a>
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
+        <span class="mobile-menu-icon" aria-hidden="true"></span>
+      </button>
     </header>
+
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+      <nav aria-label="Mobile navigation">
+        <a href="about.html" aria-current="page"><span class="mobile-menu-index">01</span><span>About</span><span class="mobile-menu-arrow" aria-hidden="true">•</span></a>
+        <a href="index.html#chapter"><span class="mobile-menu-index">02</span><span>Chapter</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="index.html#impact"><span class="mobile-menu-index">03</span><span>Impact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="index.html#workshops"><span class="mobile-menu-index">04</span><span>Workshops</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="index.html#opportunities"><span class="mobile-menu-index">05</span><span>Opportunities</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="index.html#support"><span class="mobile-menu-index">06</span><span>Support</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="contact.html"><span class="mobile-menu-index">07</span><span>Contact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+      </nav>
+      <div class="mobile-menu-meta">
+        <a href="mailto:killarney@stemfellowship.org">killarney@stemfellowship.org</a>
+        <a href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      </div>
+    </aside>
 
     <main id="main">
       <section class="about-hero">
@@ -759,7 +809,7 @@
             The organization brings these opportunities to students through a growing national network of high school chapters, university branches, regional communities, mentors, and partners.
           </p>
           <p class="mission">
-            <strong>Mission:</strong> Create equitable learning opportunities, connections, and experiences that help students develop modern skills for the digital age.
+            <strong>Mission:</strong> To create equitable learning opportunities, connections, and experiences for students to develop modern skills for the digital age.
           </p>
         </div>
       </section>
@@ -825,6 +875,11 @@
       <p>Expanding minds. Educating leaders. Empowering futures.</p>
       <div class="footer-meta">
         <span>© 2026 · Killarney Secondary School · Vancouver, BC</span>
+        <a class="footer-instagram" href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer" aria-label="Killarney STEM Fellowship on Instagram">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
+          Instagram <span aria-hidden="true">↗</span>
+        </a>
+        <a href="faq.html">Workshop FAQ <span aria-hidden="true">→</span></a>
         <a href="https://www.stemfellowship.org/" target="_blank" rel="noreferrer">
           Visit STEM Fellowship Canada <span aria-hidden="true">↗</span>
         </a>

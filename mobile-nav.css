@@ -1,0 +1,215 @@
+.wordmark {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(19, 193, 172, 0.62);
+}
+
+.mobile-menu-toggle,
+.mobile-menu {
+  display: none;
+}
+
+.mobile-menu-toggle {
+  position: relative;
+  z-index: 102;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--navy);
+  color: var(--white);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mobile-menu-icon {
+  position: relative;
+  width: 19px;
+  height: 14px;
+}
+
+.mobile-menu-icon::before,
+.mobile-menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 19px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), top 260ms ease;
+}
+
+.mobile-menu-icon::before { top: 2px; }
+.mobile-menu-icon::after { top: 11px; }
+
+.mobile-menu-open .mobile-menu-icon::before {
+  top: 6px;
+  transform: rotate(45deg);
+}
+
+.mobile-menu-open .mobile-menu-icon::after {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 76px 0 0;
+  z-index: 95;
+  overflow-y: auto;
+  padding: clamp(38px, 7vw, 76px) 4vw 34px;
+  background: var(--navy);
+  color: var(--white);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-14px);
+  transition:
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 360ms;
+}
+
+.mobile-menu-open {
+  overflow: hidden;
+}
+
+.mobile-menu-open .mobile-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.mobile-menu nav {
+  display: grid;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.mobile-menu nav a {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  min-height: clamp(70px, 11vh, 104px);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 0.95;
+  transition: color 180ms ease, padding 260ms ease;
+}
+
+.mobile-menu nav a:hover,
+.mobile-menu nav a:focus-visible,
+.mobile-menu nav a[aria-current="page"] {
+  padding-left: 10px;
+  color: var(--teal);
+}
+
+.mobile-menu-index {
+  color: var(--teal);
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.64rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+}
+
+.mobile-menu-arrow {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 1rem;
+}
+
+.mobile-menu-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  justify-content: space-between;
+  margin-top: 34px;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.72rem;
+}
+
+.mobile-menu-meta a {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+@media (max-width: 1050px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 14px;
+  }
+
+  .site-header nav {
+    display: none;
+  }
+
+  .mobile-menu-toggle,
+  .mobile-menu {
+    display: flex;
+  }
+
+  .mobile-menu {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 720px) {
+  .mobile-menu {
+    inset: 68px 0 0;
+    padding: 28px 20px 26px;
+  }
+
+  .mobile-menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .header-cta {
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+    background: transparent;
+    color: var(--navy);
+    border: 1px solid var(--navy);
+    border-radius: 50%;
+    font-size: 0;
+  }
+
+  .header-cta span {
+    display: inline !important;
+    font-size: 1rem;
+  }
+
+  .mobile-menu nav a {
+    grid-template-columns: 34px 1fr auto;
+    min-height: 72px;
+    font-size: clamp(1.85rem, 9vw, 3rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .wordmark .brand-name {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu-icon::before,
+  .mobile-menu-icon::after,
+  .mobile-menu nav a {
+    transition-duration: 0.01ms !important;
+  }
+}
