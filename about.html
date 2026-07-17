@@ -185,17 +185,22 @@
       .about-hero > * { min-width: 0; }
 
       .hero-copy,
+      .hero-side,
       .hero-summary {
         position: relative;
         z-index: 2;
       }
 
+      .hero-side {
+        display: grid;
+        gap: clamp(28px, 3.5vw, 52px);
+        align-content: center;
+      }
+
       .hero-graphic {
-        position: absolute;
-        top: clamp(26px, 4vw, 62px);
-        right: clamp(24px, 4vw, 72px);
-        z-index: 1;
-        width: min(43vw, 680px);
+        position: relative;
+        width: min(100%, 590px);
+        justify-self: end;
         color: var(--blue);
         pointer-events: none;
       }
@@ -261,7 +266,7 @@
         display: flex;
         justify-content: flex-end;
         gap: 12px;
-        margin: -6px 10px 0 0;
+        margin: 10px 10px 0 0;
         color: rgba(7, 34, 53, 0.58);
         font-size: 0.62rem;
         font-weight: 700;
@@ -558,11 +563,14 @@
         .network { grid-template-columns: 1fr; }
         h1 { max-width: 10.5ch; }
         .hero-summary { max-width: 650px; }
+        .hero-side {
+          grid-template-columns: minmax(240px, 0.7fr) minmax(280px, 1fr);
+          gap: clamp(28px, 5vw, 64px);
+          align-items: center;
+        }
         .hero-graphic {
-          top: 34px;
-          right: 3vw;
-          width: min(62vw, 600px);
-          opacity: 0.42;
+          width: 100%;
+          opacity: 0.58;
         }
       }
 
@@ -587,7 +595,12 @@
         .pillar-card:nth-child(even) { border-right: 0; }
         .pillar-card:last-child { grid-column: auto; }
         .footer-meta { flex-direction: column; }
+        .hero-side {
+          position: static;
+          display: block;
+        }
         .hero-graphic {
+          position: absolute;
           top: 38px;
           right: -90px;
           width: 112vw;
@@ -646,27 +659,29 @@
           <p class="eyebrow">About the national organization</p>
           <h1>STEM for a changing <em>world.</em></h1>
         </div>
-        <p class="hero-summary">
-          STEM Fellowship is a Canadian charitable organization helping students and educators become active, motivated partners in education.
-        </p>
-        <div class="hero-graphic" aria-hidden="true">
-          <svg viewBox="0 0 680 360" role="presentation">
-            <ellipse class="network-orbit" cx="360" cy="176" rx="286" ry="104" transform="rotate(-9 360 176)" />
-            <ellipse class="network-orbit" cx="360" cy="176" rx="208" ry="142" transform="rotate(24 360 176)" />
-            <path class="network-link" d="M91 206L206 92L360 176L512 78L622 190L523 294L360 176L199 287Z" />
-            <path class="network-link" d="M206 92L199 287M512 78L523 294M91 206L622 190" />
-            <circle class="network-node network-node-orange" cx="91" cy="206" r="9" />
-            <circle class="network-node" cx="206" cy="92" r="12" />
-            <circle class="network-node network-node-orange" cx="199" cy="287" r="7" />
-            <circle class="network-node" cx="512" cy="78" r="8" />
-            <circle class="network-node network-node-orange" cx="622" cy="190" r="11" />
-            <circle class="network-node" cx="523" cy="294" r="9" />
-            <circle class="network-core" cx="360" cy="176" r="42" />
-            <path class="network-core-mark" d="M343 176h34M360 159v34" />
-          </svg>
-          <div class="hero-graphic-label">
-            <span>Data</span><span>Research</span><span>Communication</span>
+        <div class="hero-side">
+          <div class="hero-graphic" aria-hidden="true">
+            <svg viewBox="0 0 680 360" role="presentation">
+              <ellipse class="network-orbit" cx="360" cy="176" rx="286" ry="104" transform="rotate(-9 360 176)" />
+              <ellipse class="network-orbit" cx="360" cy="176" rx="208" ry="142" transform="rotate(24 360 176)" />
+              <path class="network-link" d="M91 206L206 92L360 176L512 78L622 190L523 294L360 176L199 287Z" />
+              <path class="network-link" d="M206 92L199 287M512 78L523 294M91 206L622 190" />
+              <circle class="network-node network-node-orange" cx="91" cy="206" r="9" />
+              <circle class="network-node" cx="206" cy="92" r="12" />
+              <circle class="network-node network-node-orange" cx="199" cy="287" r="7" />
+              <circle class="network-node" cx="512" cy="78" r="8" />
+              <circle class="network-node network-node-orange" cx="622" cy="190" r="11" />
+              <circle class="network-node" cx="523" cy="294" r="9" />
+              <circle class="network-core" cx="360" cy="176" r="42" />
+              <path class="network-core-mark" d="M343 176h34M360 159v34" />
+            </svg>
+            <div class="hero-graphic-label">
+              <span>Data</span><span>Research</span><span>Communication</span>
+            </div>
           </div>
+          <p class="hero-summary">
+            STEM Fellowship is a Canadian charitable organization helping students and educators become active, motivated partners in education.
+          </p>
         </div>
         <a class="hero-scroll-cue" href="#organization-title">Scroll to explore</a>
       </section>
