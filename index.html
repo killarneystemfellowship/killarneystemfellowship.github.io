@@ -39,24 +39,12 @@ html {
   scroll-padding-top: 76px;
 }
 
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-old(root) {
-  animation: page-out 180ms ease both;
-}
-
-::view-transition-new(root) {
-  animation: page-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes page-out {
-  to { opacity: 0; transform: translateY(-6px); }
-}
-
-@keyframes page-in {
-  from { opacity: 0; transform: translateY(10px); }
+html.page-leaving {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 body {
@@ -1444,6 +1432,33 @@ blockquote cite {
       } else {
         revealItems.forEach((item) => item.classList.add("is-visible"));
       }
+
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[href]");
+        if (
+          !link ||
+          link.target === "_blank" ||
+          event.defaultPrevented ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) return;
+
+        const href = link.getAttribute("href");
+        if (!href || !/^\.?\/?[^#]*\.html(?:#.*)?$/.test(href)) return;
+
+        event.preventDefault();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.location.href = link.href;
+          return;
+        }
+
+        document.documentElement.classList.add("page-leaving");
+        window.setTimeout(() => {
+          window.location.href = link.href;
+        }, 180);
+      });
     </script>
   </body>
 </html>
