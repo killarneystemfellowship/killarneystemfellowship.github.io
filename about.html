@@ -172,16 +172,151 @@
       }
 
       .about-hero {
-        min-height: calc(72svh - 76px);
+        position: relative;
+        min-height: calc(100svh - 76px);
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
         gap: clamp(36px, 5vw, 88px);
         align-items: center;
-        padding: clamp(58px, 7vw, 104px) 4vw;
+        padding: clamp(74px, 9vw, 132px) 4vw clamp(96px, 10vw, 142px);
         overflow: hidden;
       }
 
       .about-hero > * { min-width: 0; }
+
+      .hero-copy,
+      .hero-summary {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-graphic {
+        position: absolute;
+        top: clamp(26px, 4vw, 62px);
+        right: clamp(24px, 4vw, 72px);
+        z-index: 1;
+        width: min(43vw, 680px);
+        color: var(--blue);
+        pointer-events: none;
+      }
+
+      .hero-graphic svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .network-orbit,
+      .network-link {
+        fill: none;
+        vector-effect: non-scaling-stroke;
+      }
+
+      .network-orbit {
+        stroke: rgba(9, 81, 105, 0.2);
+        stroke-width: 1;
+        stroke-dasharray: 5 11;
+        animation: network-flow 12s linear infinite;
+      }
+
+      .network-link {
+        stroke: rgba(9, 81, 105, 0.24);
+        stroke-width: 1.3;
+        stroke-dasharray: 7 10;
+        animation: network-flow 9s linear infinite reverse;
+      }
+
+      .network-node {
+        fill: var(--paper);
+        stroke: var(--teal);
+        stroke-width: 2;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: node-pulse 3.8s ease-in-out infinite;
+      }
+
+      .network-node-orange {
+        stroke: var(--orange);
+        animation-delay: -1.3s;
+      }
+
+      .network-core {
+        fill: var(--navy);
+        stroke: var(--teal);
+        stroke-width: 3;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: core-breathe 4.6s ease-in-out infinite;
+      }
+
+      .network-core-mark {
+        fill: none;
+        stroke: var(--white);
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      .hero-graphic-label {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin: -6px 10px 0 0;
+        color: rgba(7, 34, 53, 0.58);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .hero-graphic-label span + span::before {
+        content: "·";
+        margin-right: 12px;
+        color: var(--orange);
+      }
+
+      .hero-scroll-cue {
+        position: absolute;
+        bottom: 28px;
+        left: 4vw;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        color: rgba(7, 34, 53, 0.62);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero-scroll-cue::before {
+        content: "";
+        width: 42px;
+        height: 1px;
+        background: var(--orange);
+        transform-origin: left;
+        animation: cue-stretch 2.8s ease-in-out infinite;
+      }
+
+      @keyframes network-flow {
+        to { stroke-dashoffset: -72; }
+      }
+
+      @keyframes node-pulse {
+        0%, 100% { transform: scale(0.88); opacity: 0.58; }
+        50% { transform: scale(1.12); opacity: 1; }
+      }
+
+      @keyframes core-breathe {
+        0%, 100% { transform: scale(0.94); }
+        50% { transform: scale(1.06); }
+      }
+
+      @keyframes cue-stretch {
+        0%, 100% { transform: scaleX(0.45); opacity: 0.5; }
+        50% { transform: scaleX(1); opacity: 1; }
+      }
 
       h1,
       h2,
@@ -423,12 +558,23 @@
         .network { grid-template-columns: 1fr; }
         h1 { max-width: 10.5ch; }
         .hero-summary { max-width: 650px; }
+        .hero-graphic {
+          top: 34px;
+          right: 3vw;
+          width: min(62vw, 600px);
+          opacity: 0.42;
+        }
       }
 
       @media (max-width: 720px) {
         .site-header { min-height: 68px; padding: 0 20px; }
         .header-cta span { display: none; }
-        .about-hero { padding-right: 20px; padding-left: 20px; }
+        .about-hero {
+          min-height: calc(100svh - 68px);
+          padding-right: 20px;
+          padding-bottom: 94px;
+          padding-left: 20px;
+        }
         h1 {
           max-width: 100%;
           font-size: clamp(3.75rem, 18vw, 6.2rem);
@@ -441,6 +587,14 @@
         .pillar-card:nth-child(even) { border-right: 0; }
         .pillar-card:last-child { grid-column: auto; }
         .footer-meta { flex-direction: column; }
+        .hero-graphic {
+          top: 38px;
+          right: -90px;
+          width: 112vw;
+          opacity: 0.2;
+        }
+        .hero-graphic-label { display: none; }
+        .hero-scroll-cue { left: 20px; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -461,6 +615,9 @@
           opacity: 1;
           transform: none;
         }
+
+        .hero-graphic *,
+        .hero-scroll-cue::before { animation: none !important; }
       }
     </style>
   </head>
@@ -485,13 +642,33 @@
 
     <main id="main">
       <section class="about-hero">
-        <div>
+        <div class="hero-copy">
           <p class="eyebrow">About the national organization</p>
           <h1>STEM for a changing <em>world.</em></h1>
         </div>
         <p class="hero-summary">
           STEM Fellowship is a Canadian charitable organization helping students and educators become active, motivated partners in education.
         </p>
+        <div class="hero-graphic" aria-hidden="true">
+          <svg viewBox="0 0 680 360" role="presentation">
+            <ellipse class="network-orbit" cx="360" cy="176" rx="286" ry="104" transform="rotate(-9 360 176)" />
+            <ellipse class="network-orbit" cx="360" cy="176" rx="208" ry="142" transform="rotate(24 360 176)" />
+            <path class="network-link" d="M91 206L206 92L360 176L512 78L622 190L523 294L360 176L199 287Z" />
+            <path class="network-link" d="M206 92L199 287M512 78L523 294M91 206L622 190" />
+            <circle class="network-node network-node-orange" cx="91" cy="206" r="9" />
+            <circle class="network-node" cx="206" cy="92" r="12" />
+            <circle class="network-node network-node-orange" cx="199" cy="287" r="7" />
+            <circle class="network-node" cx="512" cy="78" r="8" />
+            <circle class="network-node network-node-orange" cx="622" cy="190" r="11" />
+            <circle class="network-node" cx="523" cy="294" r="9" />
+            <circle class="network-core" cx="360" cy="176" r="42" />
+            <path class="network-core-mark" d="M343 176h34M360 159v34" />
+          </svg>
+          <div class="hero-graphic-label">
+            <span>Data</span><span>Research</span><span>Communication</span>
+          </div>
+        </div>
+        <a class="hero-scroll-cue" href="#organization-title">Scroll to explore</a>
       </section>
 
       <section class="organization section-pad" aria-labelledby="organization-title">
