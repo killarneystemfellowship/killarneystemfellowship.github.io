@@ -803,6 +803,207 @@ blockquote cite {
   border-color: var(--white);
 }
 
+.home-request {
+  position: relative;
+  overflow: hidden;
+  background: var(--orange-wash);
+}
+
+.home-request::before {
+  content: "";
+  position: absolute;
+  top: -190px;
+  right: -120px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(238, 135, 40, 0.26);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 70px rgba(238, 135, 40, 0.06),
+    0 0 0 140px rgba(19, 193, 172, 0.04);
+  pointer-events: none;
+}
+
+.home-request-heading,
+.home-request-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.home-request-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(290px, 0.75fr);
+  gap: clamp(40px, 7vw, 120px);
+  align-items: end;
+  padding-bottom: clamp(48px, 6vw, 82px);
+  border-bottom: 1px solid rgba(7, 34, 53, 0.22);
+}
+
+.home-request-heading h2 {
+  max-width: 980px;
+  font-size: clamp(4rem, 7.2vw, 8.4rem);
+  line-height: 0.88;
+}
+
+.home-request-heading h2 em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+.home-request-heading > p:last-child {
+  max-width: 48ch;
+  margin: 0;
+  font-size: 1.06rem;
+}
+
+.home-request-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.58fr) minmax(0, 1.42fr);
+  gap: clamp(50px, 8vw, 130px);
+  padding-top: clamp(54px, 7vw, 94px);
+}
+
+.home-request-aside h3 {
+  max-width: 420px;
+  font-size: clamp(2.5rem, 4vw, 4.8rem);
+  line-height: 0.94;
+}
+
+.request-steps {
+  display: grid;
+  gap: 0;
+  margin: 42px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.request-steps li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.request-steps span {
+  color: var(--orange);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+}
+
+.home-request-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 34px;
+}
+
+.home-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.home-form-field-full,
+.home-form-consent,
+.home-form-submit,
+.home-form-note {
+  grid-column: 1 / -1;
+}
+
+.home-form-field label {
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-form-field input,
+.home-form-field select,
+.home-form-field textarea {
+  width: 100%;
+  min-height: 54px;
+  padding: 10px 2px 12px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid rgba(7, 34, 53, 0.42);
+  border-radius: 0;
+  outline: 0;
+  font: inherit;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.home-form-field textarea {
+  min-height: 116px;
+  resize: vertical;
+}
+
+.home-form-field input:focus,
+.home-form-field select:focus,
+.home-form-field textarea:focus {
+  border-bottom-color: var(--orange);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.home-form-field input::placeholder,
+.home-form-field textarea::placeholder {
+  color: rgba(7, 29, 42, 0.4);
+}
+
+.home-form-consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  font-size: 0.78rem;
+}
+
+.home-form-consent input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--teal);
+}
+
+.home-form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 22px 2px;
+  background: transparent;
+  color: var(--navy);
+  border: 0;
+  border-top: 1px solid var(--navy);
+  border-bottom: 1px solid var(--navy);
+  cursor: pointer;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+  font-weight: 650;
+  text-align: left;
+  transition: color 180ms ease, padding 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-form-submit:hover {
+  padding-right: 14px;
+  padding-left: 14px;
+  color: var(--blue);
+}
+
+.home-form-note {
+  margin: -14px 0 0;
+  color: rgba(7, 29, 42, 0.58);
+  font-size: 0.7rem;
+}
+
+.home-honey-field {
+  position: absolute;
+  left: -9999px;
+}
+
 .opportunities {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -1002,6 +1203,26 @@ blockquote cite {
   .workshop-grid {
     grid-template-columns: 1fr;
   }
+
+  .home-request-heading,
+  .home-request-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-request-heading > p:last-child {
+    max-width: 680px;
+  }
+
+  .home-request-aside {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.75fr) minmax(0, 1.25fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .request-steps {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 720px) {
@@ -1111,6 +1332,18 @@ blockquote cite {
 
   .workshop-meta div:last-child {
     border-bottom: 0;
+  }
+
+  .home-request-aside,
+  .home-request-form {
+    grid-template-columns: 1fr;
+  }
+
+  .home-form-field-full,
+  .home-form-consent,
+  .home-form-submit,
+  .home-form-note {
+    grid-column: auto;
   }
 
   .opportunity-row {
@@ -1344,6 +1577,90 @@ blockquote cite {
         </a>
       </section>
 
+      <section class="home-request section-pad" id="request-workshop" aria-labelledby="home-request-title">
+        <div class="home-request-heading" data-reveal>
+          <div>
+            <p class="eyebrow">For Vancouver-area elementary teachers</p>
+            <h2 id="home-request-title">Bring real science to your <em>classroom.</em></h2>
+          </div>
+          <p>
+            Request a free, hands-on workshop without leaving the website. Tell us about your class and we’ll follow up to coordinate an available date.
+          </p>
+        </div>
+
+        <div class="home-request-layout">
+          <aside class="home-request-aside" data-reveal="left">
+            <h3>One request. A hands-on class.</h3>
+            <ol class="request-steps" aria-label="Workshop request process">
+              <li><span>01</span> Share your classroom details.</li>
+              <li><span>02</span> We coordinate timing with your school.</li>
+              <li><span>03</span> Our presenters bring the materials.</li>
+            </ol>
+          </aside>
+
+          <form
+            class="home-request-form"
+            action="https://formsubmit.co/killarney@stemfellowship.org"
+            method="POST"
+            data-reveal="right"
+          >
+            <input type="hidden" name="_subject" value="New Killarney classroom workshop request" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value="https://killarneystemfellowship.github.io/thanks.html" />
+            <input type="hidden" name="_url" value="https://killarneystemfellowship.github.io/#request-workshop" />
+            <input class="home-honey-field" type="text" name="_honey" tabindex="-1" autocomplete="off" />
+
+            <div class="home-form-field">
+              <label for="home-name">Your name</label>
+              <input id="home-name" name="Name" type="text" autocomplete="name" required />
+            </div>
+            <div class="home-form-field">
+              <label for="home-email">Email</label>
+              <input id="home-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="home-form-field">
+              <label for="home-school">School</label>
+              <input id="home-school" name="School" type="text" autocomplete="organization" required />
+            </div>
+            <div class="home-form-field">
+              <label for="home-grade">Grade</label>
+              <input id="home-grade" name="Grade" type="text" placeholder="e.g. Grade 5 or split 4/5" required />
+            </div>
+            <div class="home-form-field">
+              <label for="home-class-size">Class size</label>
+              <input id="home-class-size" name="Class size" type="number" min="1" max="60" inputmode="numeric" required />
+            </div>
+            <div class="home-form-field">
+              <label for="home-workshop">Preferred workshop</label>
+              <select id="home-workshop" name="Workshop" required>
+                <option value="" selected disabled>Select a workshop</option>
+                <option>Strawberry DNA extraction</option>
+                <option>Engineering bridges</option>
+                <option>Not sure—help me choose</option>
+              </select>
+            </div>
+            <div class="home-form-field home-form-field-full">
+              <label for="home-dates">Preferred dates or timeframe</label>
+              <input id="home-dates" name="Preferred dates or timeframe" type="text" placeholder="e.g. Friday mornings in March" required />
+            </div>
+            <div class="home-form-field home-form-field-full">
+              <label for="home-message">Anything else we should know?</label>
+              <textarea id="home-message" name="Additional details" placeholder="Accessibility needs, space constraints, learning goals, or questions"></textarea>
+            </div>
+
+            <div class="home-form-consent">
+              <input id="home-consent" name="Permission to respond" type="checkbox" value="Yes" required />
+              <label for="home-consent">I consent to Killarney STEM Fellowship using these details to respond to this workshop request.</label>
+            </div>
+
+            <button class="home-form-submit" type="submit">
+              <span>Send the request</span><span aria-hidden="true">→</span>
+            </button>
+            <p class="home-form-note">Submissions are delivered securely to killarney@stemfellowship.org.</p>
+          </form>
+        </div>
+      </section>
+
       <section class="opportunities section-pad" id="opportunities">
         <div class="section-intro opportunities-intro" data-reveal data-reveal-once>
           <p class="eyebrow">STEM Fellowship Canada</p>
@@ -1412,6 +1729,12 @@ blockquote cite {
 
       const revealItems = document.querySelectorAll("[data-reveal]");
       document.documentElement.classList.add("reveal-ready");
+
+      const homeRequestForm = document.querySelector(".home-request-form");
+      const homeRequestLabel = document.querySelector(".home-form-submit span:first-child");
+      homeRequestForm?.addEventListener("submit", () => {
+        homeRequestLabel.textContent = "Sending request…";
+      });
 
       if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver(
