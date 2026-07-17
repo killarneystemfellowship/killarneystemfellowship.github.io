@@ -527,7 +527,7 @@ h1 em {
 }
 
 .route-card {
-  min-height: 510px;
+  min-height: clamp(540px, 46vw, 640px);
   display: flex;
   flex-direction: column;
   padding: clamp(32px, 5vw, 70px);
@@ -552,8 +552,13 @@ h1 em {
 }
 
 .route-card > p:not(.route-number) {
-  max-width: 560px;
-  margin: 28px 0 0;
+  max-width: 48ch;
+  margin: 34px 0 0;
+  line-height: 1.72;
+}
+
+.route-teacher > p:not(.route-number) {
+  max-width: 44ch;
 }
 
 .route-card > a {
@@ -1191,7 +1196,7 @@ blockquote cite {
               <h3>Strawberry DNA extraction</h3>
               <p>Students mash, filter, and precipitate—and leave having seen real DNA with their own eyes.</p>
               <dl class="workshop-meta">
-                <div><dt>Best for</dt><dd>Grade 5</dd></div>
+                <div><dt>Best for</dt><dd>Grade 5-7</dd></div>
                 <div><dt>Format</dt><dd>One class block</dd></div>
                 <div><dt>Includes</dt><dd>Materials &amp; presenters</dd></div>
               </dl>
@@ -1293,11 +1298,12 @@ blockquote cite {
 
       if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver(
-          (entries, observer) => {
+          (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
+              } else {
+                entry.target.classList.remove("is-visible");
               }
             });
           },
