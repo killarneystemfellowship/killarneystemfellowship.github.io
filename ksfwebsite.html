@@ -39,6 +39,26 @@ html {
   scroll-padding-top: 76px;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-out 180ms ease both;
+}
+
+::view-transition-new(root) {
+  animation: page-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -531,6 +551,16 @@ h1 em {
   display: flex;
   flex-direction: column;
   padding: clamp(32px, 5vw, 70px);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-ready .route-card[data-reveal].is-visible {
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .route-student {
@@ -549,12 +579,14 @@ h1 em {
   margin-top: 70px;
   font-size: clamp(3rem, 5.2vw, 6.2rem);
   line-height: 0.9;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .route-card > p:not(.route-number) {
   max-width: 48ch;
   margin: 34px 0 0;
   line-height: 1.72;
+  transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .route-teacher > p:not(.route-number) {
@@ -572,6 +604,57 @@ h1 em {
   font-family: var(--font-serif), Georgia, serif;
   font-size: 1.5rem;
   font-weight: 650;
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.route-card > a > span {
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.route-card:focus-within,
+.reveal-ready .route-card[data-reveal].is-visible:focus-within {
+  transform: translate3d(0, -8px, 0);
+  box-shadow: 0 24px 50px rgba(7, 34, 53, 0.16);
+}
+
+.route-card:focus-within h3 {
+  transform: translate3d(0, -5px, 0);
+}
+
+.route-card:focus-within > p:not(.route-number) {
+  transform: translate3d(0, -3px, 0);
+}
+
+.route-card:focus-within > a {
+  transform: translate3d(0, -4px, 0);
+}
+
+.route-card:focus-within > a > span {
+  transform: translate3d(5px, -5px, 0);
+}
+
+@media (hover: hover) {
+  .route-card:hover,
+  .reveal-ready .route-card[data-reveal].is-visible:hover {
+    transform: translate3d(0, -8px, 0);
+    box-shadow: 0 24px 50px rgba(7, 34, 53, 0.16);
+  }
+
+  .route-card:hover h3 {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  .route-card:hover > p:not(.route-number) {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  .route-card:hover > a {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  .route-card:hover > a > span {
+    transform: translate3d(5px, -5px, 0);
+  }
 }
 
 .workshops {
@@ -631,7 +714,7 @@ h1 em {
 }
 
 .workshop-photo-dna img {
-  object-position: center 44%;
+  object-position: center 54%;
 }
 
 .workshop-photo-bridge img {
@@ -779,12 +862,44 @@ blockquote cite {
   min-height: 142px;
   padding: 24px 0;
   border-bottom: 1px solid var(--line);
-  transition: color 180ms ease, padding 180ms ease;
+  transition: color 240ms ease;
 }
 
-.opportunity-row:hover {
+.opportunity-row:is(:hover, :focus-visible) {
   color: var(--blue);
-  padding-left: 12px;
+}
+
+.reveal-ready .opportunity-row[data-reveal] {
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 240ms ease;
+  transition-delay:
+    var(--reveal-delay, 0ms),
+    var(--reveal-delay, 0ms),
+    0ms;
+}
+
+.reveal-ready .opportunity-row[data-reveal].is-visible {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-ready .opportunity-row[data-reveal]:not(.is-visible) {
+  will-change: opacity, transform;
+}
+
+.opportunity-row > span:nth-child(2),
+.opportunity-row > span:last-child {
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.opportunity-row:is(:hover, :focus-visible) > span:nth-child(2) {
+  transform: translate3d(10px, 0, 0);
+}
+
+.opportunity-row:is(:hover, :focus-visible) > span:last-child {
+  transform: translate3d(4px, -4px, 0);
 }
 
 .opportunity-row strong {
@@ -1037,6 +1152,18 @@ blockquote cite {
     opacity: 1;
     transform: none;
   }
+
+  .opportunity-row:is(:hover, :focus-visible) > span {
+    transform: none;
+  }
+
+  .route-card:is(:hover, :focus-within),
+  .route-card:is(:hover, :focus-within) h3,
+  .route-card:is(:hover, :focus-within) > p:not(.route-number),
+  .route-card:is(:hover, :focus-within) > a,
+  .route-card:is(:hover, :focus-within) > a > span {
+    transform: none;
+  }
 }
 
     </style>
@@ -1049,6 +1176,7 @@ blockquote cite {
         Killarney <em>STEM</em> Fellowship
       </a>
       <nav aria-label="Primary navigation">
+        <a href="about.html">About</a>
         <a href="#chapter">Chapter</a>
         <a href="#impact">Impact</a>
         <a href="#workshops">Workshops</a>
@@ -1188,7 +1316,7 @@ blockquote cite {
         <div class="workshop-grid">
           <article class="workshop-card" data-reveal="left">
             <figure class="workshop-photo workshop-photo-dna">
-              <img src="IMG_7183.jpg" alt="Students participating in a Killarney STEM Fellowship strawberry DNA extraction workshop" />
+              <img src="IMG_7183.jpg" alt="Students using pipettes and cups during a Killarney STEM Fellowship strawberry DNA extraction workshop" />
               <figcaption>Strawberry DNA workshop · Killarney STEM Fellowship</figcaption>
             </figure>
             <div class="workshop-copy">
@@ -1218,7 +1346,7 @@ blockquote cite {
                 <div><dt>Cost</dt><dd>Free</dd></div>
                 <div><dt>Includes</dt><dd>Materials &amp; presenters</dd></div>
               </dl>
-              <blockquote>“Presenters were engaging, knowledgeable and circulated constantly engaging with students.”<cite>— Ashwin Prasad, teacher</cite></blockquote>
+              <blockquote>“Presenters were engaging, knowledgeable and circulated constantly engaging with students.”<cite>— Ashwin Prasad, Grade 5 teacher</cite></blockquote>
             </div>
           </article>
         </div>
@@ -1228,25 +1356,25 @@ blockquote cite {
       </section>
 
       <section class="opportunities section-pad" id="opportunities">
-        <div class="section-intro opportunities-intro" data-reveal>
+        <div class="section-intro opportunities-intro" data-reveal data-reveal-once>
           <p class="eyebrow">STEM Fellowship Canada</p>
           <h2>National opportunities.</h2>
           <p>Four national programs and one award. Details, eligibility, cost, and deadlines change—use the official pages for current information.</p>
         </div>
         <div class="opportunity-list">
-          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/hsbdc" target="_blank" rel="noreferrer" data-reveal style="--reveal-delay: 0ms">
+          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/hsbdc" target="_blank" rel="noreferrer" data-reveal data-reveal-once style="--reveal-delay: 0ms">
             <span class="opportunity-index">01</span><span><strong>(HSBDC) High School Big Data Challenge</strong><small>National program · Official details</small></span><span aria-hidden="true">↗</span>
           </a>
-          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/reo" target="_blank" rel="noreferrer" data-reveal style="--reveal-delay: 70ms">
+          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/reo" target="_blank" rel="noreferrer" data-reveal data-reveal-once style="--reveal-delay: 55ms">
             <span class="opportunity-index">02</span><span><strong>(REO) Research Exploration Opportunity</strong><small>National program · Official details</small></span><span aria-hidden="true">↗</span>
           </a>
-          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/svc" target="_blank" rel="noreferrer" data-reveal style="--reveal-delay: 140ms">
+          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/svc" target="_blank" rel="noreferrer" data-reveal data-reveal-once style="--reveal-delay: 110ms">
             <span class="opportunity-index">03</span><span><strong>(SVC) Scholarly Viewpoint Challenge</strong><small>National program · Official details</small></span><span aria-hidden="true">↗</span>
           </a>
-          <a class="opportunity-row" href="https://www.stemfellowship.org/programs" target="_blank" rel="noreferrer" data-reveal style="--reveal-delay: 210ms">
+          <a class="opportunity-row" href="https://www.stemfellowship.org/programs" target="_blank" rel="noreferrer" data-reveal data-reveal-once style="--reveal-delay: 165ms">
             <span class="opportunity-index">04</span><span><strong>(CaYPT) Canadian Young Physicists’ Tournament</strong><small>National program · Official details</small></span><span aria-hidden="true">↗</span>
           </a>
-          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/dcla" target="_blank" rel="noreferrer" data-reveal style="--reveal-delay: 280ms">
+          <a class="opportunity-row" href="https://www.stemfellowship.org/programs/dcla" target="_blank" rel="noreferrer" data-reveal data-reveal-once style="--reveal-delay: 220ms">
             <span class="opportunity-index">05</span><span><strong>(DCLA) Digital Citizenship Leadership Award</strong><small>National award · Official details</small></span><span aria-hidden="true">↗</span>
           </a>
         </div>
@@ -1302,6 +1430,9 @@ blockquote cite {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
+                if (entry.target.hasAttribute("data-reveal-once")) {
+                  revealObserver.unobserve(entry.target);
+                }
               } else {
                 entry.target.classList.remove("is-visible");
               }
