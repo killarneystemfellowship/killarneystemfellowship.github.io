@@ -11,9 +11,6 @@
     menu.setAttribute("aria-hidden", String(!isOpen));
     menu.inert = !isOpen;
 
-    if (isOpen) {
-      window.setTimeout(() => menu.querySelector("a")?.focus(), 40);
-    }
   };
 
   toggle.addEventListener("click", () => {

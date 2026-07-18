@@ -7,10 +7,21 @@
 
 html,
 body {
+  width: 100%;
   max-width: 100%;
   overflow-x: hidden;
   overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
 }
+
+body { position: relative; }
+
+img,
+svg { max-width: 100%; }
+
+a,
+button { -webkit-tap-highlight-color: transparent; }
 
 .brand-mark {
   width: 34px;
@@ -130,6 +141,15 @@ body {
   box-shadow: inset 3px 0 0 var(--teal);
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .mobile-menu nav a:focus,
+  .mobile-menu-toggle:focus,
+  .header-cta:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
 .mobile-menu-index {
   color: var(--teal);
   font-family: var(--font-sans), Arial, sans-serif;
@@ -161,6 +181,11 @@ body {
   .site-header {
     grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 14px;
+  }
+
+  .wordmark .brand-name {
+    display: inline !important;
+    white-space: nowrap;
   }
 
   .site-header nav {
