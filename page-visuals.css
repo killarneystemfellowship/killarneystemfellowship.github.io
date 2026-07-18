@@ -156,6 +156,8 @@
   background: var(--orange);
   color: var(--navy);
   border-block: 1px solid rgba(7, 34, 53, 0.28);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
 }
 
 .skills-ribbon__track {
@@ -192,7 +194,7 @@
 }
 
 @keyframes skills-ribbon-move {
-  to { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(-33.333333%, 0, 0); }
 }
 
 .pillar-card .pillar-glyph {
@@ -216,9 +218,29 @@
 }
 
 @media (min-width: 721px) {
+  .about-page .pillar-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(130px, 12vw, 180px);
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(26px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .about-page .pillar-card .pillar-number,
   .about-page .pillar-card h3,
-  .about-page .pillar-card p {
-    max-width: calc(100% - clamp(170px, 14vw, 220px));
+  .about-page .pillar-card p { grid-column: 1; max-width: 100%; }
+
+  .about-page .pillar-card .pillar-glyph {
+    position: relative;
+    inset: auto;
+    grid-column: 2;
+    grid-row: 1 / 4;
+    justify-self: end;
+    width: min(100%, 164px);
+  }
+
+  .about-page .pillar-card .pillar-number {
+    margin-bottom: clamp(32px, 4vw, 54px);
   }
 }
 
@@ -1795,6 +1817,10 @@
     gap: 1.35rem;
     padding: 13px 1.35rem 11px 0;
     font-size: 0.67rem;
+  }
+  .skills-ribbon {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
   }
 
   .pillar-card .pillar-glyph {
