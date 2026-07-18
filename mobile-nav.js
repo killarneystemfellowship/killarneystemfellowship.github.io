@@ -2,12 +2,6 @@
   const root = document.documentElement;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const transitionLayer = document.createElement("div");
-  transitionLayer.className = "page-transition";
-  transitionLayer.setAttribute("aria-hidden", "true");
-  transitionLayer.innerHTML = '<span class="page-transition__label">Ask&nbsp; · &nbsp;Explore&nbsp; · &nbsp;Share</span>';
-  document.body.append(transitionLayer);
-
   const revealPage = () => {
     root.classList.remove("page-leaving");
     if (reducedMotion) {
@@ -52,9 +46,10 @@
     }
 
     root.classList.add("page-leaving");
+    const transitionTime = window.matchMedia("(max-width: 720px)").matches ? 660 : 820;
     window.setTimeout(() => {
       window.location.href = link.href;
-    }, 820);
+    }, transitionTime);
   });
 
   const toggle = document.querySelector(".mobile-menu-toggle");
@@ -76,7 +71,21 @@
   });
 
   menu.addEventListener("click", (event) => {
-    if (event.target.closest("a")) setMenu(false);
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+
+    const destination = new URL(link.href, window.location.href);
+    const isSamePageAnchor =
+      destination.pathname === window.location.pathname &&
+      destination.search === window.location.search &&
+      Boolean(destination.hash);
+    const isInternalPage =
+      destination.origin === window.location.origin &&
+      destination.href !== window.location.href &&
+      !isSamePageAnchor &&
+      (destination.pathname.endsWith("/") || destination.pathname.endsWith(".html"));
+
+    if (!isInternalPage) setMenu(false);
   });
 
   document.addEventListener("keydown", (event) => {

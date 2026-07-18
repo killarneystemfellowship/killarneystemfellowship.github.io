@@ -2283,9 +2283,11 @@ blockquote cite {
 
     </style>
     <link rel="stylesheet" href="mobile-nav.css" />
+    <script src="mobile-nav.js" defer></script>
     <script src="page-visuals.js" defer></script>
   </head>
   <body>
+    <div class="page-transition" aria-hidden="true"><span class="page-transition__label">Ask&nbsp; · &nbsp;Explore&nbsp; · &nbsp;Share</span></div>
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
@@ -2838,52 +2840,6 @@ blockquote cite {
       const revealItems = document.querySelectorAll("[data-reveal]");
       document.documentElement.classList.add("reveal-ready");
 
-      const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-      const mobileMenu = document.querySelector(".mobile-menu");
-
-      const setMobileMenu = (isOpen) => {
-        document.body.classList.toggle("mobile-menu-open", isOpen);
-        mobileMenuToggle.setAttribute("aria-expanded", String(isOpen));
-        mobileMenuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
-        mobileMenu.setAttribute("aria-hidden", String(!isOpen));
-        mobileMenu.inert = !isOpen;
-
-      };
-
-      mobileMenuToggle.addEventListener("click", () => {
-        setMobileMenu(!document.body.classList.contains("mobile-menu-open"));
-      });
-
-      mobileMenu.addEventListener("click", (event) => {
-        if (event.target.closest("a")) setMobileMenu(false);
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (!document.body.classList.contains("mobile-menu-open")) return;
-
-        if (event.key === "Escape") {
-          setMobileMenu(false);
-          mobileMenuToggle.focus();
-        }
-
-        if (event.key === "Tab") {
-          const focusable = [mobileMenuToggle, ...mobileMenu.querySelectorAll("a")];
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
-          if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last.focus();
-          } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first.focus();
-          }
-        }
-      });
-
-      window.addEventListener("resize", () => {
-        if (window.innerWidth > 1050) setMobileMenu(false);
-      });
-
       if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver(
           (entries) => {
@@ -2986,42 +2942,6 @@ blockquote cite {
         }
       }
 
-      document.addEventListener("click", (event) => {
-        const link = event.target.closest("a[href]");
-        if (
-          !link ||
-          link.target === "_blank" ||
-          event.defaultPrevented ||
-          event.metaKey ||
-          event.ctrlKey ||
-          event.shiftKey ||
-          event.altKey
-        ) return;
-
-        const href = link.getAttribute("href");
-        if (!href) return;
-
-        const destination = new URL(href, window.location.href);
-        if (destination.origin !== window.location.origin) return;
-        if (destination.href === window.location.href) return;
-        if (
-          destination.pathname === window.location.pathname &&
-          destination.search === window.location.search &&
-          destination.hash
-        ) return;
-        if (!destination.pathname.endsWith("/") && !destination.pathname.endsWith(".html")) return;
-
-        event.preventDefault();
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          window.location.href = link.href;
-          return;
-        }
-
-        document.documentElement.classList.add("page-leaving");
-        window.setTimeout(() => {
-          window.location.href = link.href;
-        }, 820);
-      });
     </script>
   </body>
 </html>

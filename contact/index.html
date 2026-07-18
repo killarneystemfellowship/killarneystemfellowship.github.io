@@ -552,6 +552,7 @@
     <script src="../page-visuals.js" defer></script>
   </head>
   <body class="contact-page">
+    <div class="page-transition" aria-hidden="true"><span class="page-transition__label">Ask&nbsp; · &nbsp;Explore&nbsp; · &nbsp;Share</span></div>
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
@@ -854,35 +855,6 @@
         });
       });
 
-      document.addEventListener("click", (event) => {
-        const link = event.target.closest("a[href]");
-        if (!link || link.target === "_blank" || event.defaultPrevented) return;
-
-        const href = link.getAttribute("href");
-        if (!href) return;
-
-        const destination = new URL(href, window.location.href);
-        if (destination.origin !== window.location.origin) return;
-        if (destination.href === window.location.href) return;
-        if (
-          destination.pathname === window.location.pathname &&
-          destination.search === window.location.search &&
-          destination.hash
-        ) return;
-        if (!destination.pathname.endsWith("/") && !destination.pathname.endsWith(".html")) return;
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-
-        event.preventDefault();
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          window.location.href = link.href;
-          return;
-        }
-
-        document.documentElement.classList.add("page-leaving");
-        window.setTimeout(() => {
-          window.location.href = link.href;
-        }, 820);
-      });
     </script>
   </body>
 </html>
