@@ -5,8 +5,7 @@
   gap: 10px;
 }
 
-html,
-body {
+html {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
@@ -15,7 +14,12 @@ body {
   touch-action: pan-y pinch-zoom;
 }
 
-body { position: relative; }
+body {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: visible;
+}
 
 img,
 svg { max-width: 100%; }
@@ -84,10 +88,11 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .mobile-menu {
   position: fixed;
-  inset: 76px 0 0;
+  inset: 0;
   z-index: 95;
   overflow-y: auto;
-  padding: clamp(38px, 7vw, 76px) 4vw 34px;
+  overscroll-behavior: contain;
+  padding: calc(76px + clamp(28px, 5vw, 54px)) 4vw 34px;
   background: var(--navy);
   color: var(--white);
   opacity: 0;
@@ -100,7 +105,7 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 .mobile-menu-open {
-  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .mobile-menu-open .mobile-menu {
@@ -215,8 +220,8 @@ button { -webkit-tap-highlight-color: transparent; }
   }
 
   .mobile-menu {
-    inset: 64px 0 0;
-    padding: 20px 18px max(24px, env(safe-area-inset-bottom));
+    inset: 0;
+    padding: 84px 18px max(24px, env(safe-area-inset-bottom));
   }
 
   .mobile-menu-toggle {
