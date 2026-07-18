@@ -743,6 +743,14 @@
   transform: translateX(4px);
 }
 
+/* Keep the focus accent aligned to the actual select control, including the
+   workshop selectors whose labels sit above a shorter field. */
+.contact-page .form-field:has(> select)::before {
+  top: 34px;
+  bottom: auto;
+  height: 54px;
+}
+
 .support-spectrum {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -888,23 +896,7 @@
 }
 
 .support-spectrum__glyph--mentor i:nth-child(3) {
-  top: 34px;
-  left: 37px;
-  width: 23px;
-  height: 2px;
-  background: var(--blue);
-}
-
-.support-spectrum__glyph--mentor i:nth-child(3)::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  top: -3px;
-  width: 7px;
-  height: 7px;
-  border-top: 2px solid var(--blue);
-  border-right: 2px solid var(--blue);
-  transform: rotate(45deg);
+  display: none;
 }
 
 /* A microphone with sound waves: experience is being shared aloud. */
@@ -994,10 +986,6 @@
 
   .support-spectrum__item:hover .support-spectrum__glyph--mentor::after {
     transform: translateX(-4px);
-  }
-
-  .support-spectrum__item:hover .support-spectrum__glyph--mentor i:nth-child(3) {
-    transform: translateX(6px);
   }
 
   .support-spectrum__item:hover .support-spectrum__glyph--speaker::before {
@@ -1907,6 +1895,12 @@
     left: -9px;
     width: 3px;
     z-index: 0;
+  }
+
+  .contact-page .form-field:has(> select)::before {
+    top: 32px;
+    bottom: auto;
+    height: 52px;
   }
 
   .support-spectrum { margin-top: 0; }
