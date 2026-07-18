@@ -421,6 +421,12 @@
   pointer-events: none;
 }
 
+@media (min-width: 1101px) {
+  .about-page .chapter-route {
+    bottom: clamp(190px, 15vw, 240px);
+  }
+}
+
 .chapter-route__line {
   position: absolute;
   top: 86px;
