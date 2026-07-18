@@ -1973,9 +1973,12 @@
   .contact-page .contact-hero,
   .contact-page .request-layout,
   .contact-page .partner-heading { gap: 28px !important; }
-  .contact-page .contact-hero-side { padding: 22px 18px !important; }
+  .contact-page .contact-hero {
+    margin-bottom: 30px !important;
+  }
+  .contact-page .contact-hero-side { padding: 0 !important; }
   .contact-page .contact-route { width: 100%; }
-  .contact-page .request-layout { padding-top: 54px !important; }
+  .contact-page .request-layout { padding-top: 0 !important; }
   .contact-page .form-aside { padding: 24px 20px !important; }
   .contact-page .request-form { gap: 20px !important; }
   .contact-page input,
@@ -1983,11 +1986,20 @@
   .contact-page textarea { width: 100%; min-height: 52px; }
   .support-spectrum__item {
     min-height: 0;
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 14px;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
     padding: 18px;
   }
-  .support-spectrum__glyph { width: 72px; height: 70px; }
+  .support-spectrum__glyph {
+    width: 96px;
+    height: 88px;
+    transform: scale(0.64);
+    transform-origin: left center;
+  }
+  .support-spectrum__copy { min-width: 0; }
+  .support-spectrum__copy strong { font-size: clamp(1.3rem, 6.4vw, 1.75rem); }
+  .support-spectrum__copy p { font-size: 0.92rem; line-height: 1.45; }
 
   .faq-page .faq-hero { gap: 18px !important; }
   .faq-page .faq-hero-graphic {
@@ -2020,8 +2032,8 @@
   .site-header { grid-template-columns: minmax(0, 1fr) auto auto !important; }
   .wordmark .brand-name { display: inline; font-size: 0.78rem; }
   .contact-page .contact-route { grid-template-columns: 1fr; }
-  .support-spectrum__item { grid-template-columns: 58px minmax(0, 1fr); }
-  .support-spectrum__glyph { width: 58px; height: 58px; }
+  .support-spectrum__item { grid-template-columns: 58px minmax(0, 1fr); padding: 16px 14px; }
+  .support-spectrum__glyph { transform: scale(0.58); }
 }
 
 @media (prefers-reduced-motion: reduce) {
