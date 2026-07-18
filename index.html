@@ -1944,20 +1944,23 @@ blockquote cite {
   }
 
   .hero {
-    padding-top: 56px;
-    padding-bottom: 78px;
+    min-height: auto;
+    gap: 38px;
+    padding-top: 42px;
+    padding-bottom: 54px;
   }
 
   h1 {
-    font-size: clamp(4.25rem, 22vw, 7rem);
+    font-size: clamp(3.25rem, 16vw, 5.1rem);
+    line-height: 0.92;
   }
 
   .opportunities-intro h2 {
-    font-size: clamp(4rem, 18vw, 6rem);
+    font-size: clamp(3.15rem, 15vw, 4.9rem);
   }
 
   .hero-art {
-    min-height: 330px;
+    min-height: 290px;
     border-radius: 26px;
   }
 
@@ -2043,6 +2046,7 @@ blockquote cite {
   .discipline-row {
     grid-template-columns: 42px 1fr;
     gap: 16px;
+    padding-block: 24px;
   }
 
   .discipline-row p {
@@ -2059,7 +2063,7 @@ blockquote cite {
   }
 
   .stat-grid > div {
-    min-height: 220px;
+    min-height: 170px;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
@@ -2069,7 +2073,7 @@ blockquote cite {
   }
 
   .route-card {
-    min-height: 460px;
+    min-height: 360px;
   }
 
   .workshop-meta {
@@ -2132,6 +2136,18 @@ blockquote cite {
   .footer-meta {
     flex-direction: column;
   }
+
+  .section-pad { padding-top: 72px; padding-bottom: 72px; }
+  .chapter, .impact, .workshops, .opportunities, .support { min-height: 0; }
+  .section-intro h2,
+  .impact-heading h2,
+  .support-heading h2 {
+    font-size: clamp(3rem, 15vw, 4.7rem);
+    line-height: 0.94;
+  }
+  .workshop-grid, .route-grid, .support-paths { gap: 18px; }
+  .workshop-card, .support-card { min-height: 0; }
+  .support-card { padding: 26px 22px; }
 }
 
 @media (max-width: 420px) {

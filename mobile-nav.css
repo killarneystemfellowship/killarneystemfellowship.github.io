@@ -166,9 +166,20 @@
 }
 
 @media (max-width: 720px) {
+  .site-header {
+    min-height: 64px !important;
+    padding-inline: 16px !important;
+    gap: 10px !important;
+  }
+
+  .brand-mark {
+    width: 31px;
+    height: 31px;
+  }
+
   .mobile-menu {
-    inset: 68px 0 0;
-    padding: 28px 20px 26px;
+    inset: 64px 0 0;
+    padding: 20px 18px max(24px, env(safe-area-inset-bottom));
   }
 
   .mobile-menu-toggle {
@@ -194,9 +205,12 @@
 
   .mobile-menu nav a {
     grid-template-columns: 34px 1fr auto;
-    min-height: 72px;
-    font-size: clamp(1.85rem, 9vw, 3rem);
+    min-height: 64px;
+    font-size: clamp(1.65rem, 7.8vw, 2.45rem);
+    line-height: 1;
   }
+
+  .mobile-menu-meta { margin-top: 24px; }
 }
 
 @media (max-width: 420px) {
