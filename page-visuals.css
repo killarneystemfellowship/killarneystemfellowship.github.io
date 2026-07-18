@@ -1984,17 +1984,26 @@
   .request-kit { grid-template-columns: auto 1fr auto 1fr auto; }
   .request-kit-card { min-width: 58px; padding: 8px; font-size: 0.54rem; }
 
-  .thanks-status { display: none; }
+  .thanks-status {
+    display: block;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.48rem;
+    letter-spacing: 0.04em;
+  }
+  .thanks-status--one { top: 14%; left: 3%; }
+  .thanks-status--two { top: 12%; right: 1%; }
+  .thanks-status--three { right: 4%; bottom: 11%; }
   .thanks-art__core { width: 124px; height: 124px; }
   .thanks-art__label { font-size: 0.5rem; }
-  .thanks-particle--1 { --burst-x: -105px; --burst-y: -52px; }
-  .thanks-particle--2 { --burst-x: -52px; --burst-y: -105px; }
-  .thanks-particle--3 { --burst-x: 58px; --burst-y: -100px; }
-  .thanks-particle--4 { --burst-x: 110px; --burst-y: -36px; }
-  .thanks-particle--5 { --burst-x: 104px; --burst-y: 58px; }
-  .thanks-particle--6 { --burst-x: 40px; --burst-y: 108px; }
-  .thanks-particle--7 { --burst-x: -62px; --burst-y: 100px; }
-  .thanks-particle--8 { --burst-x: -112px; --burst-y: 38px; }
+  .thanks-particle--1 { --burst-x: -66px; --burst-y: -32px; }
+  .thanks-particle--2 { --burst-x: -32px; --burst-y: -68px; }
+  .thanks-particle--3 { --burst-x: 36px; --burst-y: -66px; }
+  .thanks-particle--4 { --burst-x: 70px; --burst-y: -24px; }
+  .thanks-particle--5 { --burst-x: 66px; --burst-y: 36px; }
+  .thanks-particle--6 { --burst-x: 28px; --burst-y: 70px; }
+  .thanks-particle--7 { --burst-x: -40px; --burst-y: 64px; }
+  .thanks-particle--8 { --burst-x: -70px; --burst-y: 26px; }
 }
 
 @media (max-width: 420px) {
