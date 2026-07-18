@@ -2066,7 +2066,11 @@
   .support-spectrum__copy strong { font-size: clamp(1.3rem, 6.4vw, 1.75rem); }
   .support-spectrum__copy p { font-size: 0.92rem; line-height: 1.45; }
 
-  .faq-page .faq-hero { gap: 18px !important; }
+  .faq-page .faq-hero {
+    gap: 18px !important;
+    margin-bottom: 24px !important;
+    padding-bottom: 12px !important;
+  }
   .faq-page .faq-hero-graphic {
     width: min(176px, 52vw) !important;
     margin: 0 auto !important;
