@@ -1897,8 +1897,11 @@
   }
 
   .contact-page .form-field::before {
-    left: 7px;
-    z-index: 1;
+    top: 32px;
+    bottom: 4px;
+    left: -9px;
+    width: 3px;
+    z-index: 0;
   }
 
   .support-spectrum { margin-top: 0; }
@@ -2083,9 +2086,22 @@
   .contact-page .request-layout { padding-top: 0 !important; }
   .contact-page .form-aside { padding: 24px 20px !important; }
   .contact-page .request-form { gap: 20px !important; }
-  .contact-page input,
+  .contact-page input:not([type="checkbox"]),
   .contact-page select,
   .contact-page textarea { width: 100%; min-height: 52px; }
+  .contact-page .consent {
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+  .contact-page .consent input[type="checkbox"] {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    min-height: 20px;
+    margin: 2px 0 0;
+    padding: 0;
+  }
   .support-spectrum__item {
     min-height: 0;
     grid-template-columns: 1fr;
