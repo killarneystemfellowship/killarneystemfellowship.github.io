@@ -2119,6 +2119,15 @@ blockquote cite {
     grid-template-columns: 42px 1fr;
     gap: 16px;
     padding-block: 24px;
+    transform: none;
+    will-change: auto;
+  }
+
+  .reveal-ready .discipline-row[data-reveal],
+  .reveal-ready .discipline-row[data-reveal].is-visible {
+    transform: none;
+    transition: opacity 440ms ease;
+    transition-delay: 0ms;
   }
 
   .discipline-row p {
