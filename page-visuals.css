@@ -582,6 +582,14 @@
   min-height: 54px;
 }
 
+/* Safari can ignore a select's minimum height and render the native control
+   shorter. An explicit height keeps both contact dropdowns consistent. */
+.contact-page .form-field select {
+  height: 54px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .contact-route::before {
   content: "";
   position: absolute;
@@ -746,8 +754,8 @@
 /* Keep the focus accent aligned to the actual select control, including the
    workshop selectors whose labels sit above a shorter field. */
 .contact-page .form-field:has(> select)::before {
-  top: 34px;
-  bottom: auto;
+  top: auto;
+  bottom: 0;
   height: 54px;
 }
 
@@ -1898,8 +1906,8 @@
   }
 
   .contact-page .form-field:has(> select)::before {
-    top: 32px;
-    bottom: auto;
+    top: auto;
+    bottom: 0;
     height: 52px;
   }
 
@@ -2109,6 +2117,7 @@
   .contact-page input:not([type="checkbox"]),
   .contact-page select,
   .contact-page textarea { width: 100%; min-height: 52px; }
+  .contact-page .form-field select { height: 52px; }
   .contact-page .consent {
     grid-template-columns: 20px minmax(0, 1fr);
     gap: 12px;
