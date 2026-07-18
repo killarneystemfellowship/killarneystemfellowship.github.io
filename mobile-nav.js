@@ -2,6 +2,12 @@
   const root = document.documentElement;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const transitionLayer = document.createElement("div");
+  transitionLayer.className = "page-transition";
+  transitionLayer.setAttribute("aria-hidden", "true");
+  transitionLayer.innerHTML = '<span class="page-transition__label">Ask&nbsp; · &nbsp;Explore&nbsp; · &nbsp;Share</span>';
+  document.body.append(transitionLayer);
+
   const revealPage = () => {
     root.classList.remove("page-leaving");
     if (reducedMotion) {
@@ -13,6 +19,43 @@
 
   revealPage();
   window.addEventListener("pageshow", revealPage);
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (
+      !link ||
+      link.target === "_blank" ||
+      event.defaultPrevented ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) return;
+
+    const href = link.getAttribute("href");
+    if (!href) return;
+
+    const destination = new URL(href, window.location.href);
+    if (destination.origin !== window.location.origin) return;
+    if (destination.href === window.location.href) return;
+    if (
+      destination.pathname === window.location.pathname &&
+      destination.search === window.location.search &&
+      destination.hash
+    ) return;
+    if (!destination.pathname.endsWith("/") && !destination.pathname.endsWith(".html")) return;
+
+    event.preventDefault();
+    if (reducedMotion) {
+      window.location.href = link.href;
+      return;
+    }
+
+    root.classList.add("page-leaving");
+    window.setTimeout(() => {
+      window.location.href = link.href;
+    }, 820);
+  });
 
   const toggle = document.querySelector(".mobile-menu-toggle");
   const menu = document.querySelector(".mobile-menu");
