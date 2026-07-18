@@ -5,6 +5,13 @@
   gap: 10px;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 .brand-mark {
   width: 34px;
   height: 34px;
@@ -118,6 +125,11 @@
   color: var(--teal);
 }
 
+.mobile-menu nav a:focus-visible {
+  outline: 0;
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
 .mobile-menu-index {
   color: var(--teal);
   font-family: var(--font-sans), Arial, sans-serif;
@@ -188,19 +200,22 @@
   }
 
   .header-cta {
-    width: 42px;
+    width: auto;
     height: 42px;
     justify-content: center;
-    background: transparent;
-    color: var(--navy);
+    padding: 0 13px;
+    background: var(--navy);
+    color: var(--white);
     border: 1px solid var(--navy);
-    border-radius: 50%;
-    font-size: 0;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
   }
 
   .header-cta span {
     display: inline !important;
-    font-size: 1rem;
+    font-size: 0.82rem;
   }
 
   .mobile-menu nav a {
@@ -214,9 +229,10 @@
 }
 
 @media (max-width: 420px) {
-  .wordmark .brand-name {
-    display: none;
-  }
+  .wordmark { gap: 7px; }
+  .wordmark .brand-name { display: inline; font-size: 0.72rem; line-height: 1.05; }
+  .header-cta { height: 38px; padding-inline: 11px; }
+  .mobile-menu-toggle { width: 38px; height: 38px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

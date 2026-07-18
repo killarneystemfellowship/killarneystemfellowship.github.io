@@ -2017,8 +2017,7 @@
 }
 
 @media (max-width: 420px) {
-  .header-cta { display: none !important; }
-  .site-header { grid-template-columns: minmax(0, 1fr) auto !important; }
+  .site-header { grid-template-columns: minmax(0, 1fr) auto auto !important; }
   .wordmark .brand-name { display: inline; font-size: 0.78rem; }
   .contact-page .contact-route { grid-template-columns: 1fr; }
   .support-spectrum__item { grid-template-columns: 58px minmax(0, 1fr); }
