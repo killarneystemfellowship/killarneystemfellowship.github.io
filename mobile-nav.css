@@ -108,6 +108,20 @@ button { -webkit-tap-highlight-color: transparent; }
   overscroll-behavior: none;
 }
 
+.mobile-menu-open .site-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 110;
+  width: 100%;
+  background: var(--paper);
+}
+
+.mobile-menu-open .mobile-menu-toggle {
+  z-index: 112;
+}
+
 .mobile-menu-open .mobile-menu {
   opacity: 1;
   visibility: visible;

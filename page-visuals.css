@@ -1995,42 +1995,17 @@
   .contact-page textarea { width: 100%; min-height: 52px; }
   .support-spectrum__item {
     min-height: 0;
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 12px;
-    align-items: center;
-    padding: 18px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 88px auto;
+    gap: 16px;
+    align-items: start;
+    padding: 20px;
   }
   .support-spectrum__glyph {
-    width: 54px;
-    height: 54px;
-    display: grid;
-    place-items: center;
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(9, 81, 105, 0.3);
-    border-radius: 16px;
-    color: var(--blue);
-    font-family: var(--font-sans), Arial, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 800;
+    width: 96px;
+    height: 88px;
     transform: none;
   }
-  .support-spectrum__glyph i,
-  .support-spectrum__glyph::after { display: none !important; }
-  .support-spectrum__glyph::before {
-    position: static !important;
-    inset: auto !important;
-    width: auto !important;
-    height: auto !important;
-    background: none !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-  .support-spectrum__glyph--sponsor::before { content: "$"; color: var(--orange); }
-  .support-spectrum__glyph--mentor::before { content: "↔"; color: var(--teal); }
-  .support-spectrum__glyph--speaker::before { content: "“”"; color: var(--orange); }
-  .support-spectrum__glyph--resources::before { content: "+"; color: var(--teal); }
   .support-spectrum__copy { min-width: 0; }
   .support-spectrum__copy strong { font-size: clamp(1.3rem, 6.4vw, 1.75rem); }
   .support-spectrum__copy p { font-size: 0.92rem; line-height: 1.45; }
@@ -2066,7 +2041,7 @@
   .site-header { grid-template-columns: minmax(0, 1fr) auto auto !important; }
   .wordmark .brand-name { display: inline; font-size: 0.78rem; }
   .contact-page .contact-route { grid-template-columns: 1fr; }
-  .support-spectrum__item { grid-template-columns: 54px minmax(0, 1fr); padding: 16px 14px; }
+  .support-spectrum__item { grid-template-columns: 1fr; padding: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
