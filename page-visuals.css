@@ -162,16 +162,33 @@
   width: max-content;
   display: flex;
   align-items: center;
-  animation: skills-ribbon-move 26s linear infinite;
+  animation: skills-ribbon-move 24s linear infinite;
 }
 
-.skills-ribbon__track span {
+.skills-ribbon__group {
   flex: none;
-  padding: 17px 2.4rem 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.skills-ribbon__group span {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 17px 2rem 15px 0;
   font-size: clamp(0.74rem, 1.05vw, 1rem);
   font-weight: 800;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+.skills-ribbon__group span::after {
+  content: "•";
+  flex: none;
+  color: var(--navy);
+  font-size: 0.72em;
 }
 
 @keyframes skills-ribbon-move {
@@ -196,6 +213,13 @@
 .pillar-card.is-visible .pillar-glyph {
   opacity: 0.72;
   transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (min-width: 721px) {
+  .about-page .pillar-card h3,
+  .about-page .pillar-card p {
+    max-width: calc(100% - clamp(170px, 14vw, 220px));
+  }
 }
 
 .pillar-glyph::before,
@@ -1767,13 +1791,19 @@
 
   .learning-loop__core { width: 58px; height: 58px; }
 
-  .skills-ribbon__track span { padding-block: 13px 11px; font-size: 0.67rem; }
+  .skills-ribbon__group span {
+    gap: 1.35rem;
+    padding: 13px 1.35rem 11px 0;
+    font-size: 0.67rem;
+  }
 
   .pillar-card .pillar-glyph {
     top: 24px;
     right: 22px;
     width: 92px;
   }
+  .about-page .pillar-card h3,
+  .about-page .pillar-card p { max-width: 100%; }
 
   .pillar-card .pillar-number { margin-bottom: 74px; }
 
