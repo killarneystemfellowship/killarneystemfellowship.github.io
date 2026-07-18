@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RFMSVZEBBW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFMSVZEBBW");
+    </script>
+    <script>
+      if (/^https?:$/.test(window.location.protocol) && window.location.pathname.endsWith("/index.html")) {
+        const cleanPath = window.location.pathname.slice(0, -10) || "/";
+        window.history.replaceState(null, "", `${cleanPath}${window.location.search}${window.location.hash}`);
+      }
+    </script>
+    <meta name="description" content="See Killarney STEM Fellowship students bringing hands-on science and engineering workshops into Vancouver classrooms." />
+    <title>Workshop Gallery — Killarney STEM Fellowship</title>
+    <link rel="canonical" href="https://killarneystemfellowship.github.io/gallery/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Killarney STEM Fellowship" />
+    <meta property="og:title" content="Workshop Gallery — Killarney STEM Fellowship" />
+    <meta property="og:description" content="Hands-on science, engineering, and student-led learning in Vancouver classrooms." />
+    <meta property="og:url" content="https://killarneystemfellowship.github.io/gallery/" />
+    <meta property="og:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Workshop Gallery — Killarney STEM Fellowship" />
+    <meta name="twitter:description" content="A closer look at our student-led classroom workshops." />
+    <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
+    <link rel="icon" type="image/jpeg" href="../STEMbird.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --font-sans: "DM Sans";
+        --font-serif: "Fraunces";
+        --navy: #072235;
+        --blue: #095169;
+        --teal: #13c1ac;
+        --orange: #ee8728;
+        --ink: #071d2a;
+        --paper: #f3f0ea;
+        --white: #ffffff;
+        --teal-wash: #dff6f2;
+        --line: rgba(7, 34, 53, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-sans), Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      body:has(dialog[open]) { overflow: hidden; }
+      a { color: inherit; text-decoration: none; }
+      button { color: inherit; font: inherit; }
+      a:focus-visible,
+      button:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 18px;
+        z-index: 1200;
+        padding: 10px 14px;
+        background: var(--white);
+        transform: translateY(-150%);
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        min-height: 76px;
+        display: grid;
+        grid-template-columns: minmax(250px, 1fr) auto minmax(250px, 1fr);
+        align-items: center;
+        gap: 28px;
+        padding: 0 4vw;
+        background: rgba(243, 240, 234, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+      }
+      .wordmark,
+      .footer-mark {
+        font-family: var(--font-serif), Georgia, serif;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+      }
+      .wordmark em,
+      .footer-mark em { color: var(--teal); font-style: normal; }
+      .site-header > nav {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .site-header > nav a,
+      .header-cta { transition: color 180ms ease; }
+      .site-header > nav a:hover,
+      .header-cta:hover { color: var(--blue); }
+      .header-cta {
+        justify-self: end;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .gallery-main { overflow: hidden; }
+      .gallery-hero {
+        position: relative;
+        min-height: min(720px, calc(100svh - 76px));
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.56fr);
+        gap: clamp(50px, 9vw, 150px);
+        align-items: center;
+        padding: clamp(72px, 9vw, 140px) 4vw;
+        background:
+          linear-gradient(rgba(9, 81, 105, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(9, 81, 105, 0.07) 1px, transparent 1px),
+          radial-gradient(circle at 76% 42%, rgba(19, 193, 172, 0.22), transparent 28%),
+          var(--teal-wash);
+        background-size: 54px 54px, 54px 54px, auto, auto;
+      }
+      .gallery-hero::after {
+        content: "";
+        position: absolute;
+        right: 7vw;
+        bottom: 8%;
+        width: clamp(150px, 18vw, 310px);
+        aspect-ratio: 1;
+        border: 1px dashed rgba(9, 81, 105, 0.32);
+        border-radius: 50%;
+        box-shadow: 0 0 0 42px rgba(19, 193, 172, 0.06), 0 0 0 84px rgba(238, 135, 40, 0.035);
+        pointer-events: none;
+      }
+      .eyebrow {
+        margin: 0;
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      h1,
+      h2,
+      p { margin-top: 0; }
+      h1,
+      h2 { font-family: var(--font-serif), Georgia, serif; }
+      h1 {
+        max-width: 10ch;
+        margin: 24px 0 0;
+        font-size: clamp(5rem, 9.8vw, 11rem);
+        font-weight: 600;
+        line-height: 0.84;
+        letter-spacing: -0.06em;
+      }
+      h1 em { color: var(--teal); font-style: normal; }
+      .gallery-intro {
+        position: relative;
+        z-index: 1;
+        max-width: 39ch;
+        margin: 0;
+        padding-left: 26px;
+        border-left: 3px solid var(--orange);
+        font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+        line-height: 1.75;
+      }
+
+      .gallery-section { padding: clamp(84px, 10vw, 150px) 4vw; }
+      .gallery-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+        gap: clamp(40px, 8vw, 130px);
+        align-items: end;
+        margin-bottom: clamp(48px, 7vw, 100px);
+      }
+      .gallery-heading h2 {
+        max-width: 11ch;
+        margin: 16px 0 0;
+        font-size: clamp(3.2rem, 6.6vw, 7.2rem);
+        font-weight: 600;
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+      }
+      .gallery-heading > p {
+        margin-bottom: 0;
+        color: rgba(7, 29, 42, 0.68);
+        font-size: 1rem;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: clamp(22px, 3vw, 46px);
+        grid-auto-flow: dense;
+      }
+      .gallery-card {
+        position: relative;
+        min-width: 0;
+        margin: 0;
+      }
+      .gallery-card--wide { grid-column: span 7; }
+      .gallery-card--tall { grid-column: span 5; }
+      .gallery-card--third { grid-column: span 4; }
+      .gallery-card--half { grid-column: span 6; }
+      .gallery-card--offset { margin-top: clamp(54px, 6vw, 100px); }
+      .gallery-image-button {
+        position: relative;
+        width: 100%;
+        display: block;
+        overflow: hidden;
+        padding: 0;
+        background: var(--navy);
+        border: 0;
+        border-radius: 28px;
+        cursor: zoom-in;
+      }
+      .gallery-card--wide .gallery-image-button,
+      .gallery-card--half .gallery-image-button { aspect-ratio: 4 / 3; }
+      .gallery-card--tall .gallery-image-button { aspect-ratio: 4 / 5; }
+      .gallery-card--third .gallery-image-button { aspect-ratio: 3 / 4; }
+      .gallery-image-button::after {
+        content: "View";
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        padding: 9px 14px;
+        background: var(--paper);
+        border-radius: 999px;
+        color: var(--navy);
+        font-size: 0.66rem;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transform: translateY(8px);
+        opacity: 0;
+        transition: opacity 220ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .gallery-image-button img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 300ms ease;
+      }
+      .gallery-card[data-framing="top"] img { object-position: center 24%; }
+      .gallery-card[data-framing="lower"] img { object-position: center 62%; }
+      .gallery-image-button:hover img,
+      .gallery-image-button:focus-visible img { transform: scale(1.025); filter: saturate(1.06); }
+      .gallery-image-button:hover::after,
+      .gallery-image-button:focus-visible::after { transform: translateY(0); opacity: 1; }
+      .gallery-caption {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 20px;
+        padding-top: 22px;
+      }
+      .gallery-number {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--teal);
+        border-radius: 50%;
+        color: var(--blue);
+        font-size: 0.64rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .gallery-caption strong {
+        display: block;
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(1.65rem, 2.5vw, 2.8rem);
+        line-height: 1.05;
+      }
+      .gallery-caption p {
+        max-width: 48ch;
+        margin: 10px 0 0;
+        color: rgba(7, 29, 42, 0.66);
+      }
+
+      .gallery-note {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 32px;
+        align-items: center;
+        margin: clamp(90px, 12vw, 180px) 0 0;
+        padding: clamp(30px, 4vw, 58px);
+        background: var(--navy);
+        border-radius: 28px;
+        color: var(--white);
+      }
+      .gallery-note strong {
+        display: block;
+        margin-bottom: 8px;
+        font-family: var(--font-serif), Georgia, serif;
+        font-size: clamp(2rem, 3.5vw, 4rem);
+        line-height: 1;
+      }
+      .gallery-note p { max-width: 62ch; margin-bottom: 0; color: rgba(255, 255, 255, 0.7); }
+      .button {
+        min-width: 230px;
+        display: inline-flex;
+        justify-content: space-between;
+        gap: 30px;
+        padding: 18px 22px;
+        background: var(--orange);
+        border-radius: 999px;
+        color: var(--navy);
+        font-weight: 700;
+        transition: transform 220ms ease, background 180ms ease;
+      }
+      .button:hover { background: var(--teal); transform: translateY(-3px); }
+
+      .site-footer {
+        padding: clamp(70px, 9vw, 130px) 4vw 42px;
+        background: var(--navy);
+        color: var(--white);
+      }
+      .footer-mark { margin: 0; font-size: clamp(3.4rem, 8vw, 9rem); line-height: 0.92; }
+      .site-footer > p:nth-child(2) { color: rgba(255, 255, 255, 0.64); }
+      .footer-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 22px;
+        margin-top: 70px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.24);
+        color: rgba(255, 255, 255, 0.64);
+        font-size: 0.78rem;
+      }
+      .footer-instagram { display: inline-flex; align-items: center; gap: 8px; }
+      .footer-instagram svg { width: 18px; height: 18px; }
+
+      dialog {
+        width: min(1160px, calc(100vw - 40px));
+        max-height: calc(100svh - 40px);
+        overflow: hidden;
+        padding: 0;
+        background: var(--navy);
+        border: 0;
+        border-radius: 24px;
+        color: var(--white);
+      }
+      dialog::backdrop { background: rgba(7, 29, 42, 0.82); backdrop-filter: blur(8px); }
+      .lightbox-frame { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 0.3fr); }
+      .lightbox-frame img { width: 100%; height: min(82svh, 800px); display: block; object-fit: contain; background: #041824; }
+      .lightbox-copy { display: flex; flex-direction: column; justify-content: flex-end; padding: 34px; }
+      .lightbox-copy strong { font-family: var(--font-serif), Georgia, serif; font-size: 2rem; line-height: 1.05; }
+      .lightbox-copy p { margin: 14px 0 0; color: rgba(255, 255, 255, 0.68); }
+      .lightbox-close {
+        position: absolute;
+        z-index: 2;
+        top: 18px;
+        right: 18px;
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        background: var(--paper);
+        border: 0;
+        border-radius: 50%;
+        color: var(--navy);
+        cursor: pointer;
+        font-size: 1.35rem;
+      }
+
+      @media (max-width: 850px) {
+        .gallery-hero { grid-template-columns: 1fr; min-height: 0; }
+        .gallery-hero::after { right: -70px; bottom: -20px; opacity: 0.5; }
+        .gallery-intro { max-width: 50ch; }
+        .gallery-heading { grid-template-columns: 1fr; }
+        .gallery-card--wide,
+        .gallery-card--tall,
+        .gallery-card--third,
+        .gallery-card--half { grid-column: span 6; margin-top: 0; }
+        .gallery-note { grid-template-columns: 1fr; }
+        .button { width: 100%; }
+      }
+
+      @media (max-width: 620px) {
+        .gallery-hero { padding: 62px 18px 72px; gap: 42px; }
+        h1 { font-size: clamp(4.2rem, 21vw, 6.8rem); }
+        .gallery-section { padding: 74px 18px 90px; }
+        .gallery-heading { gap: 24px; margin-bottom: 42px; }
+        .gallery-card--wide,
+        .gallery-card--tall,
+        .gallery-card--third,
+        .gallery-card--half { grid-column: 1 / -1; }
+        .gallery-card--wide .gallery-image-button,
+        .gallery-card--half .gallery-image-button { aspect-ratio: 4 / 3; }
+        .gallery-card--tall .gallery-image-button,
+        .gallery-card--third .gallery-image-button { aspect-ratio: 4 / 5; }
+        .gallery-image-button,
+        .gallery-note { border-radius: 20px; }
+        .gallery-image-button::after { opacity: 1; transform: none; }
+        .gallery-caption { gap: 14px; }
+        .gallery-note { margin-top: 84px; padding: 26px 20px; }
+        .footer-meta { flex-direction: column; }
+        .lightbox-frame { grid-template-columns: 1fr; }
+        .lightbox-frame img { height: min(64svh, 620px); }
+        .lightbox-copy { padding: 22px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+    <link rel="stylesheet" href="../mobile-nav.css" />
+    <script src="../mobile-nav.js" defer></script>
+  </head>
+  <body class="gallery-page">
+    <div class="page-transition" aria-hidden="true"><span class="page-transition__label">Ask&nbsp; · &nbsp;Explore&nbsp; · &nbsp;Share</span></div>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Killarney STEM Fellowship home">
+        <img class="brand-mark" src="../STEMbird.jpg" width="1181" height="1181" alt="" />
+        <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="/about/">About</a>
+        <a href="/#chapter">Chapter</a>
+        <a href="/#impact">Impact</a>
+        <a href="/#workshops">Workshops</a>
+        <a href="/#opportunities">Opportunities</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <a class="header-cta" href="/"><span class="header-cta-label">Home</span> <span aria-hidden="true">→</span></a>
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
+        <span class="mobile-menu-icon" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <aside class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+      <nav aria-label="Mobile navigation">
+        <a href="/about/"><span class="mobile-menu-index">01</span><span>About</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#chapter"><span class="mobile-menu-index">02</span><span>Chapter</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#impact"><span class="mobile-menu-index">03</span><span>Impact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#workshops"><span class="mobile-menu-index">04</span><span>Workshops</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#opportunities"><span class="mobile-menu-index">05</span><span>Opportunities</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/#support"><span class="mobile-menu-index">06</span><span>Support</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+        <a href="/contact/"><span class="mobile-menu-index">07</span><span>Contact</span><span class="mobile-menu-arrow" aria-hidden="true">→</span></a>
+      </nav>
+      <div class="mobile-menu-meta">
+        <a href="mailto:killarney@stemfellowship.org">killarney@stemfellowship.org</a>
+        <a href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer">Instagram ↗︎</a>
+      </div>
+    </aside>
+
+    <main class="gallery-main" id="main">
+      <section class="gallery-hero" aria-labelledby="gallery-title">
+        <div>
+          <p class="eyebrow">Workshop gallery</p>
+          <h1 id="gallery-title">Learning, <em>in motion.</em></h1>
+        </div>
+        <p class="gallery-intro">A closer look at Killarney students bringing experiments, teamwork, and real scientific thinking into Vancouver classrooms.</p>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="moments-title">
+        <div class="gallery-heading">
+          <div>
+            <p class="eyebrow">Inside the classroom</p>
+            <h2 id="moments-title">Workshop moments.</h2>
+          </div>
+          <p>This gallery will grow as we visit more classrooms. Open any photo for a closer look.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="gallery-card gallery-card--wide">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/strawberry-01.jpg" data-gallery-title="Setting up the experiment" data-gallery-caption="A student presenter walks the class through the extraction steps before the hands-on work begins.">
+              <img src="photos/strawberry-01.jpg" width="2400" height="1800" loading="eager" decoding="async" alt="A student presenter explaining the strawberry DNA extraction steps beside a projected classroom slide" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">01</span>
+              <div><strong>Setting up the experiment</strong><p>A student presenter walks the class through the extraction steps before the hands-on work begins.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--tall gallery-card--offset" data-framing="top">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/strawberry-04.jpg" data-gallery-title="Finding the DNA" data-gallery-caption="Students use safety goggles and careful observation to lift the visible strands from their samples.">
+              <img src="photos/strawberry-04.jpg" width="1800" height="2400" loading="lazy" decoding="async" alt="Elementary students in safety goggles observing extracted strawberry DNA above a clear cup" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">02</span>
+              <div><strong>Finding the DNA</strong><p>Students use safety goggles and careful observation to lift the visible strands from their samples.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--third">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/strawberry-03.jpg" data-gallery-title="Preparing the materials" data-gallery-caption="Presenters measure the solutions and organize each station before students begin.">
+              <img src="photos/strawberry-03.jpg" width="2400" height="1800" loading="lazy" decoding="async" alt="Student presenters measuring workshop materials at the front of a classroom" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">03</span>
+              <div><strong>Preparing the materials</strong><p>Presenters measure the solutions and organize each station before students begin.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--third" data-framing="top">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/bridge-03.jpg" data-gallery-title="From sketch to structure" data-gallery-caption="Teams arrange craft sticks into repeating shapes before joining the pieces.">
+              <img src="photos/bridge-03.jpg" width="1536" height="2048" loading="lazy" decoding="async" alt="Elementary students arranging craft sticks and bridge pieces around a classroom table" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">04</span>
+              <div><strong>From sketch to structure</strong><p>Teams arrange craft sticks into repeating shapes before joining the pieces.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--third" data-framing="top">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/bridge-01.jpg" data-gallery-title="Building the bridge" data-gallery-caption="Students turn their designs into three-dimensional structures, one connection at a time.">
+              <img src="photos/bridge-01.jpg" width="1242" height="2208" loading="lazy" decoding="async" alt="An elementary student carefully joining a wooden craft-stick bridge with a glue gun" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">05</span>
+              <div><strong>Building the bridge</strong><p>Students turn their designs into three-dimensional structures, one connection at a time.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--half" data-framing="lower">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/bridge-02.jpg" data-gallery-title="Testing the design" data-gallery-caption="A finished bridge supports a growing stack of textbooks while the team watches closely.">
+              <img src="photos/bridge-02.jpg" width="1536" height="2048" loading="lazy" decoding="async" alt="A craft-stick bridge supporting a tall stack of textbooks during a classroom load test" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">06</span>
+              <div><strong>Testing the design</strong><p>A finished bridge supports a growing stack of textbooks while the team watches closely.</p></div>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card gallery-card--half gallery-card--offset" data-framing="lower">
+            <button class="gallery-image-button" type="button" data-gallery-image="photos/bridge-04.jpg" data-gallery-title="A full-scale load test" data-gallery-caption="The final test makes forces, stability, and structural strength impossible to miss.">
+              <img src="photos/bridge-04.jpg" width="1536" height="2048" loading="lazy" decoding="async" alt="An elementary student standing on a completed craft-stick bridge during a strength test" />
+            </button>
+            <figcaption class="gallery-caption">
+              <span class="gallery-number" aria-hidden="true">07</span>
+              <div><strong>A full-scale load test</strong><p>The final test makes forces, stability, and structural strength impossible to miss.</p></div>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="gallery-note">
+          <div><strong>Bring the next workshop to your class.</strong><p>Tell us your grade, preferred activity, and a few possible dates. We bring the materials and trained presenters.</p></div>
+          <a class="button" href="/contact/">Request a workshop <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-mark">Killarney <em>STEM</em> Fellowship</p>
+      <p>Expanding minds. Educating leaders. Empowering futures.</p>
+      <div class="footer-meta">
+        <span>© 2026 · Killarney Secondary School · Vancouver, BC</span>
+        <a class="footer-instagram" href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer" aria-label="Killarney STEM Fellowship on Instagram">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
+          Instagram <span aria-hidden="true">↗︎</span>
+        </a>
+        <a href="/#workshops">Return to workshops <span aria-hidden="true">→</span></a>
+      </div>
+    </footer>
+
+    <dialog id="gallery-lightbox" aria-labelledby="lightbox-title">
+      <div class="lightbox-frame">
+        <button class="lightbox-close" type="button" aria-label="Close photo">×</button>
+        <img id="lightbox-image" src="" alt="" />
+        <div class="lightbox-copy"><strong id="lightbox-title"></strong><p id="lightbox-caption"></p></div>
+      </div>
+    </dialog>
+
+    <script>
+      const lightbox = document.querySelector("#gallery-lightbox");
+      const lightboxImage = document.querySelector("#lightbox-image");
+      const lightboxTitle = document.querySelector("#lightbox-title");
+      const lightboxCaption = document.querySelector("#lightbox-caption");
+
+      document.querySelectorAll(".gallery-image-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const sourceImage = button.querySelector("img");
+          lightboxImage.src = button.dataset.galleryImage;
+          lightboxImage.alt = sourceImage.alt;
+          lightboxTitle.textContent = button.dataset.galleryTitle;
+          lightboxCaption.textContent = button.dataset.galleryCaption;
+          lightbox.showModal();
+        });
+      });
+
+      document.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) lightbox.close();
+      });
+    </script>
+  </body>
+</html>
