@@ -156,8 +156,6 @@
   background: var(--orange);
   color: var(--navy);
   border-block: 1px solid rgba(7, 34, 53, 0.28);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
 }
 
 .skills-ribbon__track {
@@ -1817,10 +1815,6 @@
     gap: 1.35rem;
     padding: 13px 1.35rem 11px 0;
     font-size: 0.67rem;
-  }
-  .skills-ribbon {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
   }
 
   .pillar-card .pillar-glyph {
