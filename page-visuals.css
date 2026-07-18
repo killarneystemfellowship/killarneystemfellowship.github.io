@@ -1968,6 +1968,10 @@
   }
 
   .next-steps li strong { max-width: none; }
+
+  .next-steps li.is-complete > span {
+    box-shadow: none;
+  }
 }
 
 @media (max-width: 520px) {
