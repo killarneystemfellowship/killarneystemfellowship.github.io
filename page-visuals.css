@@ -1389,6 +1389,10 @@
   grid-template-rows: auto 1fr;
   place-items: stretch;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+  width: 100%;
+  max-width: 100%;
   padding: 0;
   background: var(--navy);
 }
@@ -1471,6 +1475,7 @@
   align-items: center;
   margin: 0 auto;
   padding: clamp(56px, 7vw, 110px) clamp(22px, 5vw, 80px);
+  overflow: hidden;
 }
 
 .thanks-copy {
@@ -1982,6 +1987,14 @@
   .thanks-status { display: none; }
   .thanks-art__core { width: 124px; height: 124px; }
   .thanks-art__label { font-size: 0.5rem; }
+  .thanks-particle--1 { --burst-x: -105px; --burst-y: -52px; }
+  .thanks-particle--2 { --burst-x: -52px; --burst-y: -105px; }
+  .thanks-particle--3 { --burst-x: 58px; --burst-y: -100px; }
+  .thanks-particle--4 { --burst-x: 110px; --burst-y: -36px; }
+  .thanks-particle--5 { --burst-x: 104px; --burst-y: 58px; }
+  .thanks-particle--6 { --burst-x: 40px; --burst-y: 108px; }
+  .thanks-particle--7 { --burst-x: -62px; --burst-y: 100px; }
+  .thanks-particle--8 { --burst-x: -112px; --burst-y: 38px; }
 }
 
 @media (max-width: 420px) {

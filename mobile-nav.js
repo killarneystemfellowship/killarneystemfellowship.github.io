@@ -1,4 +1,19 @@
 (() => {
+  const root = document.documentElement;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const revealPage = () => {
+    root.classList.remove("page-leaving");
+    if (reducedMotion) {
+      root.classList.add("page-ready");
+      return;
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add("page-ready")));
+  };
+
+  revealPage();
+  window.addEventListener("pageshow", revealPage);
+
   const toggle = document.querySelector(".mobile-menu-toggle");
   const menu = document.querySelector(".mobile-menu");
 

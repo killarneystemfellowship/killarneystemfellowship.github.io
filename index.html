@@ -792,7 +792,7 @@ h1 em {
 .chapter-pathway {
   position: relative;
   width: min(360px, 100%);
-  height: 190px;
+  height: 210px;
   margin-top: 52px;
   overflow: hidden;
   background:
@@ -803,7 +803,7 @@ h1 em {
 }
 
 .chapter-pathway::before {
-  content: "One chapter · five directions";
+  content: "A member's chapter journey";
   position: absolute;
   left: 20px;
   top: 17px;
@@ -813,49 +813,86 @@ h1 em {
   text-transform: uppercase;
 }
 
-.chapter-origin {
+.chapter-journey {
   position: absolute;
-  left: 36px;
-  top: 50%;
-  z-index: 2;
-  width: 18px;
-  height: 18px;
-  background: var(--orange);
-  border: 5px solid var(--white);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(238, 135, 40, 0.48);
-  transform: translateY(-50%);
+  inset: 62px 22px 22px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.chapter-branch {
-  position: absolute;
-  left: 51px;
-  top: 50%;
-  width: min(67%, 235px);
-  height: 1px;
-  background: linear-gradient(90deg, rgba(9, 81, 105, 0.24), var(--blue));
-  transform-origin: left center;
-}
-
-.chapter-branch::after {
+.chapter-journey::before,
+.chapter-journey::after {
   content: "";
   position: absolute;
-  right: -5px;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background: var(--white);
-  border: 3px solid var(--teal);
-  border-radius: 50%;
-  transform: translateY(-50%);
+  z-index: 0;
+  left: 9%;
+  right: 9%;
+  top: 48px;
+  height: 2px;
+  border-radius: 999px;
 }
 
-.chapter-branch:nth-of-type(2) { transform: rotate(-18deg); }
-.chapter-branch:nth-of-type(3) { transform: rotate(-9deg); }
-.chapter-branch:nth-of-type(4) { transform: rotate(0deg); }
-.chapter-branch:nth-of-type(5) { transform: rotate(9deg); }
-.chapter-branch:nth-of-type(6) { transform: rotate(18deg); }
-.chapter-branch:nth-of-type(even)::after { border-color: var(--orange); }
+.chapter-journey::before {
+  background: rgba(9, 81, 105, 0.18);
+}
+
+.chapter-journey::after {
+  background: linear-gradient(90deg, var(--orange), var(--teal), var(--blue));
+  transform-origin: left center;
+  animation: journey-line 5.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.journey-step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-align: center;
+}
+
+.journey-step::before {
+  content: attr(data-step);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--white);
+  border: 2px solid var(--teal);
+  border-radius: 50%;
+  color: var(--blue);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 0 6px rgba(245, 242, 235, 0.88);
+  animation: journey-node 5.5s ease-in-out infinite;
+  animation-delay: calc(var(--step-index) * 620ms);
+}
+
+.journey-step:nth-child(even)::before { border-color: var(--orange); }
+
+.journey-step strong {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@keyframes journey-line {
+  0%, 8% { transform: scaleX(0); opacity: 0.45; }
+  64%, 88% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes journey-node {
+  0%, 14%, 82%, 100% { transform: translateY(0); background: var(--white); }
+  24%, 42% { transform: translateY(-6px); background: #d8f4ef; }
+}
 
 .discipline-list {
   border-top: 1px solid var(--line);
@@ -947,12 +984,32 @@ h1 em {
 }
 
 .stat-grid > div {
+  position: relative;
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-between;
   min-height: 270px;
   padding: 30px;
   border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.stat-grid > div::after {
+  content: "";
+  position: absolute;
+  right: 30px;
+  bottom: 22px;
+  left: 30px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--teal));
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--stat-index, 0) * 130ms);
+}
+
+.stat-grid.is-counting > div::after {
+  transform: scaleX(1);
 }
 
 .stat-grid > div:last-child {
@@ -1187,11 +1244,18 @@ h1 em {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(1.075);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1), filter 500ms ease;
 }
 
-.workshop-card:hover .workshop-photo img {
-  transform: scale(1.045);
+.workshop-photo.is-photo-visible img {
+  transform: scale(1);
+}
+
+.workshop-card:hover .workshop-photo img,
+.workshop-card:focus-within .workshop-photo img {
+  transform: scale(1.055) translateY(-1%);
+  filter: saturate(1.08) contrast(1.03);
 }
 
 .workshop-photo-dna img {
@@ -1213,6 +1277,14 @@ h1 em {
   font-weight: 750;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  transform: translateY(14px);
+  opacity: 0;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 400ms ease;
+}
+
+.workshop-photo.is-photo-visible figcaption {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .workshop-copy {
@@ -2189,6 +2261,15 @@ blockquote cite {
   .route-card:is(:hover, :focus-within) > a > span {
     transform: none;
   }
+
+  .chapter-journey::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  .journey-step::before {
+    transform: none;
+  }
 }
 
     </style>
@@ -2319,12 +2400,13 @@ blockquote cite {
             discipline that catches your attention and build from there.
           </p>
           <div class="chapter-pathway" aria-hidden="true">
-            <span class="chapter-origin"></span>
-            <span class="chapter-branch"></span>
-            <span class="chapter-branch"></span>
-            <span class="chapter-branch"></span>
-            <span class="chapter-branch"></span>
-            <span class="chapter-branch"></span>
+            <ol class="chapter-journey">
+              <li class="journey-step" data-step="01" style="--step-index: 0"><strong>Join</strong></li>
+              <li class="journey-step" data-step="02" style="--step-index: 1"><strong>Train</strong></li>
+              <li class="journey-step" data-step="03" style="--step-index: 2"><strong>Create</strong></li>
+              <li class="journey-step" data-step="04" style="--step-index: 3"><strong>Present</strong></li>
+              <li class="journey-step" data-step="05" style="--step-index: 4"><strong>Lead</strong></li>
+            </ol>
           </div>
         </div>
         <div class="discipline-list">
@@ -2363,9 +2445,9 @@ blockquote cite {
           <p>Hands-on outreach across Vancouver—and a chapter designed to outlast any one graduating class.</p>
         </div>
         <dl class="stat-grid" aria-label="Killarney STEM Fellowship 2026 impact" data-reveal>
-          <div><dt>Elementary schools</dt><dd>4</dd></div>
-          <div><dt>Classrooms visited</dt><dd>7</dd></div>
-          <div><dt>Students reached</dt><dd>200+</dd></div>
+          <div style="--stat-index: 0"><dt>Elementary schools</dt><dd data-count="4">4</dd></div>
+          <div style="--stat-index: 1"><dt>Classrooms visited</dt><dd data-count="7">7</dd></div>
+          <div style="--stat-index: 2"><dt>Students reached</dt><dd data-count="200" data-suffix="+">200+</dd></div>
         </dl>
         <p class="impact-note">Based on Killarney STEM Fellowship’s reported 2026 chapter totals.</p>
         <p class="impact-closer" data-reveal>And we’re <em>not done.</em></p>
@@ -2814,6 +2896,87 @@ blockquote cite {
         revealItems.forEach((item) => item.classList.add("is-visible"));
       }
 
+      const workshopPhotos = document.querySelectorAll(".workshop-photo");
+      const statGrid = document.querySelector(".stat-grid");
+      const countTargets = document.querySelectorAll("[data-count]");
+      let impactAnimationRun = 0;
+
+      const showWorkshopPhotos = () => {
+        workshopPhotos.forEach((photo) => photo.classList.add("is-photo-visible"));
+      };
+
+      const finishImpactNumbers = () => {
+        countTargets.forEach((number) => {
+          number.textContent = `${number.dataset.count}${number.dataset.suffix || ""}`;
+        });
+        statGrid?.classList.add("is-counting");
+      };
+
+      const resetImpactNumbers = () => {
+        if (!statGrid) return;
+        impactAnimationRun += 1;
+        statGrid.dataset.counted = "false";
+        statGrid.classList.remove("is-counting");
+        countTargets.forEach((number) => {
+          number.textContent = `0${number.dataset.suffix || ""}`;
+        });
+      };
+
+      const animateImpactNumbers = () => {
+        if (!statGrid || statGrid.dataset.counted === "true") return;
+        statGrid.dataset.counted = "true";
+        statGrid.classList.add("is-counting");
+        impactAnimationRun += 1;
+        const currentRun = impactAnimationRun;
+
+        countTargets.forEach((number, index) => {
+          const target = Number(number.dataset.count);
+          const suffix = number.dataset.suffix || "";
+          const duration = 1050 + index * 140;
+          const start = performance.now();
+
+          const tick = (now) => {
+            if (currentRun !== impactAnimationRun) return;
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            number.textContent = `${Math.round(target * eased)}${suffix}`;
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
+        });
+      };
+
+      if (heroMotionReduced || !("IntersectionObserver" in window)) {
+        showWorkshopPhotos();
+        finishImpactNumbers();
+      } else {
+        const photoObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-photo-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.28 }
+        );
+        workshopPhotos.forEach((photo) => photoObserver.observe(photo));
+
+        if (statGrid) {
+          const statObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) animateImpactNumbers();
+                else resetImpactNumbers();
+              });
+            },
+            { threshold: 0.28, rootMargin: "-5% 0px -5%" }
+          );
+          statObserver.observe(statGrid);
+        }
+      }
+
       document.addEventListener("click", (event) => {
         const link = event.target.closest("a[href]");
         if (
@@ -2848,7 +3011,7 @@ blockquote cite {
         document.documentElement.classList.add("page-leaving");
         window.setTimeout(() => {
           window.location.href = link.href;
-        }, 180);
+        }, 820);
       });
     </script>
   </body>
