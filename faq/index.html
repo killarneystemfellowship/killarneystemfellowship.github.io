@@ -25,7 +25,7 @@
     <meta name="twitter:title" content="Workshop FAQ — Killarney STEM Fellowship" />
     <meta name="twitter:description" content="Answers for teachers planning a free classroom workshop." />
     <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
-    <link rel="icon" type="image/jpeg" href="/STEMbird.jpg" />
+    <link rel="icon" type="image/jpeg" href="../STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet" />
@@ -190,58 +190,6 @@
       .faq-hero-graphic {
         width: min(240px, 100%);
         justify-self: center;
-      }
-
-      .faq-hero-graphic svg {
-        display: block;
-        width: 100%;
-        overflow: visible;
-      }
-
-      .faq-orbit {
-        fill: none;
-        stroke: rgba(9, 81, 105, 0.26);
-        stroke-width: 1.5;
-        stroke-dasharray: 7 9;
-        transform-origin: 110px 120px;
-        animation: faq-orbit-turn 18s linear infinite;
-      }
-
-      .faq-orbit-secondary {
-        animation-direction: reverse;
-        animation-duration: 14s;
-      }
-
-      .faq-graphic-link {
-        fill: none;
-        stroke: rgba(9, 81, 105, 0.24);
-        stroke-width: 1.5;
-      }
-
-      .faq-graphic-node {
-        fill: var(--paper);
-        stroke: var(--teal);
-        stroke-width: 2;
-      }
-
-      .faq-graphic-node-orange { stroke: var(--orange); }
-
-      .faq-question-core {
-        fill: var(--navy);
-        stroke: var(--teal);
-        stroke-width: 3;
-      }
-
-      .faq-question-mark {
-        fill: var(--white);
-        font-family: var(--font-serif), Georgia, serif;
-        font-size: 78px;
-        font-weight: 600;
-        text-anchor: middle;
-      }
-
-      @keyframes faq-orbit-turn {
-        to { transform: rotate(360deg); }
       }
 
       .faq-layout {
@@ -461,18 +409,19 @@
           animation-duration: 0.01ms !important;
           transition-duration: 0.01ms !important;
         }
-        .faq-orbit { animation: none; }
       }
     </style>
-    <link rel="stylesheet" href="/mobile-nav.css" />
-    <script src="/mobile-nav.js" defer></script>
+    <link rel="stylesheet" href="../page-visuals.css" />
+    <link rel="stylesheet" href="../mobile-nav.css" />
+    <script src="../mobile-nav.js" defer></script>
+    <script src="../page-visuals.js" defer></script>
   </head>
-  <body>
+  <body class="faq-page">
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
       <a class="wordmark" href="/" aria-label="Killarney STEM Fellowship home">
-        <img class="brand-mark" src="/STEMbird.jpg" width="1181" height="1181" alt="" />
+        <img class="brand-mark" src="../STEMbird.jpg" width="1181" height="1181" alt="" />
         <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
       </a>
       <nav aria-label="Primary navigation">
@@ -511,53 +460,57 @@
           <p class="eyebrow">Classroom workshop guide</p>
           <h1 id="faq-title">Questions, <em>answered.</em></h1>
         </div>
-        <div class="faq-hero-graphic" aria-hidden="true">
-          <svg viewBox="0 0 220 240" role="presentation">
-            <ellipse class="faq-orbit" cx="110" cy="120" rx="96" ry="58" transform="rotate(-18 110 120)" />
-            <ellipse class="faq-orbit faq-orbit-secondary" cx="110" cy="120" rx="66" ry="98" transform="rotate(28 110 120)" />
-            <path class="faq-graphic-link" d="M28 88 72 46 110 120 178 68 194 156 142 202 110 120 46 178Z" />
-            <circle class="faq-graphic-node faq-graphic-node-orange" cx="28" cy="88" r="7" />
-            <circle class="faq-graphic-node" cx="72" cy="46" r="6" />
-            <circle class="faq-graphic-node" cx="178" cy="68" r="7" />
-            <circle class="faq-graphic-node faq-graphic-node-orange" cx="194" cy="156" r="6" />
-            <circle class="faq-graphic-node" cx="142" cy="202" r="7" />
-            <circle class="faq-graphic-node" cx="46" cy="178" r="6" />
-            <circle class="faq-question-core" cx="110" cy="120" r="45" />
-            <text class="faq-question-mark" x="110" y="147">?</text>
-          </svg>
+        <div class="faq-hero-graphic faq-field" aria-hidden="true">
+          <span class="faq-field-orbit faq-field-orbit-one"></span>
+          <span class="faq-field-orbit faq-field-orbit-two"></span>
+          <span class="faq-field-node faq-field-node-1"></span>
+          <span class="faq-field-node faq-field-node-2"></span>
+          <span class="faq-field-node faq-field-node-3"></span>
+          <span class="faq-field-node faq-field-node-4"></span>
+          <span class="faq-field-node faq-field-node-5"></span>
+          <span class="faq-field-node faq-field-node-6"></span>
+          <span class="faq-field-core">?</span>
+          <span class="faq-field-chip faq-field-chip-free">Free</span>
+          <span class="faq-field-chip faq-field-chip-grades">Grades 4–7</span>
+          <span class="faq-field-chip faq-field-chip-block">One class block</span>
         </div>
         <p class="faq-intro">Everything teachers usually need to know before bringing Killarney STEM Fellowship into the classroom.</p>
       </section>
 
       <section class="faq-layout" aria-label="Workshop frequently asked questions">
-        <aside class="faq-aside">
+        <aside class="faq-aside" data-visual-reveal>
           <p class="eyebrow">Quick guide</p>
           <strong>Free, hands-on, and built for one class block.</strong>
           <p>Choose a question to see the details. Only one answer opens at a time.</p>
+          <ol class="faq-process">
+            <li><span class="faq-process-number" aria-hidden="true">01</span><span>Request</span></li>
+            <li><span class="faq-process-number" aria-hidden="true">02</span><span>Coordinate</span></li>
+            <li><span class="faq-process-number" aria-hidden="true">03</span><span>Visit</span></li>
+          </ol>
         </aside>
 
         <div class="faq-list">
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 0ms">
             <summary><span class="faq-number">01</span><strong>Are the workshops really free?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>Yes. Our current classroom workshops are offered at no cost and include the planned activity materials and trained student presenters.</p></div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 60ms">
             <summary><span class="faq-number">02</span><strong>Which grades are the workshops designed for?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>Engineering bridges is designed for Grades 4–7, while Strawberry DNA extraction is best suited to Grades 5–7. Share your class grade in the request form and we’ll help confirm the fit.</p></div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 120ms">
             <summary><span class="faq-number">03</span><strong>How long does a visit take?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>Each workshop is designed for one class block. We coordinate the exact timing with the teacher when confirming the visit.</p></div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 180ms">
             <summary><span class="faq-number">04</span><strong>What does the chapter bring?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>We bring the planned workshop materials and trained presenters. The classroom teacher provides the learning space, normal classroom supervision, and any school-specific guidance we should know.</p></div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 240ms">
             <summary><span class="faq-number">05</span><strong>Where are visits available?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>Our outreach is intended for Vancouver-area elementary classrooms. Submit your school through the request form and we’ll confirm whether the chapter can coordinate a visit.</p></div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" data-visual-reveal style="--visual-delay: 300ms">
             <summary><span class="faq-number">06</span><strong>What happens after I submit a request?</strong><span class="faq-toggle" aria-hidden="true">→</span></summary>
             <div class="faq-answer"><p>Our team reviews your school, grade, class size, workshop preference, and possible dates. We then follow up by email to discuss availability and the next steps.</p></div>
           </details>
@@ -568,6 +521,13 @@
         <div>
           <strong>Still have a question?</strong>
           <p>Send the chapter your classroom details and we’ll help determine the right next step.</p>
+        </div>
+        <div class="request-kit" aria-hidden="true">
+          <span class="request-kit-card request-kit-card-school">School</span>
+          <span class="request-kit-connector"></span>
+          <span class="request-kit-card request-kit-card-grade">Grade</span>
+          <span class="request-kit-connector"></span>
+          <span class="request-kit-card request-kit-card-dates">Dates</span>
         </div>
         <a class="button" href="/contact/">Request a workshop <span aria-hidden="true">→</span></a>
       </section>

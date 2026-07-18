@@ -393,6 +393,22 @@ h1 em {
   font-style: normal;
 }
 
+.hero-phrase {
+  display: inline-block;
+  min-height: 0.88em;
+  white-space: nowrap;
+  transform-origin: left center;
+  transition:
+    opacity 280ms ease,
+    color 620ms ease,
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-phrase.is-changing {
+  opacity: 0;
+  transform: translateY(18px) rotate(1deg);
+}
+
 .hero-deck {
   max-width: 690px;
   margin: 38px 0 0;
@@ -444,11 +460,38 @@ h1 em {
 }
 
 .hero-art {
+  --field-wash: #dff6f2;
+  --field-glow-one: rgba(238, 135, 40, 0.2);
+  --field-glow-two: rgba(19, 193, 172, 0.26);
+  --field-primary: #13c1ac;
+  --field-secondary: #ee8728;
+  --field-line-one: rgba(9, 81, 105, 0.36);
+  --field-line-two: rgba(238, 135, 40, 0.44);
   position: relative;
   min-height: clamp(390px, 48vw, 660px);
-  background: var(--teal-wash);
+  background-color: var(--field-wash);
+  background-image:
+    radial-gradient(circle at 76% 18%, var(--field-glow-one), transparent 26%),
+    radial-gradient(circle at 14% 82%, var(--field-glow-two), transparent 30%);
   border: 1px solid rgba(9, 81, 105, 0.18);
+  border-radius: 34px;
   overflow: hidden;
+  transition:
+    background-color 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 720ms ease;
+}
+
+.hero-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(9, 81, 105, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9, 81, 105, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  pointer-events: none;
 }
 
 .hero-art::after {
@@ -456,68 +499,239 @@ h1 em {
   position: absolute;
   inset: 22px;
   border: 1px solid rgba(9, 81, 105, 0.2);
+  border-radius: 22px;
   pointer-events: none;
 }
 
-.art-label {
+.field-label {
   position: absolute;
   z-index: 4;
   font-size: 0.68rem;
   font-weight: 750;
   letter-spacing: 0.09em;
   text-transform: uppercase;
+  transition:
+    color 620ms ease,
+    opacity 260ms ease,
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.art-label-top {
+.field-label-top {
   left: 42px;
   top: 38px;
+  color: var(--field-primary);
 }
 
-.art-label-bottom {
+.field-label-bottom {
   right: 42px;
   bottom: 38px;
 }
 
-.helix {
+.research-map {
   position: absolute;
-  inset: 12% 7%;
+  inset: 76px 48px 70px;
 }
 
-.helix-rung {
+.research-orbit {
   position: absolute;
-  width: 1px;
-  min-height: 10px;
-  background: linear-gradient(var(--blue), var(--teal));
-  opacity: 0.72;
-  animation: helix-breathe 4s ease-in-out infinite;
-  animation-delay: var(--helix-delay);
+  border: 1px dashed var(--field-line-one);
+  border-radius: 50%;
+  transform-origin: center;
+  transition:
+    border-color 620ms ease,
+    opacity 260ms ease;
 }
 
-.helix-rung::before,
-.helix-rung::after {
-  content: "";
+.research-orbit-one {
+  inset: 10% 2%;
+  transform: rotate(-15deg);
+  animation: orbit-drift-one 15s ease-in-out infinite alternate;
+}
+
+.research-orbit-two {
+  inset: 20% 8%;
+  border-color: var(--field-line-two);
+  transform: rotate(19deg);
+  animation: orbit-drift-two 18s ease-in-out infinite alternate;
+}
+
+.research-core {
   position: absolute;
   left: 50%;
-  width: 9px;
-  height: 9px;
-  border: 2px solid var(--blue);
+  top: 50%;
+  z-index: 2;
+  width: clamp(112px, 29%, 168px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: var(--navy);
+  border: 6px solid rgba(255, 255, 255, 0.88);
   border-radius: 50%;
-  background: var(--teal-wash);
+  box-shadow:
+    0 0 0 1px var(--field-primary),
+    0 24px 54px rgba(7, 34, 53, 0.18);
   transform: translate(-50%, -50%);
+  transition:
+    box-shadow 620ms ease,
+    opacity 260ms ease,
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.helix-rung::before {
-  top: 0;
+.research-core img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
-.helix-rung::after {
-  top: 100%;
-  border-color: var(--teal);
+.research-step {
+  position: absolute;
+  z-index: 3;
+  width: clamp(120px, 34%, 175px);
+  padding: 14px 16px 15px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--field-line-one);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(7, 34, 53, 0.1);
+  transition:
+    border-color 620ms ease,
+    box-shadow 620ms ease,
+    opacity 260ms ease,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes helix-breathe {
-  0%, 100% { opacity: 0.38; }
-  50% { opacity: 1; }
+.research-step span,
+.research-step small {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.research-step span {
+  color: var(--field-secondary);
+  transition: color 620ms ease;
+}
+
+.research-step strong {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.research-step small {
+  margin-top: 8px;
+  color: rgba(7, 34, 53, 0.62);
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+.research-step-ask {
+  left: 0;
+  top: 8%;
+}
+
+.research-step-test {
+  right: 0;
+  top: 39%;
+}
+
+.research-step-share {
+  left: 9%;
+  bottom: 0;
+}
+
+.research-point {
+  position: absolute;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  background: var(--paper);
+  border: 3px solid var(--field-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px rgba(19, 193, 172, 0.12);
+  animation: point-pulse 3.8s ease-in-out infinite;
+}
+
+.research-point-one {
+  right: 17%;
+  top: 10%;
+}
+
+.research-point-two {
+  right: 7%;
+  bottom: 13%;
+  border-color: var(--field-secondary);
+  box-shadow: 0 0 0 7px rgba(238, 135, 40, 0.12);
+  animation-delay: -1.6s;
+}
+
+.research-point-three {
+  left: 2%;
+  top: 51%;
+  animation-delay: -2.4s;
+}
+
+.hero-art.is-changing .field-label,
+.hero-art.is-changing .research-step,
+.hero-art.is-changing .research-point {
+  opacity: 0;
+}
+
+.hero-art.is-changing .field-label-top,
+.hero-art.is-changing .research-step {
+  transform: translateY(12px);
+}
+
+.hero-art.is-changing .research-core {
+  opacity: 0.68;
+  transform: translate(-50%, -50%) scale(0.94);
+}
+
+.field-progress {
+  position: absolute;
+  left: 42px;
+  bottom: 41px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.field-progress span {
+  width: 7px;
+  height: 4px;
+  background: rgba(7, 34, 53, 0.22);
+  border-radius: 999px;
+  transition:
+    width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 620ms ease;
+}
+
+.field-progress span.is-active {
+  width: 26px;
+  background: var(--field-primary);
+}
+
+@keyframes orbit-drift-one {
+  from { transform: rotate(-15deg); }
+  to { transform: rotate(-10deg); }
+}
+
+@keyframes orbit-drift-two {
+  from { transform: rotate(19deg); }
+  to { transform: rotate(24deg); }
+}
+
+@keyframes point-pulse {
+  0%, 100% { transform: scale(0.86); opacity: 0.62; }
+  50% { transform: scale(1); opacity: 1; }
 }
 
 .scroll-cue {
@@ -566,6 +780,74 @@ h1 em {
   margin: 30px 0 0;
   font-size: 1.06rem;
 }
+
+.chapter-pathway {
+  position: relative;
+  width: min(360px, 100%);
+  height: 190px;
+  margin-top: 52px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(238, 135, 40, 0.16), transparent 24%),
+    linear-gradient(135deg, rgba(19, 193, 172, 0.12), rgba(9, 81, 105, 0.035));
+  border: 1px solid rgba(9, 81, 105, 0.15);
+  border-radius: 26px;
+}
+
+.chapter-pathway::before {
+  content: "One chapter · five directions";
+  position: absolute;
+  left: 20px;
+  top: 17px;
+  font-size: 0.6rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.chapter-origin {
+  position: absolute;
+  left: 36px;
+  top: 50%;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  background: var(--orange);
+  border: 5px solid var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(238, 135, 40, 0.48);
+  transform: translateY(-50%);
+}
+
+.chapter-branch {
+  position: absolute;
+  left: 51px;
+  top: 50%;
+  width: min(67%, 235px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(9, 81, 105, 0.24), var(--blue));
+  transform-origin: left center;
+}
+
+.chapter-branch::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--white);
+  border: 3px solid var(--teal);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.chapter-branch:nth-of-type(2) { transform: rotate(-18deg); }
+.chapter-branch:nth-of-type(3) { transform: rotate(-9deg); }
+.chapter-branch:nth-of-type(4) { transform: rotate(0deg); }
+.chapter-branch:nth-of-type(5) { transform: rotate(9deg); }
+.chapter-branch:nth-of-type(6) { transform: rotate(18deg); }
+.chapter-branch:nth-of-type(even)::after { border-color: var(--orange); }
 
 .discipline-list {
   border-top: 1px solid var(--line);
@@ -1059,10 +1341,24 @@ blockquote cite {
 }
 
 .opportunity-list {
+  position: relative;
   border-top: 1px solid var(--line);
 }
 
+.opportunity-list::before {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 70px;
+  bottom: 70px;
+  width: 1px;
+  background: linear-gradient(var(--teal), var(--orange), var(--teal));
+  opacity: 0.52;
+}
+
 .opportunity-row {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 58px 1fr auto;
   gap: 24px;
@@ -1073,8 +1369,40 @@ blockquote cite {
   transition: color 240ms ease;
 }
 
+.opportunity-row .opportunity-index {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px var(--white);
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.opportunity-row:nth-child(even) .opportunity-index {
+  border-color: var(--orange);
+}
+
 .opportunity-row:is(:hover, :focus-visible) {
   color: var(--blue);
+}
+
+.opportunity-row:is(:hover, :focus-visible) .opportunity-index {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--navy);
+  transform: scale(1.08);
+}
+
+.opportunity-row:nth-child(even):is(:hover, :focus-visible) .opportunity-index {
+  background: var(--orange);
+  border-color: var(--orange);
 }
 
 .reveal-ready .opportunity-row[data-reveal] {
@@ -1212,11 +1540,113 @@ blockquote cite {
     background 220ms ease;
 }
 
+.support-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.support-card-mark {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(19, 193, 172, 0.52);
+  border-radius: 18px;
+  color: var(--teal);
+  transform: rotate(3deg);
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.support-card-mark::before,
+.support-card-mark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.support-card-mark-fund::before {
+  width: 24px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 99px;
+  box-shadow: 0 -8px 0 currentColor, 0 8px 0 currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.support-card-mark-fund::after {
+  width: 4px;
+  height: 4px;
+  background: var(--navy);
+  border-radius: 50%;
+  box-shadow: 0 -8px 0 var(--navy), 0 8px 0 var(--navy);
+  transform: translate(6px, -50%);
+}
+
+.support-card-mark-connect::before {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  box-shadow: -12px 15px 0 currentColor, 12px 15px 0 currentColor;
+  transform: translate(-50%, -13px);
+}
+
+.support-card-mark-connect::after {
+  width: 24px;
+  height: 17px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  transform: translate(-50%, -4px) rotate(45deg) scale(0.7);
+}
+
+.support-card-mark-equip::before {
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  box-shadow:
+    13px 0 0 -2px var(--navy),
+    13px 0 0 0 currentColor,
+    0 13px 0 -2px var(--navy),
+    0 13px 0 0 currentColor,
+    13px 13px 0 -2px var(--navy),
+    13px 13px 0 0 currentColor;
+  transform: translate(-13px, -13px);
+}
+
+.support-card:nth-child(even) .support-card-mark {
+  color: var(--orange);
+  border-color: rgba(238, 135, 40, 0.58);
+  transform: rotate(-3deg);
+}
+
 .support-card:hover,
 .reveal-ready .support-card[data-reveal].is-visible:hover {
   transform: translateY(-7px);
   border-color: rgba(19, 193, 172, 0.72);
   background: rgba(255, 255, 255, 0.04);
+}
+
+.support-card:hover .support-card-mark,
+.reveal-ready .support-card[data-reveal].is-visible:hover .support-card-mark {
+  color: var(--navy);
+  border-color: var(--teal);
+  background: var(--teal);
+  transform: rotate(0) translateY(-3px);
+}
+
+.support-card:nth-child(even):hover .support-card-mark,
+.reveal-ready .support-card:nth-child(even)[data-reveal].is-visible:hover .support-card-mark {
+  border-color: var(--orange);
+  background: var(--orange);
 }
 
 .support-card-number {
@@ -1228,7 +1658,7 @@ blockquote cite {
 }
 
 .support-card h3 {
-  margin-top: 54px;
+  margin-top: 46px;
   font-size: clamp(2.2rem, 3.6vw, 4.2rem);
   line-height: 0.94;
 }
@@ -1409,6 +1839,10 @@ blockquote cite {
     min-height: 460px;
   }
 
+  .research-map {
+    inset: 70px 42px 66px;
+  }
+
   .chapter,
   .opportunities {
     grid-template-columns: 1fr;
@@ -1516,16 +1950,82 @@ blockquote cite {
 
   .hero-art {
     min-height: 330px;
+    border-radius: 26px;
   }
 
-  .art-label-top {
+  .hero-art::after {
+    inset: 14px;
+    border-radius: 18px;
+  }
+
+  .field-label-top {
     left: 30px;
     top: 28px;
   }
 
-  .art-label-bottom {
+  .field-label-bottom {
     right: 30px;
     bottom: 28px;
+  }
+
+  .field-progress {
+    left: 30px;
+    bottom: 31px;
+  }
+
+  .research-map {
+    inset: 62px 28px 56px;
+  }
+
+  .research-core {
+    left: auto;
+    right: 8px;
+    top: 0;
+    width: 82px;
+    padding: 10px;
+    border-width: 4px;
+    transform: none;
+  }
+
+  .hero-art.is-changing .research-core {
+    transform: scale(0.94);
+  }
+
+  .research-step {
+    width: 108px;
+    padding: 10px 12px 11px;
+    border-radius: 16px;
+  }
+
+  .research-step strong {
+    font-size: 1.35rem;
+  }
+
+  .research-step small {
+    display: none;
+  }
+
+  .research-step-ask {
+    top: 4%;
+  }
+
+  .research-step-test {
+    top: 42%;
+  }
+
+  .research-step-share {
+    left: 6%;
+  }
+
+  .research-point {
+    width: 9px;
+    height: 9px;
+    border-width: 2px;
+  }
+
+  .chapter-pathway {
+    height: 164px;
+    margin-top: 38px;
   }
 
   .scroll-cue {
@@ -1602,6 +2102,25 @@ blockquote cite {
     gap: 12px;
   }
 
+  .opportunity-list::before {
+    left: 15px;
+    top: 58px;
+    bottom: 58px;
+  }
+
+  .opportunity-row .opportunity-index {
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 0 0 6px var(--white);
+  }
+
+  .support-card-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+  }
+
   .footer-meta {
     flex-direction: column;
   }
@@ -1610,6 +2129,10 @@ blockquote cite {
 @media (max-width: 420px) {
   .wordmark .brand-name {
     display: none;
+  }
+
+  .field-label-bottom {
+    font-size: 0.58rem;
   }
 }
 
@@ -1645,6 +2168,7 @@ blockquote cite {
 }
 
     </style>
+    <script src="page-visuals.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -1695,7 +2219,7 @@ blockquote cite {
       <section class="hero" id="top">
         <div class="hero-copy">
           <p class="eyebrow">Official chapter · Killarney Secondary · Vancouver, BC</p>
-          <h1>Science,<br /> <em>made real.</em></h1>
+          <h1 aria-label="Science, made real.">Science,<br /> <em class="hero-phrase" aria-hidden="true">made real.</em></h1>
           <p class="hero-deck">
             Killarney students building skills in research, data science, physics,
             and science communication—then bringing free hands-on STEM workshops
@@ -1720,9 +2244,40 @@ blockquote cite {
         </div>
 
         <div class="hero-art" aria-hidden="true">
-          <div class="art-label art-label-top">Strawberry DNA extraction</div>
-          <div class="art-label art-label-bottom">Evidence in motion</div>
-          <div class="helix" id="helix"></div>
+          <div class="field-label field-label-top">Research in motion</div>
+          <div class="research-map">
+            <span class="research-orbit research-orbit-one"></span>
+            <span class="research-orbit research-orbit-two"></span>
+            <span class="research-point research-point-one"></span>
+            <span class="research-point research-point-two"></span>
+            <span class="research-point research-point-three"></span>
+            <div class="research-core">
+              <img src="STEMbird.jpg" width="1181" height="1181" alt="" />
+            </div>
+            <div class="research-step research-step-ask">
+              <span>01</span>
+              <strong>Ask</strong>
+              <small>Start with a useful question</small>
+            </div>
+            <div class="research-step research-step-test">
+              <span>02</span>
+              <strong>Explore</strong>
+              <small>Build, measure, and learn</small>
+            </div>
+            <div class="research-step research-step-share">
+              <span>03</span>
+              <strong>Share</strong>
+              <small>Turn evidence into impact</small>
+            </div>
+          </div>
+          <div class="field-progress">
+            <span class="is-active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="field-label field-label-bottom">Ask · explore · share</div>
         </div>
 
         <a class="scroll-cue" href="#chapter">
@@ -1738,6 +2293,14 @@ blockquote cite {
             You do not need to arrive with a finished project. Start with the
             discipline that catches your attention and build from there.
           </p>
+          <div class="chapter-pathway" aria-hidden="true">
+            <span class="chapter-origin"></span>
+            <span class="chapter-branch"></span>
+            <span class="chapter-branch"></span>
+            <span class="chapter-branch"></span>
+            <span class="chapter-branch"></span>
+            <span class="chapter-branch"></span>
+          </div>
         </div>
         <div class="discipline-list">
           <article class="discipline-row" data-reveal style="--reveal-delay: 0ms">
@@ -1900,17 +2463,26 @@ blockquote cite {
 
         <div class="support-paths">
           <article class="support-card" data-reveal style="--reveal-delay: 0ms">
-            <span class="support-card-number">01 · Fund</span>
+            <div class="support-card-top">
+              <span class="support-card-number">01 · Fund</span>
+              <span class="support-card-mark support-card-mark-fund" aria-hidden="true"></span>
+            </div>
             <h3>Sponsor a workshop.</h3>
             <p>Help cover approved materials, equipment, and transportation for free classroom outreach.</p>
           </article>
           <article class="support-card" data-reveal style="--reveal-delay: 80ms">
-            <span class="support-card-number">02 · Connect</span>
+            <div class="support-card-top">
+              <span class="support-card-number">02 · Connect</span>
+              <span class="support-card-mark support-card-mark-connect" aria-hidden="true"></span>
+            </div>
             <h3>Partner with students.</h3>
             <p>Offer mentorship, a guest speaker, a site visit, or an opportunity to see STEM beyond school.</p>
           </article>
           <article class="support-card" data-reveal style="--reveal-delay: 160ms">
-            <span class="support-card-number">03 · Equip</span>
+            <div class="support-card-top">
+              <span class="support-card-number">03 · Equip</span>
+              <span class="support-card-mark support-card-mark-equip" aria-hidden="true"></span>
+            </div>
             <h3>Contribute resources.</h3>
             <p>Share approved supplies, technical expertise, space, or other resources that strengthen our programs.</p>
           </article>
@@ -1967,18 +2539,184 @@ blockquote cite {
     </footer>
 
     <script>
-      const helix = document.getElementById("helix");
-      for (let index = 0; index < 25; index += 1) {
-        const phase = (index / 24) * Math.PI * 4;
-        const first = 50 + Math.sin(phase) * 31;
-        const second = 50 - Math.sin(phase) * 31;
-        const rung = document.createElement("span");
-        rung.className = "helix-rung";
-        rung.style.left = `${5 + (index / 24) * 90}%`;
-        rung.style.top = `${Math.min(first, second)}%`;
-        rung.style.height = `${Math.max(5, Math.abs(first - second))}%`;
-        rung.style.setProperty("--helix-delay", `${index * -90}ms`);
-        helix.appendChild(rung);
+      const heroScenes = [
+        {
+          phrase: "made real.",
+          label: "Research in motion",
+          trail: "Ask · explore · share",
+          wash: "#dff6f2",
+          glowOne: "rgba(238, 135, 40, 0.2)",
+          glowTwo: "rgba(19, 193, 172, 0.26)",
+          primary: "#13c1ac",
+          secondary: "#ee8728",
+          lineOne: "rgba(9, 81, 105, 0.36)",
+          lineTwo: "rgba(238, 135, 40, 0.44)",
+          steps: [
+            ["Ask", "Start with a useful question"],
+            ["Explore", "Build, measure, and learn"],
+            ["Share", "Turn evidence into impact"]
+          ]
+        },
+        {
+          phrase: "measured.",
+          label: "Data & AI",
+          trail: "Question · analyze · explain",
+          wash: "#e3f1f4",
+          glowOne: "rgba(19, 193, 172, 0.22)",
+          glowTwo: "rgba(9, 81, 105, 0.2)",
+          primary: "#095169",
+          secondary: "#13c1ac",
+          lineOne: "rgba(9, 81, 105, 0.48)",
+          lineTwo: "rgba(19, 193, 172, 0.48)",
+          steps: [
+            ["Question", "Frame the right problem"],
+            ["Analyze", "Find the signal in the data"],
+            ["Explain", "Defend what the results show"]
+          ]
+        },
+        {
+          phrase: "tested.",
+          label: "Experimental physics",
+          trail: "Predict · build · defend",
+          wash: "#fff0e2",
+          glowOne: "rgba(238, 135, 40, 0.26)",
+          glowTwo: "rgba(9, 81, 105, 0.16)",
+          primary: "#ee8728",
+          secondary: "#095169",
+          lineOne: "rgba(238, 135, 40, 0.5)",
+          lineTwo: "rgba(9, 81, 105, 0.4)",
+          steps: [
+            ["Predict", "Model what should happen"],
+            ["Test", "Design the experiment"],
+            ["Defend", "Argue from the evidence"]
+          ]
+        },
+        {
+          phrase: "explained.",
+          label: "Science communication",
+          trail: "Read · write · publish",
+          wash: "#e8f4ee",
+          glowOne: "rgba(9, 81, 105, 0.16)",
+          glowTwo: "rgba(19, 193, 172, 0.22)",
+          primary: "#0e8f7f",
+          secondary: "#095169",
+          lineOne: "rgba(14, 143, 127, 0.46)",
+          lineTwo: "rgba(9, 81, 105, 0.4)",
+          steps: [
+            ["Read", "Learn what is already known"],
+            ["Write", "Make a clear argument"],
+            ["Publish", "Share ideas responsibly"]
+          ]
+        },
+        {
+          phrase: "shared.",
+          label: "Classroom outreach",
+          trail: "Discover · build · teach",
+          wash: "#fff4e9",
+          glowOne: "rgba(19, 193, 172, 0.2)",
+          glowTwo: "rgba(238, 135, 40, 0.22)",
+          primary: "#ee8728",
+          secondary: "#13c1ac",
+          lineOne: "rgba(238, 135, 40, 0.48)",
+          lineTwo: "rgba(19, 193, 172, 0.46)",
+          steps: [
+            ["Discover", "Make science tangible"],
+            ["Build", "Create hands-on learning"],
+            ["Teach", "Bring it to classrooms"]
+          ]
+        }
+      ];
+
+      const heroArt = document.querySelector(".hero-art");
+      const heroPhrase = document.querySelector(".hero-phrase");
+      const heroSceneLabel = heroArt?.querySelector(".field-label-top");
+      const heroSceneTrail = heroArt?.querySelector(".field-label-bottom");
+      const heroSceneSteps = [...(heroArt?.querySelectorAll(".research-step") || [])];
+      const heroSceneProgress = [...(heroArt?.querySelectorAll(".field-progress span") || [])];
+      const heroMotionReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const heroDecodeGlyphs = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]";
+      let heroSceneIndex = 0;
+      let heroPhraseToken = 0;
+
+      const decodeHeroPhrase = (target) => {
+        const token = ++heroPhraseToken;
+        if (heroMotionReduced || !heroPhrase) {
+          if (heroPhrase) heroPhrase.textContent = target;
+          return;
+        }
+
+        const startedAt = performance.now();
+        const duration = 480;
+        const drawFrame = (now) => {
+          if (token !== heroPhraseToken) return;
+          const progress = Math.min(1, (now - startedAt) / duration);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const resolved = Math.floor(eased * target.length);
+          heroPhrase.textContent = [...target].map((character, index) => {
+            if (index < resolved || character === " " || /[.,]/.test(character)) return character;
+            return heroDecodeGlyphs[Math.floor(Math.random() * heroDecodeGlyphs.length)];
+          }).join("");
+
+          if (progress < 1) requestAnimationFrame(drawFrame);
+          else heroPhrase.textContent = target;
+        };
+        requestAnimationFrame(drawFrame);
+      };
+
+      const commitHeroScene = (scene, index, animate) => {
+        heroArt.style.setProperty("--field-wash", scene.wash);
+        heroArt.style.setProperty("--field-glow-one", scene.glowOne);
+        heroArt.style.setProperty("--field-glow-two", scene.glowTwo);
+        heroArt.style.setProperty("--field-primary", scene.primary);
+        heroArt.style.setProperty("--field-secondary", scene.secondary);
+        heroArt.style.setProperty("--field-line-one", scene.lineOne);
+        heroArt.style.setProperty("--field-line-two", scene.lineTwo);
+        heroPhrase.style.color = scene.primary;
+        heroSceneLabel.textContent = scene.label;
+        heroSceneTrail.textContent = scene.trail;
+        heroSceneSteps.forEach((step, stepIndex) => {
+          step.querySelector("strong").textContent = scene.steps[stepIndex][0];
+          step.querySelector("small").textContent = scene.steps[stepIndex][1];
+        });
+        heroSceneProgress.forEach((marker, markerIndex) => {
+          marker.classList.toggle("is-active", markerIndex === index);
+        });
+
+        if (animate) decodeHeroPhrase(scene.phrase);
+        else heroPhrase.textContent = scene.phrase;
+
+        requestAnimationFrame(() => {
+          heroArt.classList.remove("is-changing");
+          heroPhrase.classList.remove("is-changing");
+        });
+      };
+
+      const setHeroScene = (index, animate = true) => {
+        if (!heroArt || !heroPhrase || !heroSceneLabel || !heroSceneTrail) return;
+        const scene = heroScenes[index];
+        if (!animate) {
+          commitHeroScene(scene, index, false);
+          return;
+        }
+
+        heroArt.classList.add("is-changing");
+        heroPhrase.classList.add("is-changing");
+        window.setTimeout(() => commitHeroScene(scene, index, true), 260);
+      };
+
+      setHeroScene(0, false);
+      if (!heroMotionReduced) {
+        window.setInterval(() => {
+          const heroSection = document.querySelector(".hero");
+          if (
+            document.hidden ||
+            window.scrollY > (heroSection?.offsetHeight || window.innerHeight) * 0.82 ||
+            document.body.classList.contains("mobile-menu-open")
+          ) return;
+
+          heroSceneIndex = (heroSceneIndex + 1) % heroScenes.length;
+          setHeroScene(heroSceneIndex);
+        }, 3200);
       }
 
       const revealItems = document.querySelectorAll("[data-reveal]");

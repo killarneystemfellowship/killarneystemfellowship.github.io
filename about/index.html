@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="About STEM Fellowship — Killarney Chapter" />
     <meta name="twitter:description" content="Meet the national organization, its mission, and five core pillars." />
     <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
-    <link rel="icon" type="image/jpeg" href="/STEMbird.jpg" />
+    <link rel="icon" type="image/jpeg" href="../STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -721,15 +721,17 @@
       }
 
     </style>
-    <link rel="stylesheet" href="/mobile-nav.css" />
-    <script src="/mobile-nav.js" defer></script>
+    <link rel="stylesheet" href="../page-visuals.css" />
+    <link rel="stylesheet" href="../mobile-nav.css" />
+    <script src="../mobile-nav.js" defer></script>
+    <script src="../page-visuals.js" defer></script>
   </head>
-  <body>
+  <body class="about-page">
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
       <a class="wordmark" href="/" aria-label="Killarney STEM Fellowship home">
-        <img class="brand-mark" src="/STEMbird.jpg" width="1181" height="1181" alt="" />
+        <img class="brand-mark" src="../STEMbird.jpg" width="1181" height="1181" alt="" />
         <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
       </a>
       <nav aria-label="Primary navigation">
@@ -806,6 +808,15 @@
         <div data-reveal="left">
           <p class="eyebrow">The organization</p>
           <h2 id="organization-title">Learning by doing.</h2>
+          <div class="learning-loop" aria-hidden="true">
+            <span class="learning-loop__orbit learning-loop__orbit--outer"></span>
+            <span class="learning-loop__orbit learning-loop__orbit--inner"></span>
+            <span class="learning-loop__core">DO</span>
+            <span class="learning-loop__node learning-loop__node--question">Question</span>
+            <span class="learning-loop__node learning-loop__node--make">Make</span>
+            <span class="learning-loop__node learning-loop__node--test">Test</span>
+            <span class="learning-loop__node learning-loop__node--share">Share</span>
+          </div>
         </div>
         <div class="organization-copy" data-reveal="right">
           <p>
@@ -819,6 +830,13 @@
           </p>
         </div>
       </section>
+
+      <div class="skills-ribbon" aria-hidden="true">
+        <div class="skills-ribbon__track">
+          <span>DATA ANALYTICS · RESEARCH · COMMUNICATION · MENTORSHIP · LOCAL ACTION ·</span>
+          <span>DATA ANALYTICS · RESEARCH · COMMUNICATION · MENTORSHIP · LOCAL ACTION ·</span>
+        </div>
+      </div>
 
       <section class="pillars section-pad" aria-labelledby="pillars-title">
         <div class="pillars-heading">
@@ -834,26 +852,41 @@
         <div class="pillar-list">
           <article class="pillar-card" data-reveal style="--reveal-delay: 0ms">
             <span class="pillar-number">01</span>
+            <div class="pillar-glyph pillar-glyph--data" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <h3>Data Science Education for Change</h3>
             <p>Students develop skills in data analytics, problem-solving, critical thinking, and cybersecurity to address issues in their communities.</p>
           </article>
           <article class="pillar-card" data-reveal style="--reveal-delay: 70ms">
             <span class="pillar-number">02</span>
+            <div class="pillar-glyph pillar-glyph--equity" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <h3>STEMpowerment for Diversity and Equity</h3>
             <p>Mentorship and research programs help students from underrepresented backgrounds pursue opportunities in STEM across Canada.</p>
           </article>
           <article class="pillar-card" data-reveal style="--reveal-delay: 0ms">
             <span class="pillar-number">03</span>
+            <div class="pillar-glyph pillar-glyph--communication" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <h3>Science Communication for All</h3>
             <p>Young researchers gain the skills to present their work clearly and communicate scientific knowledge to others.</p>
           </article>
           <article class="pillar-card" data-reveal style="--reveal-delay: 70ms">
             <span class="pillar-number">04</span>
+            <div class="pillar-glyph pillar-glyph--grassroots" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <h3>Grassroots for Local Communities</h3>
             <p>High school chapters, university branches, and regional networks bring national programs into local communities.</p>
           </article>
           <article class="pillar-card" data-reveal>
             <span class="pillar-number">05</span>
+            <div class="pillar-glyph pillar-glyph--fellowship" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <h3>Fellowship Development</h3>
             <p>Partnerships, outreach, and shared networks expand STEM Fellowship’s projects, connections, and reach.</p>
           </article>
@@ -861,6 +894,13 @@
       </section>
 
       <section class="network section-pad" aria-labelledby="network-title">
+        <div class="chapter-route" aria-hidden="true">
+          <span class="chapter-route__line"></span>
+          <span class="chapter-route__node chapter-route__node--killarney">Killarney</span>
+          <span class="chapter-route__node chapter-route__node--vancouver">Vancouver</span>
+          <span class="chapter-route__node chapter-route__node--canada">Canada</span>
+          <span class="chapter-route__signal"></span>
+        </div>
         <div class="network-copy" data-reveal="left">
           <p class="eyebrow">National network, local action</p>
           <h2 id="network-title">The Killarney chapter is part of something bigger.</h2>

@@ -11,7 +11,7 @@
     </script>
     <meta name="description" content="Confirmation that Killarney STEM Fellowship received your message." />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Request Received — Killarney STEM Fellowship</title>
+    <title>Message Received — Killarney STEM Fellowship</title>
     <link rel="canonical" href="https://killarneystemfellowship.github.io/thanks/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Killarney STEM Fellowship" />
@@ -26,7 +26,7 @@
     <meta name="twitter:title" content="Killarney STEM Fellowship — Science, made real." />
     <meta name="twitter:description" content="Student-led STEM learning and free elementary workshops in Vancouver." />
     <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
-    <link rel="icon" type="image/jpeg" href="/STEMbird.jpg" />
+    <link rel="icon" type="image/jpeg" href="../STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&amp;family=Fraunces:wght@600&amp;display=swap" rel="stylesheet" />
@@ -70,13 +70,55 @@
         text-decoration: none;
       }
     </style>
+    <link rel="stylesheet" href="../page-visuals.css" />
   </head>
-  <body>
-    <main>
-      <p class="eyebrow">Request received</p>
-      <h1>Thanks for reaching out.</h1>
-      <p>Your message has been sent to Killarney STEM Fellowship. We’ll review the details and follow up using the email address you provided.</p>
-      <a href="/">Return to the chapter <span aria-hidden="true">→</span></a>
+  <body class="thanks-page">
+    <header class="thanks-receipt-header">
+      <a href="/" aria-label="Killarney STEM Fellowship home">
+        <img src="../STEMbird.jpg" width="1181" height="1181" alt="" />
+        <span>Killarney <em>STEM</em> Fellowship</span>
+      </a>
+      <span>Message receipt · 2026</span>
+    </header>
+
+    <main class="thanks-shell" aria-labelledby="thanks-title">
+      <section class="thanks-copy">
+        <p class="eyebrow">Message received</p>
+        <h1 id="thanks-title">Thanks for reaching out.</h1>
+        <p>Your message has been sent to Killarney STEM Fellowship. We’ll review the details and follow up using the email address you provided.</p>
+
+        <ol class="next-steps" aria-label="What happens next">
+          <li class="is-complete"><span>01</span><strong>Message received</strong></li>
+          <li><span>02</span><strong>Student team reviews the details</strong></li>
+          <li><span>03</span><strong>Follow-up arrives by email</strong></li>
+        </ol>
+
+        <a class="thanks-home" href="/">Return to the chapter <span aria-hidden="true">→</span></a>
+      </section>
+
+      <div class="thanks-art" aria-hidden="true">
+        <span class="thanks-art__label thanks-art__label--top">Transmission / received</span>
+        <span class="thanks-art__label thanks-art__label--bottom">Killarney · Vancouver</span>
+        <span class="thanks-art__orbit thanks-art__orbit--outer"></span>
+        <span class="thanks-art__orbit thanks-art__orbit--inner"></span>
+        <span class="thanks-art__signal"></span>
+        <span class="thanks-art__core">
+          <img src="../STEMbird.jpg" width="1181" height="1181" alt="" />
+          <span class="thanks-art__check">✓</span>
+        </span>
+        <span class="thanks-status thanks-status--one">01 · Sent</span>
+        <span class="thanks-status thanks-status--two">02 · Review</span>
+        <span class="thanks-status thanks-status--three">03 · Reply</span>
+        <i class="thanks-particle thanks-particle--1"></i>
+        <i class="thanks-particle thanks-particle--2"></i>
+        <i class="thanks-particle thanks-particle--3"></i>
+        <i class="thanks-particle thanks-particle--4"></i>
+        <i class="thanks-particle thanks-particle--5"></i>
+        <i class="thanks-particle thanks-particle--6"></i>
+        <i class="thanks-particle thanks-particle--7"></i>
+        <i class="thanks-particle thanks-particle--8"></i>
+      </div>
     </main>
+    <script src="../page-visuals.js" defer></script>
   </body>
 </html>

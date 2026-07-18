@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="Contact Killarney STEM Fellowship" />
     <meta name="twitter:description" content="Request a free classroom workshop or support the chapter." />
     <meta name="twitter:image" content="https://killarneystemfellowship.github.io/social-preview.png" />
-    <link rel="icon" type="image/jpeg" href="/STEMbird.jpg" />
+    <link rel="icon" type="image/jpeg" href="../STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -421,115 +421,6 @@
         left: -9999px;
       }
 
-      .contact-bridge {
-        position: relative;
-        min-height: 360px;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(300px, 0.62fr);
-        gap: clamp(40px, 7vw, 110px);
-        align-items: center;
-        margin-top: clamp(70px, 9vw, 130px);
-        padding: clamp(38px, 6vw, 80px);
-        overflow: hidden;
-        background: var(--navy);
-        color: var(--white);
-        border-radius: 32px;
-      }
-
-      .contact-bridge-copy {
-        position: relative;
-        z-index: 1;
-      }
-
-      .contact-bridge .eyebrow { color: var(--teal); }
-
-      .contact-bridge h2 {
-        max-width: 10ch;
-        margin: 18px 0 24px;
-        font-size: clamp(3rem, 5.4vw, 6.2rem);
-        line-height: 0.9;
-      }
-
-      .contact-bridge-copy > p:last-child {
-        max-width: 52ch;
-        margin-bottom: 0;
-        color: rgba(255, 255, 255, 0.68);
-      }
-
-      .bridge-visual {
-        position: relative;
-        min-height: 230px;
-      }
-
-      .bridge-visual::before,
-      .bridge-visual::after {
-        content: "";
-        position: absolute;
-        left: 16%;
-        right: 16%;
-        top: 50%;
-        height: 1px;
-        background-image: linear-gradient(90deg, rgba(19, 193, 172, 0.9) 50%, transparent 50%);
-        background-size: 12px 1px;
-      }
-
-      .bridge-visual::after {
-        top: 31%;
-        right: 25%;
-        left: 25%;
-        opacity: 0.35;
-        transform: rotate(-22deg);
-      }
-
-      .bridge-node,
-      .bridge-core {
-        position: absolute;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-      }
-
-      .bridge-node {
-        top: 50%;
-        width: 104px;
-        height: 104px;
-        transform: translateY(-50%);
-        background: var(--navy);
-        font-size: 0.68rem;
-        font-weight: 750;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
-      .bridge-node:first-child {
-        left: 0;
-        color: var(--teal);
-        border: 2px solid var(--teal);
-      }
-
-      .bridge-node:last-child {
-        right: 0;
-        color: var(--orange);
-        border: 2px solid var(--orange);
-      }
-
-      .bridge-core {
-        top: 50%;
-        left: 50%;
-        width: 54px;
-        height: 54px;
-        transform: translate(-50%, -50%);
-        background: var(--white);
-        color: var(--navy);
-        box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.08);
-        animation: bridge-core-pulse 2.8s ease-in-out infinite;
-      }
-
-      @keyframes bridge-core-pulse {
-        0%, 100% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.06); }
-        50% { box-shadow: 0 0 0 20px rgba(19, 193, 172, 0.13); }
-      }
-
       .partner-section {
         margin-top: clamp(70px, 8vw, 110px);
       }
@@ -619,11 +510,9 @@
         .site-header nav { display: none; }
         .contact-hero,
         .partner-heading,
-        .request-layout,
-        .contact-bridge { grid-template-columns: 1fr; }
+        .request-layout { grid-template-columns: 1fr; }
         .contact-intro { max-width: 680px; }
         .form-aside { position: static; }
-        .bridge-visual { width: min(500px, 100%); }
       }
 
       @media (max-width: 720px) {
@@ -635,17 +524,6 @@
           line-height: 0.92;
         }
         .request-form { grid-template-columns: 1fr; }
-        .contact-bridge {
-          min-height: auto;
-          padding: 36px 24px;
-          border-radius: 24px;
-        }
-        .bridge-visual { min-height: 190px; }
-        .bridge-node {
-          width: 84px;
-          height: 84px;
-          font-size: 0.58rem;
-        }
         .form-field-full,
         .consent,
         .privacy-note,
@@ -658,18 +536,19 @@
         html { scroll-behavior: auto; }
         *, *::before, *::after { transition-duration: 0.01ms !important; }
         .partner-scroll-cue span:last-child { animation: none; }
-        .bridge-core { animation: none; }
       }
     </style>
-    <link rel="stylesheet" href="/mobile-nav.css" />
-    <script src="/mobile-nav.js" defer></script>
+    <link rel="stylesheet" href="../page-visuals.css" />
+    <link rel="stylesheet" href="../mobile-nav.css" />
+    <script src="../mobile-nav.js" defer></script>
+    <script src="../page-visuals.js" defer></script>
   </head>
-  <body>
+  <body class="contact-page">
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
       <a class="wordmark" href="/" aria-label="Killarney STEM Fellowship home">
-        <img class="brand-mark" src="/STEMbird.jpg" width="1181" height="1181" alt="" />
+        <img class="brand-mark" src="../STEMbird.jpg" width="1181" height="1181" alt="" />
         <span class="brand-name">Killarney <em>STEM</em> Fellowship</span>
       </a>
       <nav aria-label="Primary navigation">
@@ -714,6 +593,20 @@
           <p class="contact-intro">
             Tell us about your class and preferred workshop. We’ll review your request and follow up with available dates—materials and trained presenters are included.
           </p>
+          <ol class="contact-route" aria-label="Workshop request process">
+            <li class="contact-route__step">
+              <span class="contact-route__number" aria-hidden="true">01</span>
+              <strong>Request</strong>
+            </li>
+            <li class="contact-route__step">
+              <span class="contact-route__number" aria-hidden="true">02</span>
+              <strong>Coordinate</strong>
+            </li>
+            <li class="contact-route__step">
+              <span class="contact-route__number" aria-hidden="true">03</span>
+              <strong>Visit</strong>
+            </li>
+          </ol>
           <a class="partner-scroll-cue" href="#partner-inquiry">
             <span>Sponsor or community partner?</span><span aria-hidden="true">↓</span>
           </a>
@@ -725,9 +618,25 @@
           <p class="eyebrow">What happens next</p>
           <h2>One request. A hands-on class.</h2>
           <p>We’ll confirm the workshop, coordinate timing, and let you know what the classroom needs before we arrive.</p>
+          <div
+            class="form-meter"
+            role="progressbar"
+            aria-label="Workshop request completion"
+            aria-valuemin="0"
+            aria-valuenow="0"
+            aria-valuemax="8"
+            data-form-meter-for="workshop-request-form"
+          >
+            <div class="form-meter__top">
+              <span class="form-meter__label">Request progress</span>
+              <span class="form-meter__copy">0 of 8 details ready</span>
+            </div>
+            <span class="form-meter__rail" aria-hidden="true"><span class="form-meter__fill"></span></span>
+          </div>
         </aside>
 
         <form
+          id="workshop-request-form"
           class="request-form"
           action="https://formsubmit.co/killarney@stemfellowship.org"
           method="POST"
@@ -792,19 +701,6 @@
         </form>
       </section>
 
-      <section class="contact-bridge" aria-labelledby="contact-bridge-title">
-        <div class="contact-bridge-copy">
-          <p class="eyebrow">Two paths · One purpose</p>
-          <h2 id="contact-bridge-title">From classrooms to community.</h2>
-          <p>Whether you are inviting us into a classroom or helping students reach further, every conversation begins with the same goal: making STEM more tangible.</p>
-        </div>
-        <div class="bridge-visual" aria-hidden="true">
-          <span class="bridge-node">Learn</span>
-          <span class="bridge-core">↔</span>
-          <span class="bridge-node">Support</span>
-        </div>
-      </section>
-
       <section class="partner-section" id="partner-inquiry" aria-labelledby="partner-title">
         <div class="partner-heading">
           <div>
@@ -816,14 +712,61 @@
           </p>
         </div>
 
+        <ul class="support-spectrum" aria-label="Ways to support Killarney STEM Fellowship">
+          <li class="support-spectrum__item">
+            <span class="support-spectrum__glyph support-spectrum__glyph--sponsor" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div class="support-spectrum__copy">
+              <strong>Sponsor workshops</strong>
+              <p>Help cover materials so classroom sessions can remain free.</p>
+            </div>
+          </li>
+          <li class="support-spectrum__item">
+            <span class="support-spectrum__glyph support-spectrum__glyph--mentor" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div class="support-spectrum__copy">
+              <strong>Mentor students</strong>
+              <p>Share practical guidance as students explore STEM pathways.</p>
+            </div>
+          </li>
+          <li class="support-spectrum__item">
+            <span class="support-spectrum__glyph support-spectrum__glyph--speaker" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div class="support-spectrum__copy">
+              <strong>Guest speaking</strong>
+              <p>Bring real-world experience to an approved student learning opportunity.</p>
+            </div>
+          </li>
+          <li class="support-spectrum__item">
+            <span class="support-spectrum__glyph support-spectrum__glyph--resources" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div class="support-spectrum__copy">
+              <strong>Share resources</strong>
+              <p>Offer approved learning tools that strengthen hands-on workshops.</p>
+            </div>
+          </li>
+        </ul>
+
         <div class="request-layout">
           <aside class="form-aside partner-aside">
             <p class="eyebrow">Start a conversation</p>
             <h2>Support can take many forms.</h2>
             <p>Share the idea first. We’ll follow up to discuss fit, student needs, and the right next step.</p>
+            <div
+              class="form-meter"
+              role="progressbar"
+              aria-label="Partner inquiry completion"
+              aria-valuemin="0"
+              aria-valuenow="0"
+              aria-valuemax="5"
+              data-form-meter-for="partner-request-form"
+            >
+              <div class="form-meter__top">
+                <span class="form-meter__label">Inquiry progress</span>
+                <span class="form-meter__copy">0 of 5 details ready</span>
+              </div>
+              <span class="form-meter__rail" aria-hidden="true"><span class="form-meter__fill"></span></span>
+            </div>
           </aside>
 
           <form
+            id="partner-request-form"
             class="request-form partner-form"
             action="https://formsubmit.co/killarney@stemfellowship.org"
             method="POST"
