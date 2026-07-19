@@ -378,6 +378,8 @@ button { -webkit-tap-highlight-color: transparent; }
     font-size: 0.68rem;
     letter-spacing: 0.03em;
     white-space: nowrap;
+    gap: 9px;
+    align-items: center;
   }
 
   .header-cta span {
@@ -394,6 +396,23 @@ button { -webkit-tap-highlight-color: transparent; }
   .header-cta[href$="join.html"] .header-cta-label::after {
     content: "Join";
     font-size: 0.68rem;
+  }
+
+  .header-cta .header-cta-label[data-mobile-label] {
+    font-size: 0;
+  }
+
+  .header-cta .header-cta-label[data-mobile-label]::after {
+    content: attr(data-mobile-label);
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+
+  .header-cta > span[aria-hidden="true"] {
+    display: inline-grid !important;
+    place-items: center;
+    line-height: 1;
+    transform: translateY(-0.5px);
   }
 
   .mobile-menu nav a {
