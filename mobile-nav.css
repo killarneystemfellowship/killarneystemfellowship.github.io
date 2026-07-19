@@ -229,8 +229,56 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 .mobile-menu-arrow {
-  font-family: var(--font-sans), Arial, sans-serif;
-  font-size: 1rem;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: block;
+  flex: 0 0 auto;
+  font-size: 0 !important;
+  line-height: 0;
+}
+
+.mobile-menu-arrow::before,
+.mobile-menu-arrow::after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+.mobile-menu-arrow::before {
+  top: 10px;
+  left: 2px;
+  width: 17px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 999px;
+}
+
+.mobile-menu-arrow::after {
+  top: 6px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.mobile-menu nav a[href^="#"] .mobile-menu-arrow {
+  transform: rotate(90deg);
+}
+
+.mobile-menu nav a[aria-current="page"] .mobile-menu-arrow {
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.mobile-menu nav a[aria-current="page"] .mobile-menu-arrow::before,
+.mobile-menu nav a[aria-current="page"] .mobile-menu-arrow::after {
+  display: none;
 }
 
 .mobile-menu-meta {
