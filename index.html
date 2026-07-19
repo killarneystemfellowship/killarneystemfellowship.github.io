@@ -1538,7 +1538,37 @@ blockquote cite {
 }
 
 .opportunity-row > span:last-child {
-  font-size: 1.5rem;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: block;
+  font-size: 0;
+}
+
+.opportunity-row > span:last-child::before,
+.opportunity-row > span:last-child::after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+.opportunity-row > span:last-child::before {
+  left: 3px;
+  top: 11px;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 999px;
+  transform: rotate(-45deg);
+}
+
+.opportunity-row > span:last-child::after {
+  top: 2px;
+  right: 1px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
 }
 
 .support {
