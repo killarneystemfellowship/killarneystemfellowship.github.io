@@ -36,10 +36,11 @@ body {
   background-size: 92px 92px, 118px 118px, auto, auto;
   clip-path: polygon(0 0, 100% 0, 100% 94%, 50% 100%, 0 94%);
   pointer-events: none;
-  transform: translateY(-101%);
-  animation: page-curtain-reveal 780ms cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translate3d(0, -101%, 0);
+  animation: page-curtain-reveal 780ms cubic-bezier(0.65, 0, 0.35, 1) both;
   transition: transform 780ms cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .page-transition__label {
@@ -58,12 +59,12 @@ body {
 
 html.page-leaving .page-transition {
   animation: none;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 @keyframes page-curtain-reveal {
-  from { transform: translateY(0); }
-  to { transform: translateY(-101%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -101%, 0); }
 }
 
 /* Keep the transition layer visible over older page-level fade rules. */
@@ -293,6 +294,38 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .mobile-menu-meta a {
   border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+/* Consistent external-link arrow; avoids platform emoji glyphs. */
+.external-arrow {
+  position: relative;
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.18em;
+  vertical-align: -0.02em;
+  font-size: 0;
+}
+.external-arrow::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0.52em;
+  height: 0.52em;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+.external-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0.08em;
+  top: 0.14em;
+  width: 0.68em;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  transform-origin: right center;
 }
 
 @media (max-width: 1050px) {
