@@ -45,6 +45,7 @@
       return;
     }
 
+    root.classList.remove("page-ready");
     root.classList.add("page-leaving");
     const transitionTime = window.matchMedia("(max-width: 720px)").matches ? 660 : 820;
     window.setTimeout(() => {
