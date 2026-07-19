@@ -337,11 +337,13 @@ button { -webkit-tap-highlight-color: transparent; }
     font-size: 0.82rem;
   }
 
-  .header-cta[href*="forms.gle"] .header-cta-label {
+  .header-cta[href*="forms.gle"] .header-cta-label,
+  .header-cta[href$="join.html"] .header-cta-label {
     font-size: 0;
   }
 
-  .header-cta[href*="forms.gle"] .header-cta-label::after {
+  .header-cta[href*="forms.gle"] .header-cta-label::after,
+  .header-cta[href$="join.html"] .header-cta-label::after {
     content: "Join";
     font-size: 0.68rem;
   }
