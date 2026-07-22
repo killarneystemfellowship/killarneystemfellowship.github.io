@@ -1,9 +1,12 @@
 (() => {
   const root = document.documentElement;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const transitionLayer = document.querySelector(".page-transition");
+  let isNavigating = false;
 
   const revealPage = () => {
     root.classList.remove("page-leaving");
+    isNavigating = false;
     if (reducedMotion) {
       root.classList.add("page-ready");
       return;
@@ -19,6 +22,9 @@
     if (
       !link ||
       link.target === "_blank" ||
+      link.hasAttribute("download") ||
+      event.button !== 0 ||
+      isNavigating ||
       event.defaultPrevented ||
       event.metaKey ||
       event.ctrlKey ||
@@ -47,10 +53,17 @@
 
     root.classList.remove("page-ready");
     root.classList.add("page-leaving");
-    const transitionTime = window.matchMedia("(max-width: 720px)").matches ? 660 : 820;
-    window.setTimeout(() => {
+    isNavigating = true;
+
+    let navigationStarted = false;
+    const navigate = () => {
+      if (navigationStarted) return;
+      navigationStarted = true;
       window.location.href = link.href;
-    }, transitionTime);
+    };
+
+    transitionLayer?.addEventListener("animationend", navigate, { once: true });
+    window.setTimeout(navigate, window.matchMedia("(max-width: 720px)").matches ? 430 : 540);
   });
 
   const toggle = document.querySelector(".mobile-menu-toggle");

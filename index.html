@@ -1145,7 +1145,11 @@ h1 em {
   transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.route-card > a > span {
+.route-link-arrow {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  overflow: visible;
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1167,7 +1171,7 @@ h1 em {
   transform: translate3d(0, -4px, 0);
 }
 
-.route-card:focus-within > a > span {
+.route-card:focus-within > a > .route-link-arrow {
   transform: translate3d(5px, -5px, 0);
 }
 
@@ -1190,7 +1194,7 @@ h1 em {
     transform: translate3d(0, -4px, 0);
   }
 
-  .route-card:hover > a > span {
+  .route-card:hover > a > .route-link-arrow {
     transform: translate3d(5px, -5px, 0);
   }
 }
@@ -2275,7 +2279,7 @@ blockquote cite {
   .route-card:is(:hover, :focus-within) h3,
   .route-card:is(:hover, :focus-within) > p:not(.route-number),
   .route-card:is(:hover, :focus-within) > a,
-  .route-card:is(:hover, :focus-within) > a > span {
+  .route-card:is(:hover, :focus-within) > a > .route-link-arrow {
     transform: none;
   }
 
@@ -2315,7 +2319,7 @@ blockquote cite {
         class="header-cta"
         href="/join/"
       >
-        <span class="header-cta-label" data-mobile-label="Join">Join the chapter</span> <span aria-hidden="true">→</span>
+        <span class="header-cta-label">Join the chapter</span> <span aria-hidden="true">→</span>
       </a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
         <span class="mobile-menu-icon" aria-hidden="true"></span>
@@ -2334,7 +2338,7 @@ blockquote cite {
       </nav>
       <div class="mobile-menu-meta">
         <a href="mailto:killarney@stemfellowship.org">killarney@stemfellowship.org</a>
-        <a href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer">Instagram <span class="external-arrow" aria-hidden="true"></span></a>
+        <a href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer">Instagram <svg class="external-arrow" aria-hidden="true" viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
       </div>
     </aside>
 
@@ -2479,7 +2483,7 @@ blockquote cite {
             <h3>Find your place in the chapter.</h3>
             <p>Complete the short chapter form with your grade and what you want to explore. We will follow up with the next meeting details.</p>
             <a href="/join/">
-              Explore membership <span aria-hidden="true">→</span>
+              Explore membership <svg class="route-link-arrow" aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M12 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
           </article>
           <article class="route-card route-teacher" data-reveal="right">
@@ -2487,7 +2491,7 @@ blockquote cite {
             <h3>Bring a free workshop to your classroom.</h3>
             <p>Share your school, grade, class size, preferred workshop, and a few possible dates. Materials and trained presenters are included.</p>
             <a href="/contact/">
-              Request a workshop <span aria-hidden="true">↗︎</span>
+              Request a workshop <svg class="route-link-arrow" aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M5 15 15 5M8 5h7v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
           </article>
         </div>
@@ -2654,7 +2658,7 @@ blockquote cite {
         <span>© 2026 · Killarney Secondary School · Vancouver, BC</span>
         <a class="footer-instagram" href="https://www.instagram.com/killarneystemfellowship/" target="_blank" rel="noopener noreferrer" aria-label="Killarney STEM Fellowship on Instagram">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
-          Instagram <span class="external-arrow" aria-hidden="true"></span>
+          Instagram <svg class="external-arrow" aria-hidden="true" viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" /></svg>
         </a>
         <a href="/gallery/">Workshop gallery <span aria-hidden="true">→</span></a>
         <a href="/faq/">Workshop FAQ <span aria-hidden="true">→</span></a>

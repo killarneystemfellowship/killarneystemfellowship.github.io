@@ -26,6 +26,7 @@ body {
   position: fixed;
   z-index: 1000;
   inset: 0;
+  isolation: isolate;
   display: grid;
   place-items: center;
   background:
@@ -34,12 +35,30 @@ body {
     linear-gradient(115deg, rgba(19, 193, 172, 0.2), transparent 42%),
     var(--navy);
   background-size: 92px 92px, 118px 118px, auto, auto;
-  clip-path: polygon(0 0, 100% 0, 100% 94%, 50% 100%, 0 94%);
   pointer-events: none;
   transform: translate3d(0, 0, 0);
-  transition: transform 780ms cubic-bezier(0.65, 0, 0.35, 1);
+  transition: transform 540ms cubic-bezier(0.76, 0, 0.24, 1);
   will-change: transform;
   backface-visibility: hidden;
+}
+
+.page-transition::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--teal), var(--orange) 52%, var(--teal));
+  box-shadow: 0 8px 30px rgba(238, 135, 40, 0.28);
+}
+
+.page-transition::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.3;
+  background: repeating-linear-gradient(115deg, transparent 0 70px, rgba(255, 255, 255, 0.035) 70px 71px);
 }
 
 html.page-ready .page-transition {
@@ -47,6 +66,8 @@ html.page-ready .page-transition {
 }
 
 .page-transition__label {
+  position: relative;
+  z-index: 1;
   width: min(430px, calc(100vw - 48px));
   padding: 0 12px 14px;
   border-bottom: 3px solid var(--orange);
@@ -58,10 +79,28 @@ html.page-ready .page-transition {
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
+  transition: opacity 180ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html.page-leaving .page-transition {
   transform: translate3d(0, 0, 0);
+  animation: page-cover 460ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+html.page-ready .page-transition__label {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0);
+}
+
+html.page-leaving .page-transition__label {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 150ms;
+}
+
+@keyframes page-cover {
+  from { transform: translate3d(0, 101%, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 /* Keep the transition layer visible over older page-level fade rules. */
@@ -290,39 +329,53 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 .mobile-menu-meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.34);
 }
 
-/* Consistent external-link arrow; avoids platform emoji glyphs. */
+/* Consistent external-link arrow; explicit SVG avoids platform glyph differences. */
 .external-arrow {
-  position: relative;
-  display: inline-block;
-  width: 0.72rem;
-  height: 0.72rem;
-  margin-left: 0.2rem;
-  vertical-align: -0.04rem;
-  font-size: 0;
+  display: block;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  margin-left: 2px;
+  overflow: visible;
 }
-.external-arrow::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 0.42rem;
-  height: 0.42rem;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
+
+.external-arrow path {
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
 }
-.external-arrow::after {
-  content: "";
-  position: absolute;
-  right: 0.05rem;
-  top: 0.13rem;
-  width: 0.62rem;
-  height: 1.5px;
-  background: currentColor;
-  transform: rotate(-45deg);
-  transform-origin: right center;
+
+.footer-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.footer-instagram > svg:not(.external-arrow) {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.site-footer > .footer-mark {
+  line-height: 0.98 !important;
+  text-wrap: balance;
+}
+
+.site-footer > .footer-mark + p {
+  margin-top: clamp(36px, 4.5vw, 64px) !important;
+}
+
+.footer-instagram svg.external-arrow {
+  width: 13px;
+  height: 13px;
+  flex-basis: 13px;
 }
 
 @media (max-width: 1050px) {
@@ -352,10 +405,13 @@ button { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 720px) {
   .page-transition {
-    background: linear-gradient(145deg, #095169, var(--navy) 58%);
-    clip-path: none;
+    place-items: end center;
+    padding-bottom: max(34px, env(safe-area-inset-bottom));
+    background:
+      radial-gradient(circle at 82% 22%, rgba(238, 135, 40, 0.18), transparent 34%),
+      linear-gradient(145deg, #095169, var(--navy) 58%);
     transform: translate3d(0, 0, 0);
-    transition: transform 620ms cubic-bezier(0.65, 0, 0.35, 1);
+    transition-duration: 420ms;
   }
 
   html.page-ready .page-transition {
@@ -364,6 +420,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
   html.page-leaving .page-transition {
     transform: translate3d(0, 0, 0);
+    animation-duration: 360ms;
   }
 
   .page-transition__label {
@@ -371,6 +428,14 @@ button { -webkit-tap-highlight-color: transparent; }
     padding-bottom: 11px;
     font-size: 0.6rem;
     letter-spacing: 0.1em;
+  }
+
+  .site-footer > .footer-mark {
+    line-height: 1.02 !important;
+  }
+
+  .site-footer > .footer-mark + p {
+    margin-top: 30px !important;
   }
 
   .site-header {
