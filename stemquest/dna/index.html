@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="STEMQuest: DNA Discovery Lab is Killarney STEM Fellowship's interactive companion for the strawberry DNA extraction workshop."
+    />
+    <meta name="theme-color" content="#072235" />
+    <title>STEMQuest: DNA Discovery Lab</title>
+    <link rel="icon" type="image/jpeg" href="../../STEMbird.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="stemquest.css" />
+    <script src="stemquest-config.js" defer></script>
+    <script src="storage.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#quest-main">Skip to the workshop activity</a>
+
+    <header class="quest-header" data-app-header>
+      <a class="quest-brand" href="/" aria-label="Killarney STEM Fellowship home">
+        <img src="../../STEMbird.jpg" width="1181" height="1181" alt="" />
+        <span class="quest-brand__copy">
+          <span class="quest-brand__name">STEMQuest</span>
+          <span class="quest-brand__lab">DNA Discovery Lab</span>
+        </span>
+      </a>
+
+      <div class="save-status" data-save-status role="status" aria-live="polite">
+        <span class="save-status__dot" aria-hidden="true"></span>
+        <span data-save-status-text>Ready</span>
+      </div>
+
+      <div class="quest-progress" data-progress-wrap>
+        <div class="quest-progress__copy">
+          <span data-progress-label>Welcome</span>
+          <span data-progress-count>Get ready</span>
+        </div>
+        <div
+          class="quest-progress__track"
+          role="progressbar"
+          aria-label="Workshop progress"
+          aria-valuemin="0"
+          aria-valuemax="8"
+          aria-valuenow="0"
+          data-progress
+        >
+          <span data-progress-fill></span>
+        </div>
+      </div>
+    </header>
+
+    <noscript>
+      <div class="noscript-message">
+        This workshop guide needs JavaScript to save your answers and move through the lab. Please ask your presenter for help.
+      </div>
+    </noscript>
+
+    <main id="quest-main" class="quest-main">
+      <!-- Welcome -->
+      <section class="quest-screen quest-screen--welcome is-active" id="screen-welcome" data-screen="welcome" data-step-index="0">
+        <div class="welcome-copy">
+          <p class="quest-kicker">Killarney STEM Fellowship presents</p>
+          <h1>DNA <span>Discovery</span> Lab</h1>
+          <p class="welcome-lede">
+            Your digital lab notebook for a real strawberry DNA extraction. Make a prediction, follow your presenter, record what you see, and explain what happened.
+          </p>
+
+          <div class="physical-lab-note">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M8 3h8M10 3v5l-5.2 9A2.7 2.7 0 0 0 7.1 21h9.8a2.7 2.7 0 0 0 2.3-4l-5.2-9V3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M7.2 16h9.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+            <p><strong>The experiment stays hands-on.</strong> This guide helps you think and record. Always follow your presenter’s instructions for the physical lab.</p>
+          </div>
+
+          <div class="screen-actions screen-actions--welcome">
+            <button class="quest-button quest-button--primary" type="button" id="start-quest" data-action="go-to-join">
+              Begin the lab <span aria-hidden="true">→</span>
+            </button>
+            <a class="organizer-link" href="admin/" data-organizer-link>
+              I’m an organizer <span>Open the class dashboard</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="dna-hero-art" aria-hidden="true">
+          <span class="dna-hero-art__label">From strawberry to strand</span>
+          <svg viewBox="0 0 520 520" fill="none">
+            <circle class="cell-ring cell-ring--outer" cx="260" cy="260" r="212" />
+            <circle class="cell-ring cell-ring--middle" cx="260" cy="260" r="154" />
+            <circle class="cell-ring cell-ring--inner" cx="260" cy="260" r="88" />
+            <path class="dna-line dna-line--one" d="M220 174c72 40 7 98 80 138 70 39 14 83-25 99" />
+            <path class="dna-line dna-line--two" d="M300 174c-72 40-7 98-80 138-70 39-14 83 25 99" />
+            <path class="dna-rung" d="m224 196 68 18M209 232l99 26M208 279l98 24M221 326l72 17M239 372l40 10" />
+            <path class="strawberry" d="M208 91c17-18 34-21 52-4 17-17 35-14 52 4-8 2-17 8-25 15 34 13 49 41 39 72-10 31-42 60-66 71-24-11-56-40-66-71-10-31 5-59 39-72-8-7-17-13-25-15Z" />
+            <circle class="seed" cx="221" cy="141" r="4" /><circle class="seed" cx="260" cy="125" r="4" /><circle class="seed" cx="299" cy="141" r="4" />
+            <circle class="seed" cx="235" cy="172" r="4" /><circle class="seed" cx="284" cy="172" r="4" /><circle class="seed" cx="260" cy="202" r="4" />
+          </svg>
+          <ol class="hero-path">
+            <li><span>Predict</span></li>
+            <li><span>Extract</span></li>
+            <li><span>Explain</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Step 1: Join -->
+      <section class="quest-screen" id="screen-join" data-screen="join" data-step-index="1" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Join the workshop</p>
+          <h1>Tell us where to save your lab notes.</h1>
+          <p>No account, email, or full name needed. A nickname is perfect.</p>
+        </div>
+
+        <form class="quest-form join-form" id="join-workshop-form" data-form="join" novalidate>
+          <div class="field-group">
+            <label for="student-nickname">Nickname <span aria-hidden="true">*</span></label>
+            <p class="field-hint" id="nickname-hint">Use a first name or classroom nickname—not your full name.</p>
+            <input id="student-nickname" name="nickname" type="text" maxlength="30" autocomplete="nickname" aria-describedby="nickname-hint nickname-error" required />
+            <p class="field-error" id="nickname-error" data-error-for="student-nickname" aria-live="polite"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="student-grade">Grade level <span aria-hidden="true">*</span></label>
+            <select id="student-grade" name="grade" required aria-describedby="grade-error">
+              <option value="" selected disabled>Choose your grade</option>
+              <option value="4">Grade 4</option>
+              <option value="5">Grade 5</option>
+              <option value="6">Grade 6</option>
+              <option value="7">Grade 7</option>
+              <option value="8-plus">Grade 8 or higher</option>
+              <option value="other">Another grade</option>
+            </select>
+            <p class="field-error" id="grade-error" data-error-for="student-grade" aria-live="polite"></p>
+          </div>
+
+          <div class="form-split">
+            <div class="field-group">
+              <label for="workshop-code">Workshop code <span aria-hidden="true">*</span></label>
+              <p class="field-hint" id="code-hint">It is on the board or already filled in from the QR code.</p>
+              <input id="workshop-code" name="workshop_code" type="text" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" aria-describedby="code-hint code-error" required />
+              <p class="field-error" id="code-error" data-error-for="workshop-code" aria-live="polite"></p>
+            </div>
+
+            <div class="field-group">
+              <label for="group-number">Group number <span aria-hidden="true">*</span></label>
+              <p class="field-hint" id="group-hint">Ask your presenter if you are not sure.</p>
+              <input id="group-number" name="group_number" type="number" min="1" max="30" inputmode="numeric" aria-describedby="group-hint group-error" required />
+              <p class="field-error" id="group-error" data-error-for="group-number" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6V10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p><strong>Your work stays with this class.</strong> We use these details to organize anonymous class results. Do not enter private or sensitive information.</p>
+          </div>
+
+          <div class="screen-actions">
+            <button class="quest-button quest-button--primary" type="submit" id="join-workshop-button">
+              Join workshop <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 2: Introduction -->
+      <section class="quest-screen" id="screen-introduction" data-screen="introduction" data-step-index="2" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Meet DNA</p>
+          <h1>A tiny instruction library inside living things.</h1>
+          <p>Before we extract it, let’s zoom in from a strawberry to the DNA packed inside its cells.</p>
+        </div>
+
+        <div class="dna-zoom" aria-label="A visual showing DNA inside a strawberry cell">
+          <article>
+            <span class="zoom-visual zoom-visual--fruit" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M13 13c3-4 7-5 11-1 4-4 8-3 11 1-2 0-4 2-6 3 8 3 11 9 8 16-3 7-9 12-13 14-5-2-11-7-14-14-3-7 0-13 8-16-2-1-4-3-5-3Z" fill="currentColor" />
+                <path d="M17 23h.1M25 20h.1M31 25h.1M20 31h.1M28 34h.1" stroke="white" stroke-width="2.6" stroke-linecap="round" />
+              </svg>
+            </span>
+            <div><h2>Strawberry</h2><p>A strawberry is made of many tiny cells.</p></div>
+          </article>
+          <span class="zoom-connector" aria-hidden="true"></span>
+          <article>
+            <span class="zoom-visual zoom-visual--cell" aria-hidden="true"><i></i></span>
+            <div><h2>Cell</h2><p>Most DNA is stored in a cell’s nucleus.</p></div>
+          </article>
+          <span class="zoom-connector" aria-hidden="true"></span>
+          <article>
+            <span class="zoom-visual zoom-visual--dna" aria-hidden="true"><i></i><i></i></span>
+            <div><h2>DNA</h2><p>DNA carries instructions that help living things grow, work, and reproduce.</p></div>
+          </article>
+        </div>
+
+        <div class="learning-grid">
+          <article class="learning-card learning-card--wide">
+            <h2>What is DNA?</h2>
+            <p>DNA stands for <strong>deoxyribonucleic acid</strong>. It is a long molecule that stores biological instructions, a little like a recipe book for cells.</p>
+          </article>
+          <article class="learning-card">
+            <h2>Where is it found?</h2>
+            <p>DNA is inside the cells of plants, animals, fungi, and many microorganisms. That means strawberries have DNA—and so do you.</p>
+          </article>
+          <article class="learning-card">
+            <h2>Why study it?</h2>
+            <p>DNA can help scientists understand health, inherited traits, relationships between living things, and how organisms change over time.</p>
+          </article>
+        </div>
+
+        <div class="dna-uses" aria-labelledby="dna-uses-title">
+          <div class="section-subheading">
+            <h2 id="dna-uses-title">How scientists use DNA</h2>
+            <p>Open each example to learn more.</p>
+          </div>
+          <details>
+            <summary><span class="use-icon" aria-hidden="true">+</span><span><strong>Medicine</strong><small>Understanding health and designing treatments</small></span></summary>
+            <p>Scientists study DNA to learn how some conditions develop and why a treatment may work differently for different people.</p>
+          </details>
+          <details>
+            <summary><span class="use-icon" aria-hidden="true">⌕</span><span><strong>Forensics</strong><small>Comparing biological evidence</small></span></summary>
+            <p>Specialists can compare DNA samples as one part of a careful investigation. DNA evidence must always be collected and interpreted responsibly.</p>
+          </details>
+          <details>
+            <summary><span class="use-icon" aria-hidden="true">⌁</span><span><strong>Genetics research</strong><small>Studying traits, variation, and inheritance</small></span></summary>
+            <p>Researchers compare DNA to study how traits are passed on, how organisms are related, and how living things adapt.</p>
+          </details>
+        </div>
+
+        <form class="concept-pulse" id="confidence-before-form" data-form="confidence-before">
+          <fieldset>
+            <legend>Right now, how ready do you feel to explain what DNA is?</legend>
+            <div class="compact-choices">
+              <label><input type="radio" name="confidence_before" value="1" required /><span>I’m still learning</span></label>
+              <label><input type="radio" name="confidence_before" value="2" required /><span>I know some of it</span></label>
+              <label><input type="radio" name="confidence_before" value="3" required /><span>I could explain it</span></label>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="screen-actions screen-actions--split">
+          <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+          <button class="quest-button quest-button--primary" type="button" id="introduction-continue" data-action="complete-introduction">
+            Make a prediction <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 3: Prediction -->
+      <section class="quest-screen" id="screen-prediction" data-screen="prediction" data-step-index="3" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Make a prediction</p>
+          <h1>What do you think extracted strawberry DNA will look like?</h1>
+          <p>Choose your best idea before the experiment. Scientists make predictions so they can compare what they expected with what they observed.</p>
+        </div>
+
+        <form class="quest-form" id="prediction-form" data-form="prediction">
+          <fieldset class="choice-fieldset">
+            <legend class="sr-only">Choose what extracted strawberry DNA will look like</legend>
+            <div class="choice-grid choice-grid--prediction">
+              <label class="choice-card">
+                <input type="radio" name="prediction" value="clear-liquid" required />
+                <span class="choice-card__mark" aria-hidden="true"></span>
+                <span><strong>Clear liquid</strong><small>Transparent with no solid pieces</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="prediction" value="white-stringy-material" required />
+                <span class="choice-card__mark" aria-hidden="true"></span>
+                <span><strong>White stringy material</strong><small>Cloudy strands or clumps</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="prediction" value="small-crystals" required />
+                <span class="choice-card__mark" aria-hidden="true"></span>
+                <span><strong>Small crystals</strong><small>Hard grains that sink</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="prediction" value="nothing-visible" required />
+                <span class="choice-card__mark" aria-hidden="true"></span>
+                <span><strong>Nothing visible</strong><small>Too small to see without a microscope</small></span>
+              </label>
+            </div>
+          </fieldset>
+          <p class="field-error" data-error-for="prediction" aria-live="polite"></p>
+          <div class="screen-actions screen-actions--split">
+            <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+            <button class="quest-button quest-button--primary" type="submit" id="submit-prediction">
+              Lock in prediction <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+
+        <section class="class-prediction" id="prediction-results" data-prediction-results aria-live="polite" hidden>
+          <div class="section-subheading">
+            <p class="step-label">Class prediction</p>
+            <h2>Here is what your class thinks so far.</h2>
+            <p><span data-prediction-response-count>0</span> predictions submitted. Results update as classmates respond.</p>
+          </div>
+          <div class="bar-chart" data-chart="predictions" aria-label="Class prediction results">
+            <div data-option="clear-liquid"><span>Clear liquid</span><i><b style="--bar-value: 0%"></b></i><strong>0%</strong></div>
+            <div data-option="white-stringy-material"><span>White stringy material</span><i><b style="--bar-value: 0%"></b></i><strong>0%</strong></div>
+            <div data-option="small-crystals"><span>Small crystals</span><i><b style="--bar-value: 0%"></b></i><strong>0%</strong></div>
+            <div data-option="nothing-visible"><span>Nothing visible</span><i><b style="--bar-value: 0%"></b></i><strong>0%</strong></div>
+          </div>
+          <p class="chart-note">We will reveal the result after the extraction.</p>
+          <div class="screen-actions">
+            <button class="quest-button quest-button--primary" type="button" data-action="go-to-lab">
+              Start the experiment guide <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <!-- Step 4: Experiment guide -->
+      <section class="quest-screen" id="screen-lab-guide" data-screen="lab-guide" data-step-index="4" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Experiment guide</p>
+          <h1>Five moves from fruit to visible DNA.</h1>
+          <p>Complete each checkpoint when your presenter tells you to. Add a quick note if your group notices something useful.</p>
+        </div>
+
+        <aside class="safety-note">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M12 3 2.8 20h18.4L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><path d="M12 9v5M12 17.5v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+          <p><strong>Pause and follow your presenter.</strong> Do not taste any materials. Keep the extraction solution and alcohol away from your eyes and mouth.</p>
+        </aside>
+
+        <ol class="lab-step-list" data-lab-step-list>
+          <li>
+            <article class="lab-step is-current" data-lab-step="1">
+              <div class="lab-step__number"><span>1</span><small>of 5</small></div>
+              <div class="lab-step__content">
+                <p class="lab-step__verb">Mash</p>
+                <h2>Mash the strawberries.</h2>
+                <p class="lab-step__instruction">Seal the strawberries in the bag and mash until there are very few large pieces left.</p>
+                <div class="why-card"><strong>Why do we mash strawberries?</strong><span>To break apart the strawberry tissue and help open cells so their DNA can be released.</span></div>
+                <label class="step-note" for="step-note-1">Optional observation</label>
+                <textarea id="step-note-1" name="step_note_1" rows="2" maxlength="240" placeholder="What changed as you mashed?"></textarea>
+                <button class="checkpoint-button" type="button" data-action="complete-lab-step" data-step="1" aria-pressed="false"><span class="checkpoint-button__icon" aria-hidden="true">✓</span><span>Mark step complete</span></button>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="lab-step" data-lab-step="2">
+              <div class="lab-step__number"><span>2</span><small>of 5</small></div>
+              <div class="lab-step__content">
+                <p class="lab-step__verb">Release</p>
+                <h2>Add the extraction solution.</h2>
+                <p class="lab-step__instruction">Add the amount your presenter gives you, reseal the bag, and mix gently.</p>
+                <div class="why-card"><strong>What is the solution doing?</strong><span>Soap helps break cell and nucleus membranes. Salt helps the released DNA gather together.</span></div>
+                <label class="step-note" for="step-note-2">Optional observation</label>
+                <textarea id="step-note-2" name="step_note_2" rows="2" maxlength="240" placeholder="How did the mixture look or feel?"></textarea>
+                <button class="checkpoint-button" type="button" data-action="complete-lab-step" data-step="2" aria-pressed="false"><span class="checkpoint-button__icon" aria-hidden="true">✓</span><span>Mark step complete</span></button>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="lab-step" data-lab-step="3">
+              <div class="lab-step__number"><span>3</span><small>of 5</small></div>
+              <div class="lab-step__content">
+                <p class="lab-step__verb">Separate</p>
+                <h2>Filter the mixture.</h2>
+                <p class="lab-step__instruction">Pour carefully through the filter and collect the liquid below it.</p>
+                <div class="why-card"><strong>Why filter?</strong><span>The filter holds back seeds, pulp, and larger cell pieces while the liquid containing DNA passes through.</span></div>
+                <label class="step-note" for="step-note-3">Optional observation</label>
+                <textarea id="step-note-3" name="step_note_3" rows="2" maxlength="240" placeholder="What stayed in the filter?"></textarea>
+                <button class="checkpoint-button" type="button" data-action="complete-lab-step" data-step="3" aria-pressed="false"><span class="checkpoint-button__icon" aria-hidden="true">✓</span><span>Mark step complete</span></button>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="lab-step" data-lab-step="4">
+              <div class="lab-step__number"><span>4</span><small>of 5</small></div>
+              <div class="lab-step__content">
+                <p class="lab-step__verb">Reveal</p>
+                <h2>Add cold alcohol.</h2>
+                <p class="lab-step__instruction">Tilt the cup and slowly add cold alcohol so it forms a layer. Do not stir.</p>
+                <div class="why-card"><strong>Why cold alcohol?</strong><span>DNA does not dissolve well in cold alcohol. It leaves the liquid and clumps into material we can see.</span></div>
+                <label class="step-note" for="step-note-4">Optional observation</label>
+                <textarea id="step-note-4" name="step_note_4" rows="2" maxlength="240" placeholder="What happened where the two layers met?"></textarea>
+                <button class="checkpoint-button" type="button" data-action="complete-lab-step" data-step="4" aria-pressed="false"><span class="checkpoint-button__icon" aria-hidden="true">✓</span><span>Mark step complete</span></button>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="lab-step" data-lab-step="5">
+              <div class="lab-step__number"><span>5</span><small>of 5</small></div>
+              <div class="lab-step__content">
+                <p class="lab-step__verb">Observe</p>
+                <h2>Look for DNA strands.</h2>
+                <p class="lab-step__instruction">Watch the alcohol layer and the boundary between the layers. Use the tool your presenter provides to lift the material gently.</p>
+                <div class="why-card"><strong>What might DNA look like?</strong><span>Many DNA molecules clumped together can look white, cloudy, stringy, or web-like.</span></div>
+                <label class="step-note" for="step-note-5">Optional observation</label>
+                <textarea id="step-note-5" name="step_note_5" rows="2" maxlength="240" placeholder="Where did the strands appear?"></textarea>
+                <button class="checkpoint-button" type="button" data-action="complete-lab-step" data-step="5" aria-pressed="false"><span class="checkpoint-button__icon" aria-hidden="true">✓</span><span>Mark step complete</span></button>
+              </div>
+            </article>
+          </li>
+        </ol>
+
+        <div class="screen-actions screen-actions--split">
+          <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+          <button class="quest-button quest-button--primary" type="button" id="lab-guide-continue" data-action="complete-lab-guide" disabled>
+            Record observations <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 5: Observation -->
+      <section class="quest-screen" id="screen-observation" data-screen="observation" data-step-index="5" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Record what happened</p>
+          <h1>Your observation is evidence.</h1>
+          <p>Report what your group actually saw—even if it was different from your prediction or nothing was visible.</p>
+        </div>
+
+        <form class="quest-form" id="observation-form" data-form="observation">
+          <fieldset class="choice-fieldset">
+            <legend>Did you see DNA?</legend>
+            <div class="compact-choices compact-choices--large">
+              <label><input type="radio" name="saw_dna" value="yes" required /><span>Yes</span></label>
+              <label><input type="radio" name="saw_dna" value="somewhat" required /><span>Somewhat</span></label>
+              <label><input type="radio" name="saw_dna" value="no" required /><span>No</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="observation-tags">
+            <legend>Which words match what you saw? <span>Choose any that fit.</span></legend>
+            <div>
+              <label><input type="checkbox" name="observation_tags" value="white" /><span>White</span></label>
+              <label><input type="checkbox" name="observation_tags" value="cloudy" /><span>Cloudy</span></label>
+              <label><input type="checkbox" name="observation_tags" value="stringy" /><span>Stringy</span></label>
+              <label><input type="checkbox" name="observation_tags" value="clumpy" /><span>Clumpy</span></label>
+              <label><input type="checkbox" name="observation_tags" value="web-like" /><span>Web-like</span></label>
+              <label><input type="checkbox" name="observation_tags" value="no-visible-change" /><span>No visible change</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field-group">
+            <label for="observation-description">Describe what you observed. <span aria-hidden="true">*</span></label>
+            <p class="field-hint" id="observation-hint">Where did it appear? What colour, shape, or texture did it have?</p>
+            <textarea id="observation-description" name="observation_description" rows="5" maxlength="600" aria-describedby="observation-hint observation-error" required></textarea>
+            <div class="field-meta"><p class="field-error" id="observation-error" data-error-for="observation-description" aria-live="polite"></p><span data-character-count-for="observation-description">0 / 600</span></div>
+          </div>
+
+          <div class="photo-field">
+            <div>
+              <label for="observation-photo">Add a photo <span>Optional</span></label>
+              <p>Photograph the cup or DNA only—no faces, names, or identifying details. The photo stays as a preview on this device and is not added to the class report.</p>
+            </div>
+            <label class="photo-picker" for="observation-photo">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="15" rx="3" stroke="currentColor" stroke-width="1.7" /><path d="m7 16 3-3 2 2 2.5-3 3.5 4M9 9.5h.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <span>Choose photo</span>
+            </label>
+            <input id="observation-photo" class="sr-only" name="observation_photo" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" data-photo-input />
+            <div class="photo-preview" data-photo-preview hidden>
+              <img alt="Preview of your lab observation photo" data-photo-preview-image />
+              <button type="button" data-action="remove-photo">Remove photo</button>
+            </div>
+          </div>
+
+          <div class="screen-actions screen-actions--split">
+            <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+            <button class="quest-button quest-button--primary" type="submit" id="submit-observation">
+              Save observation <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 6: Analysis -->
+      <section class="quest-screen" id="screen-analysis" data-screen="analysis" data-step-index="6" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Analyze the evidence</p>
+          <h1>What did the class discover?</h1>
+          <p>Your class results combine anonymous responses from everyone using the same workshop code.</p>
+        </div>
+
+        <form class="analysis-check" id="analysis-check-form" data-form="analysis-check">
+          <fieldset class="choice-fieldset">
+            <legend>Quick check: What was the white, stringy material in the alcohol layer?</legend>
+            <div class="compact-choices compact-choices--stack">
+              <label><input type="radio" name="analysis_answer" value="white-stringy-material" required /><span>Many strawberry DNA molecules clumped together</span></label>
+              <label><input type="radio" name="analysis_answer" value="seeds" required /><span>Tiny strawberry seeds</span></label>
+              <label><input type="radio" name="analysis_answer" value="soap" required /><span>Soap bubbles only</span></label>
+              <label><input type="radio" name="analysis_answer" value="sugar" required /><span>Sugar crystals</span></label>
+            </div>
+          </fieldset>
+          <button class="quest-button quest-button--primary" type="submit">Check and view class results <span aria-hidden="true">→</span></button>
+        </form>
+
+        <div class="analysis-results" id="analysis-results" data-analysis-results hidden aria-live="polite">
+          <div class="metric-grid">
+            <article class="metric-card"><span>Groups</span><strong data-metric="groups">—</strong><small>reporting results</small></article>
+            <article class="metric-card metric-card--teal"><span>Successful extractions</span><strong data-metric="success">—</strong><small>groups saw DNA</small></article>
+          </div>
+
+          <article class="result-panel result-panel--observation">
+            <div>
+              <p class="step-label">Common observations</p>
+              <h2 data-common-observation>Waiting for class observations…</h2>
+            </div>
+            <div class="observation-cloud" data-observation-cloud aria-label="Common observation words"></div>
+          </article>
+
+          <article class="result-panel">
+            <div class="section-subheading">
+              <h2>Prediction accuracy</h2>
+              <p>How the class’s first ideas compare with what students understand now.</p>
+            </div>
+            <div class="before-after-chart" data-chart="understanding">
+              <div><span>Before the lab</span><strong data-metric="prediction-accuracy">—</strong><i><b style="--bar-value: 0%"></b></i><small>predicted white stringy material</small></div>
+              <div><span>After the lab</span><strong data-metric="concept-accuracy">—</strong><i><b style="--bar-value: 0%"></b></i><small>identified the extracted DNA</small></div>
+            </div>
+          </article>
+
+          <details class="accessible-results">
+            <summary>Read the results as text</summary>
+            <div data-results-text>Class results are still loading.</div>
+          </details>
+
+          <div class="screen-actions screen-actions--split">
+            <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+            <button class="quest-button quest-button--primary" type="button" data-action="go-to-reflection">
+              Reflect on the lab <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 7: Reflection -->
+      <section class="quest-screen" id="screen-reflection" data-screen="reflection" data-step-index="7" hidden>
+        <div class="screen-heading">
+          <p class="step-label">Explain your thinking</p>
+          <h1>Turn what you did into what you learned.</h1>
+          <p>Short, clear answers are great. Use evidence from your group’s experiment whenever you can.</p>
+        </div>
+
+        <form class="reflection-form" id="reflection-form" data-form="reflection">
+          <ol class="reflection-list">
+            <li class="field-group">
+              <label for="reflection-dna">What is DNA and where is it found?</label>
+              <textarea id="reflection-dna" name="reflection_dna" rows="3" maxlength="500" placeholder="DNA is… It is found…" required></textarea>
+              <p class="field-error" data-error-for="reflection-dna" aria-live="polite"></p>
+            </li>
+            <li class="field-group">
+              <label for="reflection-mash">Why did we mash the strawberries?</label>
+              <textarea id="reflection-mash" name="reflection_mash" rows="3" maxlength="500" placeholder="Mashing helped because…" required></textarea>
+              <p class="field-error" data-error-for="reflection-mash" aria-live="polite"></p>
+            </li>
+            <li class="field-group">
+              <label for="reflection-soap">Why did we add soap?</label>
+              <textarea id="reflection-soap" name="reflection_soap" rows="3" maxlength="500" placeholder="Soap helped…" required></textarea>
+              <p class="field-error" data-error-for="reflection-soap" aria-live="polite"></p>
+            </li>
+            <li class="field-group">
+              <label for="reflection-alcohol">Why did alcohol help separate DNA?</label>
+              <textarea id="reflection-alcohol" name="reflection_alcohol" rows="3" maxlength="500" placeholder="In cold alcohol, DNA…" required></textarea>
+              <p class="field-error" data-error-for="reflection-alcohol" aria-live="polite"></p>
+            </li>
+            <li class="field-group">
+              <label for="reflection-scientists">Why do scientists study DNA?</label>
+              <textarea id="reflection-scientists" name="reflection_scientists" rows="3" maxlength="500" placeholder="Scientists study DNA to…" required></textarea>
+              <p class="field-error" data-error-for="reflection-scientists" aria-live="polite"></p>
+            </li>
+          </ol>
+
+          <fieldset class="concept-pulse concept-pulse--after">
+            <legend>Now, how ready do you feel to explain what DNA is?</legend>
+            <div class="compact-choices">
+              <label><input type="radio" name="confidence_after" value="1" required /><span>I’m still learning</span></label>
+              <label><input type="radio" name="confidence_after" value="3" required /><span>I know some of it</span></label>
+              <label><input type="radio" name="confidence_after" value="5" required /><span>I could explain it</span></label>
+            </div>
+          </fieldset>
+
+          <div class="screen-actions screen-actions--split">
+            <button class="quest-button quest-button--quiet" type="button" data-action="previous-screen">Back</button>
+            <button class="quest-button quest-button--primary" type="submit" id="submit-reflection">
+              Finish my lab <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 8: Badge -->
+      <section class="quest-screen quest-screen--badge" id="screen-badge" data-screen="badge" data-step-index="8" hidden>
+        <div class="badge-copy">
+          <p class="step-label">Lab complete</p>
+          <h1>Congratulations! You completed the DNA Discovery Lab.</h1>
+          <p>Your prediction, observations, and reflections are now part of your class’s anonymous workshop report.</p>
+        </div>
+
+        <div class="dna-badge" id="dna-explorer-badge" data-badge>
+          <div class="dna-badge__ring">
+            <img src="../../STEMbird.jpg" width="1181" height="1181" alt="Killarney STEM Fellowship owl" />
+            <svg aria-hidden="true" viewBox="0 0 120 120" fill="none">
+              <path d="M39 18c44 22-2 62 42 84M81 18c-44 22 2 62-42 84" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+              <path d="m43 29 34 8M36 47l48 10M36 67l48 10M43 87l34 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <p>STEMQuest</p>
+          <h2>DNA Explorer</h2>
+          <span>Awarded to <strong data-badge-name>DNA Explorer</strong></span>
+          <small data-badge-date>Killarney STEM Fellowship</small>
+        </div>
+
+        <div class="completion-summary" aria-label="Workshop completion summary">
+          <div><span aria-hidden="true">✓</span><p><strong>Prediction</strong> recorded</p></div>
+          <div><span aria-hidden="true">✓</span><p><strong>Five lab steps</strong> completed</p></div>
+          <div><span aria-hidden="true">✓</span><p><strong>Reflection</strong> submitted</p></div>
+        </div>
+
+        <div class="screen-actions badge-actions">
+          <button class="quest-button quest-button--primary" type="button" data-action="download-badge">Save my badge</button>
+          <button class="quest-button quest-button--quiet" type="button" data-action="start-new-submission">Start a new submission</button>
+          <a class="quest-button quest-button--quiet" href="/">Return to Killarney STEM Fellowship</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="connection-message" data-connection-message role="status" aria-live="polite" hidden>
+      <span aria-hidden="true"></span>
+      <p data-connection-message-text>Your work is saved on this device. We’ll sync it when the connection returns.</p>
+    </div>
+
+    <div class="sr-only" aria-live="assertive" data-screen-announcer></div>
+  </body>
+</html>
