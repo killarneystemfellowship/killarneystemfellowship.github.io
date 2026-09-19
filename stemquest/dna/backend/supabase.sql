@@ -1,5 +1,5 @@
--- STEMQuest: DNA Discovery Lab
--- Supabase/PostgreSQL schema for one workshop experience.
+-- Scope workshops (including existing STEMQuest DNA sessions).
+-- Rerunnable Supabase/PostgreSQL schema for all five lesson-plan labs.
 -- Run this file in the Supabase SQL editor, then follow backend/README.md.
 
 begin;
@@ -27,6 +27,16 @@ create table if not exists public.stemquest_workshop_sessions (
   constraint stemquest_workshop_window
     check (closes_at is null or opens_at is null or closes_at > opens_at)
 );
+
+-- Defaults retain the original DNA contract for existing sessions and scripts.
+alter table public.stemquest_workshop_sessions
+  add column if not exists prediction_options text[] not null default array[
+    'clear-liquid', 'white-stringy-material', 'small-crystals', 'nothing-visible'
+  ]::text[],
+  add column if not exists observation_tag_options text[] not null default array[
+    'white', 'cloudy', 'stringy', 'clumpy', 'web-like', 'no-visible-change'
+  ]::text[],
+  add column if not exists correct_post_check_answer text not null default 'white-stringy-material';
 
 -- A workshop type can have many class sessions. Drop the earlier MVP's
 -- one-session-per-slug constraint when this schema is rerun as a migration.
@@ -98,6 +108,17 @@ create table if not exists public.stemquest_student_runs (
     check (understanding_rating is null or understanding_rating between 1 and 5)
 );
 
+-- The RPC checks each option against its workshop. Replace the original DNA-
+-- only constraints without rewriting or deleting any existing student rows.
+alter table public.stemquest_student_runs
+  drop constraint if exists stemquest_prediction_value,
+  drop constraint if exists stemquest_observation_tags_values;
+alter table public.stemquest_student_runs
+  add constraint stemquest_prediction_value
+    check (prediction is null or prediction ~ '^[a-z0-9][a-z0-9-]{0,79}$'),
+  add constraint stemquest_observation_tags_values
+    check (cardinality(observation_tags) <= 12 and array_position(observation_tags, null) is null);
+
 create index if not exists stemquest_student_runs_workshop_idx
   on public.stemquest_student_runs (workshop_id, created_at);
 
@@ -133,6 +154,11 @@ as $$
     ),
     'workshopTitle', (
       select session.title
+      from public.stemquest_workshop_sessions as session
+      where session.id = p_run.workshop_id
+    ),
+    'workshopSlug', (
+      select session.slug
       from public.stemquest_workshop_sessions as session
       where session.id = p_run.workshop_id
     ),
@@ -172,23 +198,36 @@ as $$
     'predictionWhiteStringyMaterialCount', count(*) filter (where prediction = 'white-stringy-material'),
     'predictionSmallCrystalsCount', count(*) filter (where prediction = 'small-crystals'),
     'predictionNothingVisibleCount', count(*) filter (where prediction = 'nothing-visible'),
+    'predictionCounts', (
+      select coalesce(jsonb_object_agg(option, (
+        select count(*) from public.stemquest_student_runs as responses
+        where responses.workshop_id = p_workshop_id and responses.prediction = option
+      )), '{}'::jsonb)
+      from public.stemquest_workshop_sessions as session,
+        unnest(session.prediction_options) as option
+      where session.id = p_workshop_id
+    ),
     'observedYesCount', count(*) filter (where observation_result = 'yes'),
     'observedSomewhatCount', count(*) filter (where observation_result = 'somewhat'),
     'observedNoCount', count(*) filter (where observation_result = 'no'),
     'observationSubmittedCount', count(*) filter (where observation_result is not null),
     'groupObservationCount', count(distinct group_number) filter (where observation_result is not null),
     'successfulGroupCount', count(distinct group_number) filter (where observation_result in ('yes', 'somewhat')),
-    'observationTagCounts', jsonb_build_object(
-      'white', count(*) filter (where 'white' = any(observation_tags)),
-      'cloudy', count(*) filter (where 'cloudy' = any(observation_tags)),
-      'stringy', count(*) filter (where 'stringy' = any(observation_tags)),
-      'clumpy', count(*) filter (where 'clumpy' = any(observation_tags)),
-      'web-like', count(*) filter (where 'web-like' = any(observation_tags)),
-      'no-visible-change', count(*) filter (where 'no-visible-change' = any(observation_tags))
+    'observationTagCounts', (
+      select coalesce(jsonb_object_agg(option, (
+        select count(*) from public.stemquest_student_runs as responses
+        where responses.workshop_id = p_workshop_id and option = any(responses.observation_tags)
+      )), '{}'::jsonb)
+      from public.stemquest_workshop_sessions as session,
+        unnest(session.observation_tag_options) as option
+      where session.id = p_workshop_id
     ),
     'completedCount', count(*) filter (where completed_at is not null),
     'postCheckResponseCount', count(*) filter (where post_check_answer is not null),
-    'postCheckCorrectCount', count(*) filter (where post_check_answer = 'white-stringy-material'),
+    'postCheckCorrectCount', count(*) filter (where post_check_answer = (
+      select correct_post_check_answer from public.stemquest_workshop_sessions
+      where id = p_workshop_id
+    )),
     'understandingResponseCount', count(*) filter (where understanding_rating is not null),
     'understandingScoreTotal', coalesce(sum(understanding_rating), 0)
   )
@@ -196,12 +235,16 @@ as $$
   where workshop_id = p_workshop_id;
 $$;
 
+-- Replace the five-argument function to avoid ambiguous PostgREST overloads.
+-- Its existing callers still work because the sixth argument defaults to DNA.
+drop function if exists public.stemquest_join_student(text, text, text, integer, text);
 create or replace function public.stemquest_join_student(
   p_class_code text,
   p_nickname text,
   p_grade_level text,
   p_group_number integer,
-  p_resume_token text
+  p_resume_token text,
+  p_workshop_slug text default 'dna-discovery-lab'
 )
 returns jsonb
 language plpgsql
@@ -235,7 +278,7 @@ begin
   into v_workshop
   from public.stemquest_workshop_sessions
   where class_code = v_code
-    and slug = 'dna-discovery-lab'
+    and slug = p_workshop_slug
     and is_active
     and (opens_at is null or opens_at <= timezone('utc', now()))
     and (closes_at is null or closes_at >= timezone('utc', now()))
@@ -331,6 +374,20 @@ begin
   if octet_length(p_payload::text) > 30000 then
     raise exception using errcode = 'P0001', message = 'Workshop progress is too large to save.';
   end if;
+  if p_payload::text ~* '(data:image/|blob:(https?:|null/))' then
+    raise exception using errcode = 'P0001', message = 'Photos stay on this device and cannot be saved.';
+  end if;
+
+  select * into v_run
+  from public.stemquest_student_runs
+  where id = p_run_id
+    and resume_token_hash = extensions.digest(convert_to(p_resume_token, 'UTF8'), 'sha256');
+  if not found then
+    raise exception using errcode = 'P0001', message = 'Workshop progress could not be saved.';
+  end if;
+  select * into v_workshop
+  from public.stemquest_workshop_sessions
+  where id = v_run.workshop_id;
 
   if p_payload ? 'introCompleted'
      and jsonb_typeof(p_payload -> 'introCompleted') <> 'boolean' then
@@ -342,9 +399,7 @@ begin
   end if;
   if p_payload ? 'prediction'
      and jsonb_typeof(p_payload -> 'prediction') <> 'null'
-     and coalesce(p_payload ->> 'prediction', '') not in (
-       'clear-liquid', 'white-stringy-material', 'small-crystals', 'nothing-visible'
-     ) then
+     and not (coalesce(p_payload ->> 'prediction', '') = any(v_workshop.prediction_options)) then
     raise exception using errcode = 'P0001', message = 'That prediction option is not valid.';
   end if;
   if p_payload ? 'experimentSteps'
@@ -365,13 +420,11 @@ begin
   end if;
   if p_payload ? 'observationTags'
      and (
-       jsonb_array_length(p_payload -> 'observationTags') > 6
+       jsonb_array_length(p_payload -> 'observationTags') > cardinality(v_workshop.observation_tag_options)
        or exists (
          select 1
          from jsonb_array_elements_text(p_payload -> 'observationTags') as tag(value)
-         where tag.value not in (
-           'white', 'cloudy', 'stringy', 'clumpy', 'web-like', 'no-visible-change'
-         )
+         where tag.value is null or not (tag.value = any(v_workshop.observation_tag_options))
        )
      ) then
     raise exception using errcode = 'P0001', message = 'One or more observation tags are not valid.';
@@ -387,9 +440,13 @@ begin
      and jsonb_typeof(p_payload -> 'understandingRating') <> 'null'
      and (
        jsonb_typeof(p_payload -> 'understandingRating') <> 'number'
-       or (p_payload ->> 'understandingRating')::integer not between 1 and 5
+       or (p_payload ->> 'understandingRating') !~ '^[1-5]$'
      ) then
     raise exception using errcode = 'P0001', message = 'Understanding rating must be from 1 to 5.';
+  end if;
+  if (p_payload ? 'observationText' and jsonb_typeof(p_payload -> 'observationText') not in ('string', 'null'))
+     or (p_payload ? 'postCheckAnswer' and jsonb_typeof(p_payload -> 'postCheckAnswer') not in ('string', 'null')) then
+    raise exception using errcode = 'P0001', message = 'Workshop answers must be text.';
   end if;
 
   update public.stemquest_student_runs
@@ -478,7 +535,6 @@ begin
   into v_workshop
   from public.stemquest_workshop_sessions
   where class_code = v_code
-    and slug = 'dna-discovery-lab'
     and is_active
     and (opens_at is null or opens_at <= timezone('utc', now()))
     and (closes_at is null or closes_at >= timezone('utc', now()))
@@ -489,6 +545,7 @@ begin
       'found', false,
       'classCode', v_code,
       'workshopTitle', 'STEMQuest: DNA Discovery Lab',
+      'workshopSlug', 'dna-discovery-lab',
       'studentCount', 0,
       'groupCount', 0,
       'predictionSubmittedCount', 0,
@@ -496,6 +553,9 @@ begin
       'predictionWhiteStringyMaterialCount', 0,
       'predictionSmallCrystalsCount', 0,
       'predictionNothingVisibleCount', 0,
+      'predictionCounts', jsonb_build_object(
+        'clear-liquid', 0, 'white-stringy-material', 0, 'small-crystals', 0, 'nothing-visible', 0
+      ),
       'observedYesCount', 0,
       'observedSomewhatCount', 0,
       'observedNoCount', 0,
@@ -521,7 +581,8 @@ begin
   return jsonb_build_object(
     'found', true,
     'classCode', v_workshop.class_code,
-    'workshopTitle', v_workshop.title
+    'workshopTitle', v_workshop.title,
+    'workshopSlug', v_workshop.slug
   ) || public._stemquest_summary(v_workshop.id);
 end;
 $$;
@@ -544,7 +605,6 @@ begin
   into v_workshop
   from public.stemquest_workshop_sessions
   where class_code = v_code
-    and slug = 'dna-discovery-lab'
   limit 1;
 
   if not found
@@ -568,6 +628,9 @@ begin
       'classCode', v_workshop.class_code,
       'title', v_workshop.title,
       'active', v_workshop.is_active,
+      'predictionOptions', to_jsonb(v_workshop.prediction_options),
+      'observationTagOptions', to_jsonb(v_workshop.observation_tag_options),
+      'correctPostCheckAnswer', v_workshop.correct_post_check_answer,
       'opensAt', v_workshop.opens_at,
       'closesAt', v_workshop.closes_at,
       'createdAt', v_workshop.created_at,
@@ -576,41 +639,59 @@ begin
     'summary', jsonb_build_object(
       'found', true,
       'classCode', v_workshop.class_code,
-      'workshopTitle', v_workshop.title
+      'workshopTitle', v_workshop.title,
+      'workshopSlug', v_workshop.slug
     ) || public._stemquest_summary(v_workshop.id),
     'responses', v_responses
   );
 end;
 $$;
 
--- Fail closed: the example workshop is inactive until its public class code
--- and private organizer PIN are changed after running this script.
+-- Fail closed: examples stay inactive until an organizer assigns a private PIN
+-- and activates a session. Reruns never replace existing class credentials.
 insert into public.stemquest_workshop_sessions (
   slug,
   class_code,
   title,
   organizer_pin_hash,
-  is_active
-) values (
-  'dna-discovery-lab',
-  'DNA-DEMO',
-  'STEMQuest: DNA Discovery Lab',
-  extensions.crypt('CHANGE-ME-BEFORE-LAUNCH', extensions.gen_salt('bf')),
-  false
+  is_active,
+  prediction_options,
+  observation_tag_options,
+  correct_post_check_answer
 )
+select slug, class_code, title,
+  extensions.crypt('CHANGE-ME-BEFORE-LAUNCH', extensions.gen_salt('bf')),
+  false, prediction_options, observation_tag_options, correct_answer
+from (values
+  ('dna-discovery-lab', 'DNA-DEMO', 'STEMQuest: DNA Discovery Lab',
+   array['clear-liquid', 'white-stringy-material', 'small-crystals', 'nothing-visible'],
+   array['white', 'cloudy', 'stringy', 'clumpy', 'web-like', 'no-visible-change'], 'white-stringy-material'),
+  ('yeast-balloon-lab', 'YEAST-DEMO', 'Scope: Yeast Balloon Lab',
+   array['fed-larger', 'same-size', 'control-larger', 'no-inflation'],
+   array['fed-inflated', 'control-inflated', 'foam', 'bubbles', 'no-change'], 'co2'),
+  ('human-engine-lab', 'HEART-DEMO', 'Scope: Human Engine Lab',
+   array['faster', 'slower', 'same', 'stops'],
+   array['faster', 'slower', 'lub-dub', 'recovery', 'no-change'], 'oxygen-demand'),
+  ('bubbling-leaves-lab', 'LEAF-DEMO', 'Scope: Bubbling Leaves Lab',
+   array['light-more', 'shade-more', 'same', 'no-bubbles'],
+   array['light-bubbles', 'shade-bubbles', 'faster-light', 'no-bubbles'], 'oxygen'),
+  ('bird-beak-lab', 'BEAK-DEMO', 'Scope: Bird Beak Lab',
+   array['beak-environment', 'same-beak', 'equal-counts', 'random-only'],
+   array['counts-differ', 'environment-difference', 'same-counts', 'handling-difficulty'], 'inherited-variation')
+) as labs(slug, class_code, title, prediction_options, observation_tag_options, correct_answer)
 on conflict (class_code) do nothing;
 
 -- PostgreSQL grants function execution to PUBLIC by default. Remove those
 -- implicit grants before exposing only the intended RPC surface.
 revoke all on function public._stemquest_run_json(public.stemquest_student_runs) from public, anon, authenticated;
 revoke all on function public._stemquest_summary(uuid) from public, anon, authenticated;
-revoke all on function public.stemquest_join_student(text, text, text, integer, text) from public, anon, authenticated;
+revoke all on function public.stemquest_join_student(text, text, text, integer, text, text) from public, anon, authenticated;
 revoke all on function public.stemquest_get_student_run(uuid, text) from public, anon, authenticated;
 revoke all on function public.stemquest_save_student_run(uuid, text, jsonb) from public, anon, authenticated;
 revoke all on function public.stemquest_class_summary(text) from public, anon, authenticated;
 revoke all on function public.stemquest_organizer_report(text, text) from public, anon, authenticated;
 
-grant execute on function public.stemquest_join_student(text, text, text, integer, text) to anon, authenticated;
+grant execute on function public.stemquest_join_student(text, text, text, integer, text, text) to anon, authenticated;
 grant execute on function public.stemquest_get_student_run(uuid, text) to anon, authenticated;
 grant execute on function public.stemquest_save_student_run(uuid, text, jsonb) to anon, authenticated;
 grant execute on function public.stemquest_class_summary(text) to anon, authenticated;

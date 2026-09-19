@@ -24,18 +24,14 @@
     "small-crystals": "predictionSmallCrystalsCount",
     "nothing-visible": "predictionNothingVisibleCount",
   };
-  const predictionLabels = {
-    "clear-liquid": "Clear liquid",
-    "white-stringy-material": "White stringy material",
-    "small-crystals": "Small crystals",
-    "nothing-visible": "Nothing visible",
-  };
+  let workshop = window.SCOPE_WORKSHOPS["dna-discovery-lab"];
+  let predictionLabels = {};
   const observationLabels = {
     yes: "Yes",
     somewhat: "Somewhat",
     no: "No",
   };
-  const reflectionLabels = {
+  let reflectionLabels = {
     dna: "What is DNA and where is it found?",
     mash: "Why mash the strawberries?",
     soap: "Why add soap?",
@@ -92,10 +88,11 @@
   }
 
   function getJoinUrl(code) {
-    const url = new URL("../", window.location.href);
+    const url = new URL(window.location.protocol === "file:" ? "../index.html" : "../", window.location.href);
     url.search = "";
     url.hash = "";
     url.searchParams.set("code", code);
+    url.searchParams.set("lab", workshop.slug);
     return url.href;
   }
 
@@ -106,6 +103,7 @@
       joinLink.textContent = url.replace(/^https?:\/\//, "");
     }
     if (!qr) return;
+    qr.setAttribute("aria-label", `QR code for students to join ${workshop.title}`);
     qr.replaceChildren();
     const image = document.createElement("img");
     image.width = 260;
@@ -139,14 +137,21 @@
     const total = Number(summary.predictionSubmittedCount) || 0;
     const totalField = document.querySelector("[data-prediction-total]");
     if (totalField) totalField.textContent = String(total);
-    Object.entries(predictionFields).forEach(([option, field]) => {
-      const row = document.querySelector(`[data-prediction-option="${option}"]`);
-      if (!row) return;
-      const count = Number(summary[field]) || 0;
-      const countField = row.querySelector("[data-prediction-count]");
-      const bar = row.querySelector("[data-prediction-bar]");
-      if (countField) countField.textContent = String(count);
-      if (bar) bar.style.width = `${percent(count, total)}%`;
+    const chart = document.querySelector("[data-prediction-chart]");
+    chart.replaceChildren();
+    workshop.predictions.forEach(({ id, label }) => {
+      const row = createTextElement("div", "", `prediction-row${id === workshop.correctPrediction ? " prediction-row--correct" : ""}`);
+      row.dataset.predictionOption = id;
+      const heading = document.createElement("div");
+      const count = Number(summary.predictionCounts?.[id] ?? summary[predictionFields[id]]) || 0;
+      heading.append(createTextElement("span", label), createTextElement("strong", count));
+      const track = createTextElement("span", "", "prediction-track");
+      track.setAttribute("aria-hidden", "true");
+      const bar = document.createElement("span");
+      bar.style.width = `${percent(count, total)}%`;
+      track.append(bar);
+      row.append(heading, track);
+      chart.append(row);
     });
   }
 
@@ -172,9 +177,9 @@
     details.append(summary);
     if (answered) {
       const list = document.createElement("dl");
-      Object.entries(reflectionLabels).forEach(([key, label]) => {
-        if (!values[key]) return;
-        list.append(createTextElement("dt", label), createTextElement("dd", values[key]));
+      Object.entries(values).forEach(([key, value]) => {
+        if (!value) return;
+        list.append(createTextElement("dt", reflectionLabels[key] || key), createTextElement("dd", value));
       });
       details.append(list);
     }
@@ -207,12 +212,24 @@
         studentCell.append(createTextElement("strong", response.nickname || "Anonymous"));
         studentCell.append(createTextElement("small", `Grade ${response.gradeLevel || "—"}`));
         const groupCell = createTextElement("td", response.groupNumber || "—");
-        const predictionCell = createTextElement("td", predictionLabels[response.prediction] || "Not submitted");
+        const predictionCell = createTextElement("td", predictionLabels[response.prediction] || response.prediction || "Not submitted");
         const observationCell = document.createElement("td");
         observationCell.append(createTextElement("strong", observationLabels[response.observationResult] || "Not submitted"));
         if (response.observationText) observationCell.append(createTextElement("small", response.observationText));
         if (Array.isArray(response.observationTags) && response.observationTags.length) {
-          observationCell.append(createTextElement("small", response.observationTags.join(", ")));
+          observationCell.append(createTextElement("small", response.observationTags.map((id) => workshop.observationTags.find((tag) => tag.id === id)?.label || id).join(", ")));
+        }
+        const measurements = response.experimentSteps?.measurements;
+        if (measurements && Object.keys(measurements).length) {
+          const details = document.createElement("details");
+          details.append(createTextElement("summary", "Recorded measurements"));
+          const list = document.createElement("dl");
+          Object.entries(measurements).forEach(([key, value]) => {
+            const field = workshop.measurements?.fields?.find((item) => item.id === key || item.key === key);
+            list.append(createTextElement("dt", field?.label || key), createTextElement("dd", value));
+          });
+          details.append(list);
+          observationCell.append(details);
         }
         const understandingCell = createTextElement("td", response.understandingRating ? `${response.understandingRating}/5` : "—");
         const progressCell = createTextElement("td", progressLabel(response));
@@ -226,9 +243,21 @@
   function renderReport(report) {
     currentReport = report;
     const summary = report.summary || {};
+    const slug = report.workshop?.slug || summary.workshopSlug || "dna-discovery-lab";
+    workshop = window.SCOPE_WORKSHOPS[slug] || window.SCOPE_WORKSHOPS["dna-discovery-lab"];
+    predictionLabels = Object.fromEntries(workshop.predictions.map(({ id, label }) => [id, label]));
+    reflectionLabels = Object.fromEntries(workshop.reflections.map(({ id, question }) => [id, question]));
+    if (slug === "dna-discovery-lab") Object.assign(reflectionLabels, { soap: "Why add soap? (earlier lab version)", alcohol: "Why add cold alcohol? (earlier lab version)" });
+    document.getElementById("observation-title").textContent = workshop.observationQuestion;
+    document.querySelector('[data-observation-result="yes"] > span:last-child').textContent = "Yes";
+    document.querySelector('[data-observation-result="no"] > span:last-child').textContent = "No";
+    document.querySelectorAll(".admin-brand, .admin-back-link").forEach((link) => { link.href = getJoinUrl(activeCode); });
+    document.querySelector(".admin-brand small").textContent = `${workshop.title} · Organizer`;
+    document.querySelector(".admin-table caption").textContent = `${workshop.title} responses and reflections`;
+    document.title = `${workshop.title} Dashboard — SCOPE`;
     const title = document.querySelector("[data-workshop-title]");
     const code = document.querySelector("[data-active-class-code]");
-    if (title) title.textContent = report.workshop?.title || summary.workshopTitle || "DNA Discovery Lab";
+    if (title) title.textContent = report.workshop?.title || summary.workshopTitle || workshop.title;
     if (code) code.textContent = activeCode;
     setMetric("students", Number(summary.studentCount) || 0);
     setMetric("groups", Number(summary.groupCount) || 0);
@@ -271,7 +300,8 @@
   }
 
   function csvEscape(value) {
-    const text = String(value == null ? "" : value).replace(/\r?\n/g, " ");
+    let text = String(value == null ? "" : value).replace(/\r?\n/g, " ");
+    if (/^[\s]*[=+@-]/.test(text) || /^[\t\r]/.test(text)) text = `'${text}`;
     return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
   }
 
@@ -287,28 +317,27 @@
 
   function exportCsv() {
     if (!currentReport) return;
+    const reflectionKeys = Array.from(new Set([
+      ...Object.keys(reflectionLabels),
+      ...(currentReport.responses || []).flatMap((response) => Object.keys(response.reflections || {})),
+    ]));
     const columns = [
-      "nickname", "grade", "group", "prediction", "observation", "observation tags", "observation notes",
-      "understanding / 5", "progress", "DNA and location", "why mash", "why soap", "why alcohol", "why scientists study DNA",
+      "workshop", "nickname", "grade", "group", "prediction", "observation", "observation tags", "observation notes",
+      "measurements (JSON)", "lab steps and notes (JSON)", "understanding / 5", "progress",
+      ...reflectionKeys.map((key) => reflectionLabels[key] || key),
     ];
     const rows = (currentReport.responses || []).map((response) => [
-      response.nickname,
-      response.gradeLevel,
-      response.groupNumber,
-      predictionLabels[response.prediction] || "",
+      workshop.title, response.nickname, response.gradeLevel, response.groupNumber,
+      predictionLabels[response.prediction] || response.prediction || "",
       observationLabels[response.observationResult] || "",
-      (response.observationTags || []).join("; "),
-      response.observationText,
-      response.understandingRating,
-      progressLabel(response),
-      response.reflections?.dna,
-      response.reflections?.mash,
-      response.reflections?.soap,
-      response.reflections?.alcohol,
-      response.reflections?.scientists,
+      (response.observationTags || []).join("; "), response.observationText,
+      JSON.stringify(response.experimentSteps?.measurements || {}),
+      JSON.stringify(response.experimentSteps || {}),
+      response.understandingRating, progressLabel(response),
+      ...reflectionKeys.map((key) => response.reflections?.[key]),
     ]);
     const csv = [columns, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
-    download(`dna-discovery-${activeCode}.csv`, `\uFEFF${csv}`, "text/csv;charset=utf-8");
+    download(`${workshop.slug}-${activeCode}.csv`, `\uFEFF${csv}`, "text/csv;charset=utf-8");
   }
 
   function exportJson() {
@@ -320,7 +349,7 @@
       responses: currentReport.responses,
       photoPolicy: window.STEMQuestStorage.PHOTO_POLICY,
     };
-    download(`dna-discovery-${activeCode}.json`, JSON.stringify(payload, null, 2), "application/json");
+    download(`${workshop.slug}-${activeCode}.json`, JSON.stringify(payload, null, 2), "application/json");
   }
 
   async function copyJoinLink() {
@@ -356,7 +385,7 @@
       renderJoinCard(activeCode);
       accessPanel.hidden = true;
       dashboard.hidden = false;
-      history.replaceState(null, "", `?code=${encodeURIComponent(activeCode)}`);
+      history.replaceState(null, "", `?code=${encodeURIComponent(activeCode)}&lab=${workshop.slug}`);
       setStatus("Dashboard opened. Results refresh automatically.");
       startAutoRefresh();
       document.getElementById("dashboard-title")?.focus?.({ preventScroll: true });
@@ -383,9 +412,11 @@
     }
   });
 
-  const queryCode = new URLSearchParams(window.location.search).get("code");
+  const query = new URLSearchParams(window.location.search);
+  const queryCode = query.get("code");
+  const initialWorkshop = window.SCOPE_WORKSHOPS[query.get("lab")] || workshop;
   if (classCodeInput) {
-    classCodeInput.value = normalizeClassCode(queryCode || window.STEMQUEST_CONFIG?.DEFAULT_CLASS_CODE || "DNA-DEMO");
+    classCodeInput.value = normalizeClassCode(queryCode || (initialWorkshop.slug === "dna-discovery-lab" && window.STEMQUEST_CONFIG?.DEFAULT_CLASS_CODE) || initialWorkshop.demoCode);
     classCodeInput.addEventListener("input", () => {
       classCodeInput.value = normalizeClassCode(classCodeInput.value);
     });

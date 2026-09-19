@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "ksf.stemquest.dna.v1";
-  const SCHEMA_VERSION = 1;
+  // Keep the original key so existing DNA runs and their resume tokens survive.
+  const SCHEMA_VERSION = 2;
   const WORKSHOP_SLUG = "dna-discovery-lab";
   const WORKSHOP_TITLE = "STEMQuest: DNA Discovery Lab";
   const PREDICTIONS = new Set([
@@ -32,6 +33,27 @@
     "understandingRating",
     "completed",
   ]);
+
+  function workshopDefinition(slug) {
+    const selected = slug || WORKSHOP_SLUG;
+    const catalog = global.SCOPE_WORKSHOPS || {};
+    if (Object.prototype.hasOwnProperty.call(catalog, selected)) return catalog[selected];
+    if (selected === WORKSHOP_SLUG) {
+      return {
+        slug: WORKSHOP_SLUG,
+        title: WORKSHOP_TITLE,
+        demoCode: "DNA-DEMO",
+        predictions: Array.from(PREDICTIONS, (id) => ({ id })),
+        observationTags: Array.from(OBSERVATION_TAGS, (id) => ({ id })),
+        postCheckCorrectAnswer: "white-stringy-material",
+      };
+    }
+    throw new STEMQuestStorageError("That workshop is not available.", "invalid_workshop");
+  }
+
+  function optionIds(options) {
+    return (options || []).map((option) => typeof option === "string" ? option : option.id);
+  }
 
   class STEMQuestStorageError extends Error {
     constructor(message, code, cause) {
@@ -99,8 +121,12 @@
     if (global.crypto && typeof global.crypto.randomUUID === "function") {
       return global.crypto.randomUUID();
     }
-    const token = randomToken(16).replace(/[^a-zA-Z0-9]/g, "").padEnd(32, "0");
-    return `${token.slice(0, 8)}-${token.slice(8, 12)}-4${token.slice(13, 16)}-a${token.slice(17, 20)}-${token.slice(20, 32)}`;
+    const bytes = new Uint8Array(16);
+    global.crypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
   }
 
   function bytesToBase64Url(bytes) {
@@ -136,6 +162,37 @@
     return value == null ? value : JSON.parse(JSON.stringify(value));
   }
 
+  function jsonStorageBytes(value) {
+    // PostgreSQL jsonb uses spaces after separators and expands exponents.
+    // Measure that representation in UTF-8, not JavaScript's UTF-16 length.
+    function storedJson(entry) {
+      if (Array.isArray(entry)) return `[${entry.map(storedJson).join(", ")}]`;
+      if (entry && typeof entry === "object") {
+        return `{${Object.entries(entry).map(([key, item]) => `${JSON.stringify(key)}: ${storedJson(item)}`).join(", ")}}`;
+      }
+      const json = JSON.stringify(entry);
+      if (typeof entry !== "number" || !/e/i.test(json)) return json;
+      const [mantissa, exponent] = json.toLowerCase().split("e");
+      const sign = mantissa.startsWith("-") ? "-" : "";
+      const unsigned = mantissa.replace(/^-/, "");
+      const digits = unsigned.replace(".", "");
+      const point = (unsigned.includes(".") ? unsigned.indexOf(".") : unsigned.length) + Number(exponent);
+      if (point <= 0) return `${sign}0.${"0".repeat(-point)}${digits}`;
+      if (point >= digits.length) return `${sign}${digits}${"0".repeat(point - digits.length)}`;
+      return `${sign}${digits.slice(0, point)}.${digits.slice(point)}`;
+    }
+    const json = storedJson(value);
+    return typeof global.TextEncoder === "function"
+      ? new global.TextEncoder().encode(json).length
+      : encodeURIComponent(json).replace(/%[A-F\d]{2}/gi, "x").length;
+  }
+
+  function rejectPhotoData(value) {
+    if (/(?:data:image\/|blob:(?:https?:|null\/))/i.test(JSON.stringify(value))) {
+      throw new STEMQuestStorageError("Photos stay on this device and cannot be saved.", "photo_persistence_blocked");
+    }
+  }
+
   function safeJsonObject(value, maxLength, label) {
     if (value == null) return {};
     if (typeof value !== "object" || Array.isArray(value)) {
@@ -147,18 +204,22 @@
     } catch (error) {
       throw new STEMQuestStorageError(`${label} could not be saved.`, "invalid_payload", error);
     }
-    if (serialized.length > maxLength) {
+    const parsed = serialized && JSON.parse(serialized);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new STEMQuestStorageError(`${label} must be an object.`, "invalid_payload");
+    }
+    if (jsonStorageBytes(parsed) > maxLength) {
       throw new STEMQuestStorageError(`${label} is too large to save.`, "payload_too_large");
     }
-    if (/data:image\//i.test(serialized) || /blob:https?:/i.test(serialized)) {
-      throw new STEMQuestStorageError("Photos stay on this device and cannot be saved.", "photo_persistence_blocked");
-    }
-    return JSON.parse(serialized);
+    rejectPhotoData(parsed);
+    return parsed;
   }
 
-  function sanitizePatch(changes) {
+  function sanitizePatch(changes, definition) {
     const source = changes && typeof changes === "object" ? changes : {};
     const result = {};
+    const predictions = new Set(optionIds(definition.predictions));
+    const observationTags = new Set(optionIds(definition.observationTags));
 
     // This explicit allowlist intentionally omits files, data URLs, and photo
     // fields. Student photos may be previewed in the UI but are never persisted.
@@ -167,9 +228,12 @@
       const value = source[field];
 
       if (field === "introCompleted" || field === "completed") {
-        result[field] = Boolean(value);
+        if (typeof value !== "boolean") {
+          throw new STEMQuestStorageError("Progress status must be true or false.", "invalid_payload");
+        }
+        result[field] = value;
       } else if (field === "prediction") {
-        if (value !== null && !PREDICTIONS.has(value)) {
+        if (value !== null && !predictions.has(value)) {
           throw new STEMQuestStorageError("That prediction option is not valid.", "invalid_prediction");
         }
         result[field] = value;
@@ -185,7 +249,7 @@
           throw new STEMQuestStorageError("Observation tags must be a list.", "invalid_observation_tags");
         }
         const tags = Array.from(new Set(value));
-        if (tags.length > OBSERVATION_TAGS.size || tags.some((tag) => !OBSERVATION_TAGS.has(tag))) {
+        if (tags.length > observationTags.size || tags.some((tag) => !observationTags.has(tag))) {
           throw new STEMQuestStorageError("One or more observation tags are not valid.", "invalid_observation_tags");
         }
         result[field] = tags;
@@ -204,6 +268,7 @@
       }
     });
 
+    rejectPhotoData(result);
     return result;
   }
 
@@ -214,11 +279,12 @@
     return copy;
   }
 
-  function emptySummary(classCode) {
+  function emptySummary(classCode, workshop) {
     return {
       found: false,
       classCode,
-      workshopTitle: WORKSHOP_TITLE,
+      workshopTitle: workshop ? workshop.title : WORKSHOP_TITLE,
+      workshopSlug: workshop ? workshop.slug : WORKSHOP_SLUG,
       studentCount: 0,
       groupCount: 0,
       predictionSubmittedCount: 0,
@@ -226,20 +292,14 @@
       predictionWhiteStringyMaterialCount: 0,
       predictionSmallCrystalsCount: 0,
       predictionNothingVisibleCount: 0,
+      predictionCounts: Object.fromEntries((workshop ? workshop.predictionOptions : Array.from(PREDICTIONS)).map((id) => [id, 0])),
       observedYesCount: 0,
       observedSomewhatCount: 0,
       observedNoCount: 0,
       observationSubmittedCount: 0,
       groupObservationCount: 0,
       successfulGroupCount: 0,
-      observationTagCounts: {
-        white: 0,
-        cloudy: 0,
-        stringy: 0,
-        clumpy: 0,
-        "web-like": 0,
-        "no-visible-change": 0,
-      },
+      observationTagCounts: Object.fromEntries((workshop ? workshop.observationTagOptions : Array.from(OBSERVATION_TAGS)).map((id) => [id, 0])),
       completedCount: 0,
       postCheckResponseCount: 0,
       postCheckCorrectCount: 0,
@@ -249,7 +309,7 @@
   }
 
   function summarize(workshop, runs) {
-    const summary = emptySummary(workshop.classCode);
+    const summary = emptySummary(workshop.classCode, workshop);
     summary.found = true;
     summary.workshopTitle = workshop.title;
     summary.studentCount = runs.length;
@@ -259,6 +319,9 @@
 
     runs.forEach((run) => {
       if (run.prediction) summary.predictionSubmittedCount += 1;
+      if (Object.prototype.hasOwnProperty.call(summary.predictionCounts, run.prediction)) {
+        summary.predictionCounts[run.prediction] += 1;
+      }
       if (run.prediction === "clear-liquid") summary.predictionClearLiquidCount += 1;
       if (run.prediction === "white-stringy-material") {
         summary.predictionWhiteStringyMaterialCount += 1;
@@ -282,7 +345,7 @@
       });
       if (run.completedAt) summary.completedCount += 1;
       if (run.postCheckAnswer) summary.postCheckResponseCount += 1;
-      if (run.postCheckAnswer === "white-stringy-material") summary.postCheckCorrectCount += 1;
+      if (run.postCheckAnswer === workshop.correctPostCheckAnswer) summary.postCheckCorrectCount += 1;
       if (Number.isInteger(run.understandingRating)) {
         summary.understandingResponseCount += 1;
         summary.understandingScoreTotal += run.understandingRating;
@@ -308,16 +371,23 @@
 
   function createEmptyLocalState(config) {
     const now = new Date().toISOString();
+    const slugs = new Set([WORKSHOP_SLUG, ...Object.keys(global.SCOPE_WORKSHOPS || {})]);
     return {
       version: SCHEMA_VERSION,
-      workshop: {
-        id: "local-dna-discovery-lab",
-        slug: WORKSHOP_SLUG,
-        classCode: normalizeClassCode(config.DEFAULT_CLASS_CODE || "DNA-DEMO"),
-        title: WORKSHOP_TITLE,
-        active: true,
-        createdAt: now,
-      },
+      workshops: Object.fromEntries(Array.from(slugs, (slug) => {
+        const definition = workshopDefinition(slug);
+        return [slug, {
+          id: `local-${slug}`,
+          slug,
+          classCode: normalizeClassCode(slug === WORKSHOP_SLUG ? config.DEFAULT_CLASS_CODE || definition.demoCode : definition.demoCode),
+          title: definition.title,
+          predictionOptions: optionIds(definition.predictions),
+          observationTagOptions: optionIds(definition.observationTags),
+          correctPostCheckAnswer: definition.postCheckCorrectAnswer,
+          active: true,
+          createdAt: now,
+        }];
+      })),
       runs: {},
     };
   }
@@ -326,6 +396,7 @@
     constructor(config) {
       this.mode = "local";
       this.config = config;
+      this.workshopSlug = config.WORKSHOP_SLUG || WORKSHOP_SLUG;
       this.persistent = canUseLocalStorage();
       this.memoryState = createEmptyLocalState(config);
     }
@@ -334,10 +405,23 @@
       if (!this.persistent) return clone(this.memoryState);
       try {
         const parsed = JSON.parse(global.localStorage.getItem(STORAGE_KEY));
-        if (!parsed || parsed.version !== SCHEMA_VERSION || !parsed.workshop || !parsed.runs) {
+        if (!parsed || !parsed.runs || (parsed.version !== 1 && parsed.version !== SCHEMA_VERSION)) {
           return createEmptyLocalState(this.config);
         }
-        return parsed;
+        const state = createEmptyLocalState(this.config);
+        // Version 1 stored one DNA workshop. Preserve its code, ID, and every
+        // existing run while adding the other workshop sessions alongside it.
+        const savedWorkshops = parsed.version === 1 && parsed.workshop
+          ? { [WORKSHOP_SLUG]: parsed.workshop }
+          : parsed.workshops || {};
+        Object.entries(savedWorkshops).forEach(([slug, workshop]) => {
+          state.workshops[slug] = Object.assign({}, state.workshops[slug], workshop);
+        });
+        state.runs = parsed.runs;
+        Object.values(state.runs).forEach((run) => {
+          if (!run.workshopSlug) run.workshopSlug = WORKSHOP_SLUG;
+        });
+        return state;
       } catch (_error) {
         return createEmptyLocalState(this.config);
       }
@@ -361,20 +445,25 @@
 
     async joinStudent(input) {
       const details = validateJoinInput(input);
-      const state = this.readState();
-      if (!state.workshop.active || details.classCode !== state.workshop.classCode) {
-        throw new STEMQuestStorageError("That workshop code is not active.", "workshop_not_found");
-      }
-
+      const slug = (input && input.workshopSlug) || this.workshopSlug;
+      workshopDefinition(slug);
       const resumeToken = randomToken(32);
       const resumeTokenHash = await hashToken(resumeToken);
+      // Read after asynchronous hashing so concurrent joins cannot overwrite
+      // another student's freshly saved run with an older state snapshot.
+      const state = this.readState();
+      const workshop = state.workshops[slug];
+      if (!workshop || !workshop.active || details.classCode !== workshop.classCode) {
+        throw new STEMQuestStorageError("That workshop code is not active.", "workshop_not_found");
+      }
       const runId = randomId();
       const now = new Date().toISOString();
       const run = {
         runId,
-        workshopId: state.workshop.id,
-        classCode: state.workshop.classCode,
-        workshopTitle: state.workshop.title,
+        workshopId: workshop.id,
+        workshopSlug: workshop.slug,
+        classCode: workshop.classCode,
+        workshopTitle: workshop.title,
         nickname: details.nickname,
         gradeLevel: details.gradeLevel,
         groupNumber: details.groupNumber,
@@ -401,9 +490,10 @@
     async getStudentRun(input) {
       const runId = cleanString(input && input.runId, 80);
       const resumeToken = cleanString(input && input.resumeToken, 256);
+      const resumeTokenHash = await hashToken(resumeToken);
       const state = this.readState();
       const run = state.runs[runId];
-      if (!run || !resumeToken || (await hashToken(resumeToken)) !== run.resumeTokenHash) {
+      if (!run || !resumeToken || resumeTokenHash !== run.resumeTokenHash) {
         throw new STEMQuestStorageError("Workshop progress could not be resumed.", "resume_denied");
       }
       return publicRun(run);
@@ -412,12 +502,13 @@
     async saveStudentRun(input) {
       const runId = cleanString(input && input.runId, 80);
       const resumeToken = cleanString(input && input.resumeToken, 256);
-      const changes = sanitizePatch(input && (input.changes || input.patch));
+      const resumeTokenHash = await hashToken(resumeToken);
       const state = this.readState();
       const run = state.runs[runId];
-      if (!run || !resumeToken || (await hashToken(resumeToken)) !== run.resumeTokenHash) {
+      if (!run || !resumeToken || resumeTokenHash !== run.resumeTokenHash) {
         throw new STEMQuestStorageError("Workshop progress could not be saved.", "resume_denied");
       }
+      const changes = sanitizePatch(input && (input.changes || input.patch), workshopDefinition(run.workshopSlug));
 
       Object.keys(changes).forEach((field) => {
         if (field === "completed") {
@@ -435,10 +526,11 @@
     async getClassSummary(classCode) {
       const normalized = normalizeClassCode(classCode);
       const state = this.readState();
-      if (!state.workshop.active || normalized !== state.workshop.classCode) {
+      const workshop = Object.values(state.workshops).find((entry) => entry.classCode === normalized);
+      if (!workshop || !workshop.active) {
         return emptySummary(normalized);
       }
-      return summarize(state.workshop, Object.values(state.runs));
+      return summarize(workshop, Object.values(state.runs).filter((run) => run.workshopId === workshop.id));
     }
 
     async getOrganizerReport(input) {
@@ -450,13 +542,14 @@
       }
 
       const state = this.readState();
-      if (classCode !== state.workshop.classCode) {
+      const workshop = Object.values(state.workshops).find((entry) => entry.classCode === classCode);
+      if (!workshop) {
         throw new STEMQuestStorageError("That workshop could not be found.", "workshop_not_found");
       }
-      const runs = Object.values(state.runs);
+      const runs = Object.values(state.runs).filter((run) => run.workshopId === workshop.id);
       return {
-        workshop: clone(state.workshop),
-        summary: summarize(state.workshop, runs),
+        workshop: clone(workshop),
+        summary: summarize(workshop, runs),
         responses: runs.map(publicRun),
       };
     }
@@ -466,8 +559,10 @@
     constructor(config) {
       this.mode = "supabase";
       this.persistent = true;
+      this.workshopSlug = config.WORKSHOP_SLUG || WORKSHOP_SLUG;
+      this.runWorkshops = new Map();
       this.url = String(config.SUPABASE_URL).replace(/\/+$/, "");
-      this.anonKey = String(config.SUPABASE_ANON_KEY);
+      this.anonKey = String(config.SUPABASE_PUBLISHABLE_KEY || config.SUPABASE_ANON_KEY).trim();
       this.schema = cleanString(config.SUPABASE_SCHEMA || "public", 64) || "public";
       this.timeoutMs = Number(config.REQUEST_TIMEOUT_MS) || 12000;
     }
@@ -483,7 +578,8 @@
           method: "POST",
           headers: {
             apikey: this.anonKey,
-            Authorization: `Bearer ${this.anonKey}`,
+            // Publishable keys are opaque API keys, not JWT bearer tokens.
+            ...(this.anonKey.startsWith("sb_publishable_") ? {} : { Authorization: `Bearer ${this.anonKey}` }),
             "Content-Type": "application/json",
             Accept: "application/json",
             "Accept-Profile": this.schema,
@@ -527,6 +623,8 @@
 
     async joinStudent(input) {
       const details = validateJoinInput(input);
+      const slug = (input && input.workshopSlug) || this.workshopSlug;
+      workshopDefinition(slug);
       const resumeToken = randomToken(32);
       const run = await this.rpc("stemquest_join_student", {
         p_class_code: details.classCode,
@@ -534,22 +632,26 @@
         p_grade_level: details.gradeLevel,
         p_group_number: details.groupNumber,
         p_resume_token: resumeToken,
+        p_workshop_slug: slug,
       });
+      if (run && run.runId) this.runWorkshops.set(run.runId, slug);
       return { run, resumeToken };
     }
 
     async getStudentRun(input) {
-      return this.rpc("stemquest_get_student_run", {
+      const run = await this.rpc("stemquest_get_student_run", {
         p_run_id: cleanString(input && input.runId, 80),
         p_resume_token: cleanString(input && input.resumeToken, 256),
       });
+      if (run && run.runId && run.workshopSlug) this.runWorkshops.set(run.runId, run.workshopSlug);
+      return run;
     }
 
     async saveStudentRun(input) {
       return this.rpc("stemquest_save_student_run", {
         p_run_id: cleanString(input && input.runId, 80),
         p_resume_token: cleanString(input && input.resumeToken, 256),
-        p_payload: sanitizePatch(input && (input.changes || input.patch)),
+        p_payload: sanitizePatch(input && (input.changes || input.patch), workshopDefinition(this.runWorkshops.get(input && input.runId) || this.workshopSlug)),
       });
     }
 
@@ -569,7 +671,7 @@
 
   function remoteIsConfigured(config) {
     const url = cleanString(config.SUPABASE_URL, 500);
-    const key = cleanString(config.SUPABASE_ANON_KEY, 4000);
+    const key = cleanString(config.SUPABASE_PUBLISHABLE_KEY || config.SUPABASE_ANON_KEY, 4000);
     return /^https:\/\/[a-z0-9.-]+$/i.test(url.replace(/\/+$/, "")) && key.length >= 40;
   }
 

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       name="description"
-      content="STEMQuest: DNA Discovery Lab is Killarney STEM Fellowship's interactive companion for the strawberry DNA extraction workshop."
+      content="Scope is Killarney STEM Fellowship's hands-on science workshop companion: five labs, predictions, measurements, and reflections."
     />
     <meta name="theme-color" content="#072235" />
-    <title>STEMQuest: DNA Discovery Lab</title>
+    <title>Scope: DNA Discovery Lab</title>
     <link rel="icon" type="image/jpeg" href="../../STEMbird.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,6 +18,8 @@
     />
     <link rel="stylesheet" href="stemquest.css" />
     <script src="stemquest-config.js" defer></script>
+    <script src="workshops.js" defer></script>
+    <script src="workshop-ui.js" defer></script>
     <script src="storage.js" defer></script>
     <script src="app.js" defer></script>
   </head>
@@ -28,7 +30,7 @@
       <a class="quest-brand" href="/" aria-label="Killarney STEM Fellowship home">
         <img src="../../STEMbird.jpg" width="1181" height="1181" alt="" />
         <span class="quest-brand__copy">
-          <span class="quest-brand__name">STEMQuest</span>
+          <span class="quest-brand__name">Scope</span>
           <span class="quest-brand__lab">DNA Discovery Lab</span>
         </span>
       </a>
@@ -72,6 +74,15 @@
           <p class="welcome-lede">
             Your digital lab notebook for a real strawberry DNA extraction. Make a prediction, follow your presenter, record what you see, and explain what happened.
           </p>
+          <form class="lab-chooser" action="./" method="get">
+            <label for="choose-workshop">Choose a workshop</label>
+            <div class="lab-chooser__controls">
+              <select id="choose-workshop" name="lab" aria-describedby="lab-choice-hint"></select>
+              <button class="quest-button quest-button--quiet" type="submit">Open lab</button>
+            </div>
+            <p class="field-hint" id="lab-choice-hint">Your notes are saved separately for each lab on this device.</p>
+          </form>
+          <p class="workshop-meta" data-workshop-meta></p>
 
           <div class="physical-lab-note">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
@@ -132,6 +143,7 @@
             <label for="student-grade">Grade level <span aria-hidden="true">*</span></label>
             <select id="student-grade" name="grade" required aria-describedby="grade-error">
               <option value="" selected disabled>Choose your grade</option>
+              <option value="3">Grade 3</option>
               <option value="4">Grade 4</option>
               <option value="5">Grade 5</option>
               <option value="6">Grade 6</option>
@@ -498,6 +510,7 @@
         </form>
 
         <div class="analysis-results" id="analysis-results" data-analysis-results hidden aria-live="polite">
+          <p class="answer-explanation" data-answer-explanation></p>
           <div class="metric-grid">
             <article class="metric-card"><span>Groups</span><strong data-metric="groups">—</strong><small>reporting results</small></article>
             <article class="metric-card metric-card--teal"><span>Successful extractions</span><strong data-metric="success">—</strong><small>groups saw DNA</small></article>
@@ -607,7 +620,7 @@
               <path d="m43 29 34 8M36 47l48 10M36 67l48 10M43 87l34 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
             </svg>
           </div>
-          <p>STEMQuest</p>
+          <p>Scope</p>
           <h2>DNA Explorer</h2>
           <span>Awarded to <strong data-badge-name>DNA Explorer</strong></span>
           <small data-badge-date>Killarney STEM Fellowship</small>
@@ -622,6 +635,7 @@
         <div class="screen-actions badge-actions">
           <button class="quest-button quest-button--primary" type="button" data-action="download-badge">Save my badge</button>
           <button class="quest-button quest-button--quiet" type="button" data-action="start-new-submission">Start a new submission</button>
+          <a class="quest-button quest-button--quiet" href="../">Start another lab</a>
           <a class="quest-button quest-button--quiet" href="/">Return to Killarney STEM Fellowship</a>
         </div>
       </section>

@@ -2055,3 +2055,75 @@ textarea[aria-invalid="true"] {
     -webkit-print-color-adjust: exact;
   }
 }
+
+/* Shared Scope workshop chooser, scientific models, and measurement notebook. */
+.welcome-copy { min-width: 0; }
+.answer-explanation { margin: 0; padding: 18px 20px; border-left: 4px solid var(--teal); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--teal-wash); color: var(--navy); font-size: 0.9rem; }
+.lab-chooser {
+  margin: 24px 0 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.65);
+}
+.lab-chooser > label { display: block; margin-bottom: 8px; font-size: 0.8rem; font-weight: 800; }
+.lab-chooser__controls { display: flex; flex-wrap: wrap; gap: 10px; }
+.lab-chooser__controls select { flex: 1 1 180px; min-width: 0; width: 100%; }
+.lab-chooser__controls .quest-button { flex: 0 0 auto; }
+.lab-chooser .field-hint { margin: 10px 0 0; }
+.workshop-meta { color: var(--blue); font-size: 0.76rem; font-weight: 700; }
+.welcome-copy h1.module-welcome-title { max-width: 12ch; font-size: clamp(3.6rem, 7.2vw, 7.3rem); }
+.module-hero-art { isolation: isolate; }
+.module-hero-symbol { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; }
+.module-hero-icon { z-index: 1; width: 52%; height: auto; color: var(--teal); filter: drop-shadow(0 12px 22px rgba(19, 193, 172, 0.12)); }
+.module-hero-orbit { position: absolute; inset: 10%; border: 1px dashed rgba(19, 193, 172, 0.55); border-radius: 50%; }
+.module-hero-orbit::before, .module-hero-orbit::after { content: ''; position: absolute; inset: 13%; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 50%; }
+.module-hero-orbit::after { inset: -10%; border-style: solid; border-color: rgba(238, 135, 40, 0.2); }
+.concept-number { width: 62px; height: 62px; display: grid; place-items: center; border: 1px solid rgba(19, 193, 172, 0.4); border-radius: 50%; background: var(--teal-wash); color: var(--blue); font-family: var(--font-serif); font-size: 1.8rem; }
+.workshop-overview { margin: 0 0 20px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.65); }
+.workshop-overview summary { color: var(--navy); cursor: pointer; font-weight: 800; font-size: 0.86rem; }
+.workshop-overview p { margin: 14px 0 0; color: var(--muted); font-size: 0.84rem; }
+.workshop-overview a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+.measurement-panel { min-width: 0; margin-top: 28px; padding: 22px 16px; border: 1px solid rgba(19, 193, 172, 0.5); border-radius: var(--radius-md); background: var(--teal-wash); }
+.measurement-panel h2 { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.1; }
+.measurement-panel > p { color: var(--muted); font-size: 0.82rem; }
+.measurement-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.65); }
+.measurement-table-wrap:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.measurement-table { width: 100%; border-collapse: collapse; text-align: left; }
+.measurement-table th, .measurement-table td { padding: 10px; border-bottom: 1px solid var(--line); }
+.measurement-table th { color: var(--navy); font-size: 0.72rem; }
+.measurement-table thead { background: rgba(19, 193, 172, 0.13); }
+.measurement-table tbody th { min-width: 78px; white-space: nowrap; }
+.measurement-table tr:last-child th, .measurement-table tr:last-child td { border-bottom: 0; }
+.measurement-table input, .measurement-table select { min-width: 84px; min-height: 46px; padding: 10px; font-size: 16px; }
+.measurement-table select, .measurement-table input[type="text"] { min-width: 150px; }
+.measurement-fields { display: grid; gap: 16px; }
+.measurement-fields .field-group { min-width: 0; }
+.measurement-fields label { font-size: 0.8rem; }
+.measurement-panel > .field-hint { margin-top: 14px; font-size: 0.72rem; }
+.scope-launcher .quest-screen { min-height: auto; }
+.scope-launcher .screen-heading { max-width: 760px; }
+.workshop-card-grid { display: grid; gap: 18px; }
+.workshop-card { display: flex; flex-direction: column; align-items: flex-start; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.72); }
+.workshop-card h2 { font-size: 2rem; line-height: 1.05; }
+.workshop-card p { color: var(--muted); font-size: 0.85rem; }
+.workshop-card .workshop-meta { color: var(--blue); font-size: 0.72rem; }
+.workshop-card .quest-button { margin-top: auto; }
+@media (min-width: 620px) {
+  .measurement-panel { padding: 28px; }
+  .measurement-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workshop-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 390px) {
+  .welcome-copy h1:not(.module-welcome-title) { font-size: clamp(3.8rem, 20vw, 4.4rem); }
+  .measurement-panel { padding: 18px 10px; }
+  .measurement-table th, .measurement-table td { padding: 7px; }
+  .measurement-table tbody th { min-width: 62px; }
+  .measurement-table input { min-width: 65px; }
+}
+
+.badge-copy { grid-template-columns: minmax(0, 1fr); }
+.badge-copy > * { min-width: 0; }
+@media (max-width: 390px) {
+  .badge-copy h1, .screen-heading h1 { max-width: 100%; font-size: clamp(2rem, 10.5vw, 2.55rem); }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "scope-compatibility-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --test ../stemquest/dna/backend/storage.test.cjs && node database.test.cjs && node browser.test.cjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "playwright": "1.62.1"
+  }
+}
